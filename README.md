@@ -1,221 +1,292 @@
-# Adafruit Unified Sensor Driver #
+# AusExBasedLibraries
 
-Many small embedded systems exist to collect data from sensors, analyse the data, and either take an appropriate action or send that sensor data to another system for processing.
+このライブラリは，Adafruitが公開しているセンサ類を統一して取り扱うためのドライバ(
+[Adafruit Unified Sensor Driver][AdafruitUSD])を更に拡張して，より多くの
+センサやセンサと似た使い方ができるデバイスを使うことができるようにするものです．
 
-One of the many challenges of embedded systems design is the fact that parts you used today may be out of production tomorrow, or system requirements may change and you may need to choose a different sensor down the road.
-
-Creating new drivers is a relatively easy task, but integrating them into existing systems is both error prone and time consuming since sensors rarely use the exact same units of measurement.
-
-By reducing all data to a single **sensors\_event\_t** 'type' and settling on specific, **standardised SI units** for each sensor family the same sensor types return values that are comparable with any other similar sensor.  This enables you to switch sensor models with very little impact on the rest of the system, which can help mitigate some of the risks and problems of sensor availability and code reuse.
-
-The unified sensor abstraction layer is also useful for data-logging and data-transmission since you only have one well-known type to log or transmit over the air or wire.
-
-## Unified Sensor Drivers ##
-
-The following drivers are based on the Adafruit Unified Sensor Driver:
-
-**Accelerometers**
-  - [Adafruit\_ADXL345](https://github.com/adafruit/Adafruit_ADXL345)
-  - [Adafruit\_LSM303DLHC](https://github.com/adafruit/Adafruit_LSM303DLHC)
-  - [Adafruit\_MMA8451\_Library](https://github.com/adafruit/Adafruit_MMA8451_Library)
-
-**Gyroscope**
-  - [Adafruit\_L3GD20\_U](https://github.com/adafruit/Adafruit_L3GD20_U)
-
-**Light**
-  - [Adafruit\_TSL2561](https://github.com/adafruit/Adafruit_TSL2561)
-  - [Adafruit\_TSL2591\_Library](https://github.com/adafruit/Adafruit_TSL2591_Library)
-
-**Magnetometers**
-  - [Adafruit\_LSM303DLHC](https://github.com/adafruit/Adafruit_LSM303DLHC)
-  - [Adafruit\_HMC5883\_Unified](https://github.com/adafruit/Adafruit_HMC5883_Unified)
-  
-**Barometric Pressure**
-  - [Adafruit\_BMP085\_Unified](https://github.com/adafruit/Adafruit_BMP085_Unified)
-  - [Adafruit\_BMP183\_Unified\_Library](https://github.com/adafruit/Adafruit_BMP183_Unified_Library)
-
-**Humidity & Temperature**
-  - [DHT-sensor-library](https://github.com/adafruit/DHT-sensor-library)
-
-**Orientation**
- - [Adafruit_BNO055](https://github.com/adafruit/Adafruit_BNO055)
-
-## How Does it Work? ##
-
-Any driver that supports the Adafruit unified sensor abstraction layer will implement the Adafruit\_Sensor base class.  There are two main typedefs and one enum defined in Adafruit_Sensor.h that are used to 'abstract' away the sensor details and values:
-
-**Sensor Types (sensors\_type\_t)**
-
-These pre-defined sensor types are used to properly handle the two related typedefs below, and allows us determine what types of units the sensor uses, etc.
-
+一般的に，Arduinoでセンサ類を取り扱う場合のプログラムの構造は下のようになりますが，同じ対象を測定可能なセンサが複数種類あった場合に，プログラムの「loop()」の中身を変更しなくて良いようにすることが目的です．
 ```
-/** Sensor types */
-typedef enum
-{
-  SENSOR_TYPE_ACCELEROMETER         = (1),
-  SENSOR_TYPE_MAGNETIC_FIELD        = (2),
-  SENSOR_TYPE_ORIENTATION           = (3),
-  SENSOR_TYPE_GYROSCOPE             = (4),
-  SENSOR_TYPE_LIGHT                 = (5),
-  SENSOR_TYPE_PRESSURE              = (6),
-  SENSOR_TYPE_PROXIMITY             = (8),
-  SENSOR_TYPE_GRAVITY               = (9),
-  SENSOR_TYPE_LINEAR_ACCELERATION   = (10),
-  SENSOR_TYPE_ROTATION_VECTOR       = (11),
-  SENSOR_TYPE_RELATIVE_HUMIDITY     = (12),
-  SENSOR_TYPE_AMBIENT_TEMPERATURE   = (13),
-  SENSOR_TYPE_VOLTAGE               = (15),
-  SENSOR_TYPE_CURRENT               = (16),
-  SENSOR_TYPE_COLOR                 = (17)
-} sensors_type_t;
+センサの定義
+
+setup(){
+  // センサのセットアップを行う
+}
+
+loop(){
+  // センサの値を読み取り，なにかの処理をする
+}
 ```
 
-**Sensor Details (sensor\_t)**
+## ライセンスについて
+いろんなライブラリを変更するものなので，基本的に改造前のベースのソースプラグに従います．
+各デバイスのドライバでインクルードしているこのライブラリ本体は，[Adafruit Unified Sensor Driver][AdafruitUSD]を
+拡張したものなので，Apache License v2.0となります．
 
-This typedef describes the specific capabilities of this sensor, and allows us to know what sensor we are using beneath the abstraction layer.
+なお，各種のセンサ等の周辺機器用のライブラリは，ベースとなるソースがそれぞれ異なるため，ドライバの各ディレクトリのREADME.mdを参照してください．
 
-```
-/* Sensor details (40 bytes) */
-/** struct sensor_s is used to describe basic information about a specific sensor. */
-typedef struct
-{
-    char     name[12];
-    int32_t  version;
-    int32_t  sensor_id;
-    int32_t  type;
-    float    max_value;
-    float    min_value;
-    float    resolution;
-    int32_t  min_delay;
-} sensor_t;
-```
+今のところ各ドライバやライブラリのライセンスの記述は不十分ですが，作業中なのでご容赦ください．
 
-The individual fields are intended to be used as follows:
+## 現在対応しているセンサ類
+今の所，手元にセンサがある(もしくは過去に持っていたもの)だけを作成したため，
+[Seeed Studio][SeedStudio]の[Grove][Grove]システムのいろいろなセンサ類だけが
+対象になっています．
+そのため，SPIとI2Cの両方に対応しているチップが搭載されているGroveのモジュールに
+ついては，I2Cのみの対応になっています(GroveではSPI接続機器が存在しないため)．
 
-- **name**: The sensor name or ID, up to a maximum of twelve characters (ex. "MPL115A2")
-- **version**: The version of the sensor HW and the driver to allow us to differentiate versions of the board or driver
-- **sensor\_id**: A unique sensor identifier that is used to differentiate this specific sensor instance from any others that are present on the system or in the sensor network
-- **type**: The sensor type, based on **sensors\_type\_t** in sensors.h
-- **max\_value**: The maximum value that this sensor can return (in the appropriate SI unit)
-- **min\_value**: The minimum value that this sensor can return (in the appropriate SI unit)
-- **resolution**: The smallest difference between two values that this sensor can report (in the appropriate SI unit)
-- **min\_delay**: The minimum delay in microseconds between two sensor events, or '0' if there is no constant sensor rate
+- Grove - 3-Axis Digital Accelerometer(±1.5g) [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/][AusExGrove3AxisDigitalAccelerometer1_5g]
+- Grove - 3-Axis Digital Gyro [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/][AusExGrove3AxisDigitalGyro]
+- Grove - I2C Touch Sensor [http://wiki.seeedstudio.com/Grove-I2C_Touch_Sensor/][AusExGroveI2cTouchSensor]
+- Grove-Single Axis Analog Gyro [http://wiki.seeedstudio.com/Grove-Single_Axis_Analog_Gyro/][AusExGroveAnalog1AxisGyro]
+- Grove - Electricity Sensor [http://wiki.seeedstudio.com/Grove-Electricity_Sensor/][AusExGroveAnalogCurrentSensor]
+- Grove - Temperature Sensor V1.2 [http://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/][AusExGroveAnalogTemperatureSensor]
+- Grove - GSR Sensor [http://wiki.seeedstudio.com/Grove-GSR_Sensor/][AusExGroveGsr]
+- Grove - Rotary Angle Sensor [http://wiki.seeedstudio.com/Grove-Rotary_Angle_Sensor/][AusExGroveRotaryAngleSensor]
+- Grove - Light Sensor [http://wiki.seeedstudio.com/Grove-Light_Sensor/][AusExGroveSimpleLight]
+- Grove - Moisture Sensor [http://wiki.seeedstudio.com/Grove-Moisture_Sensor/][AusExGroveSimpleMoisture]
+- Grove - Loudness Sensor [http://wiki.seeedstudio.com/Grove-Loudness_Sensor/][AusExGroveSimpleSound]
+- Grove - Switch(P) [http://wiki.seeedstudio.com/Grove-Switch-P/][AusExDigitalSwitch]
+- Grove - Dust Sensor [http://wiki.seeedstudio.com/Grove-Dust_Sensor/][AusExGroveDustSensor]
+- Grove - IR Distance Interrupter v1.2 [http://wiki.seeedstudio.com/Grove-IR_Distance_Interrupter_v1.2/][AusExGroveInfraredDistanceSensor]
+- Grove - Infrared Reflective Sensor [http://wiki.seeedstudio.com/Grove-Infrared_Reflective_Sensor/][AusExGroveInfraredReflectiveSensor]
+- Grove - Touch Sensor [http://wiki.seeedstudio.com/Grove-Touch_Sensor/][AusExGroveTouchSensor]
+- Grove - Ultrasonic Ranger [http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/][AusExGroveUltrasonicRanger]
+- Grove - Water Sensor [http://wiki.seeedstudio.com/Grove-Water_Sensor/][AusExGroveWaterSensor]
 
-**Sensor Data/Events (sensors\_event\_t)**
+## ディレクトリ構成
 
-This typedef is used to return sensor data from any sensor supported by the abstraction layer, using standard SI units and scales.
+|名前|内容|
+|:---|:---|
+|このディレクトリ|[Adafruit Unified Sensor Driver][AdafruitUSD]を拡張したセンサ等のAPI定義|
+|drivers|動作を確認できたArduinoライブラリ形式の各種デバイス用ドライバ|
+|templates|ドライバ開発用のテンプレートを入れたディレクトリ|
+|working|開発中のソースや調査に用いた資料など|
 
-```
-/* Sensor event (36 bytes) */
-/** struct sensor_event_s is used to provide a single sensor event in a common format. */
-typedef struct
-{
-    int32_t version;
-    int32_t sensor_id;
-    int32_t type;
-    int32_t reserved0;
-    int32_t timestamp;
-    union
-    {
-        float           data[4];
-        sensors_vec_t   acceleration;
-        sensors_vec_t   magnetic;
-        sensors_vec_t   orientation;
-        sensors_vec_t   gyro;
-        float           temperature;
-        float           distance;
-        float           light;
-        float           pressure;
-        float           relative_humidity;
-        float           current;
-        float           voltage;
-        sensors_color_t color;
-    };
-} sensors_event_t;
-```
-It includes the following fields:
+### ドライバディレクトリの中身
+|名前|内容|
+|:---|:---|
+|I2C_SPI|I2CやSPIインターフェイスのデバイス|
+|SimpleAnalog|アナログ端子の電圧を読み取るタイプのデバイス|
+|SimpleDigital|デジタル端子のHIGH,LOWを読み取るタイプのデバイス|
+|Serial|シリアルで接続する機器|
 
-- **version**: Contain 'sizeof(sensors\_event\_t)' to identify which version of the API we're using in case this changes in the future
-- **sensor\_id**: A unique sensor identifier that is used to differentiate this specific sensor instance from any others that are present on the system or in the sensor network (must match the sensor\_id value in the corresponding sensor\_t enum above!)
-- **type**: the sensor type, based on **sensors\_type\_t** in sensors.h
-- **timestamp**: time in milliseconds when the sensor value was read
-- **data[4]**: An array of four 32-bit values that allows us to encapsulate any type of sensor data via a simple union (further described below)
+## 利用準備(インストール)
+- このディレクトリをArduino IDEのライブラリ置き場にコピー
+- 使いたいドライバをArduino IDEのライブラリ置き場にコピー
+- IDEのスケッチ例からインストールしたライブラリのサンプルプログラムを開く
 
-**Required Functions**
 
-In addition to the two standard types and the sensor type enum, all drivers based on Adafruit_Sensor must also implement the following two functions:
+## 検証に用いた機種
+|ベンダ            | 機種              |CPUアーキ| MCU       | 備考     |
+| :---            | :---              | :---   | :---       | :---    |
+|[Arduino][Arduino]         | [Uno R3][Uno]              |AVR     |ATmega328P  |         |
+|                 | [Mega 2560 R3][Mega]              |        |ATmega2560  |         |
+|                 | [Leonardo Ethernet][LeonardoEth] |        |ATmega32U4  |         |
+|                 | [M0 Pro][M0Pro]            |ARM M0+ |ATSAMD21G18A|3.3V     |
+|[Sparkfun][Sparkfun] | [Pro mini 328][ProMini]      |AVR     |ATmega328P  |3.3V 8MHz|
+|[スイッチサイエンス][SwitchScience] | [ESPr one 32][ESPrOne32]      |Xtensa   |ESP32       |3.3V     |
 
-```
-bool getEvent(sensors_event_t*);
-```
-Calling this function will populate the supplied sensors\_event\_t reference with the latest available sensor data.  You should call this function as often as you want to update your data.
+どの機種で動いたかは，各デバイス用のドライバによって違うので，各ドライバのREADME.mdを参照してください．
 
-```
-void getSensor(sensor_t*);
-```
-Calling this function will provide some basic information about the sensor (the sensor name, driver version, min and max values, etc.
 
-**Standardised SI values for sensors\_event\_t**
 
-A key part of the abstraction layer is the standardisation of values on SI units of a particular scale, which is accomplished via the data[4] union in sensors\_event\_t above.  This 16 byte union includes fields for each main sensor type, and uses the following SI units and scales:
+### アナログセンサについて
+ESP32の検証に用いた「ESPr One 32」のアナログ端子は，WiFiと同時に利用できないなどいろいろややこしいので，アナログ接続のセンサ類の検証は断念しました．
 
-- **acceleration**: values are in **meter per second per second** (m/s^2)
-- **magnetic**: values are in **micro-Tesla** (uT)
-- **orientation**: values are in **degrees**
-- **gyro**: values are in **rad/s**
-- **temperature**: values in **degrees centigrade** (Celsius) 
-- **distance**: values are in **centimeters**
-- **light**: values are in **SI lux** units
-- **pressure**: values are in **hectopascal** (hPa)
-- **relative\_humidity**: values are in **percent**
-- **current**: values are in **milliamps** (mA)
-- **voltage**: values are in **volts** (V)
-- **color**: values are in 0..1.0 RGB channel luminosity and 32-bit RGBA format
+気力が復活したらやるかもしれませんが，あまり期待しないでください．
 
-## The Unified Driver Abstraction Layer in Practice ##
+## 利用がうまくいかなかった機種
+Groveのシールドと組み合わせ場合に，動作がおかしくなる，というかシリアルポートが壊れるため，検証作業を断念した機種．
 
-Using the unified sensor abstraction layer is relatively easy once a compliant driver has been created.
+|ベンダ            | 機種              |CPUアーキ| MCU     | 備考     |
+| :---            | :---              | :---   | :---     | :---    |
+| [Arduino][Arduino]         | [Due][Due]              |ARM M3   |SAM3X8E   |3.3V     |
+|[スイッチサイエンス][SwitchScience] | [ESPr one][ESPrOne]         |Xtensa   |ESP8266   |3.3V     |
 
-Every compliant sensor can now be read using a single, well-known 'type' (sensors\_event\_t), and there is a standardised way of interrogating a sensor about its specific capabilities (via sensor\_t).
+マイコンが壊れてしまい，新品を買い直してジャンパ線で配線を頑張る気持ちがなくなったため，
+断念してしまいました．
 
-An example of reading the [TSL2561](https://github.com/adafruit/Adafruit_TSL2561) light sensor can be seen below:
+### アナログセンサについて
+ESP8266のアナログ端子は1.0Vの仕様のため，ハードウェア的に変換が必要だったりします．
+自分でやる際にには，ご注意ください．
 
-```
- Adafruit_TSL2561 tsl = Adafruit_TSL2561(TSL2561_ADDR_FLOAT, 12345);
- ...
- /* Get a new sensor event */ 
- sensors_event_t event;
- tsl.getEvent(&event);
- 
- /* Display the results (light is measured in lux) */
- if (event.light)
- {
-   Serial.print(event.light); Serial.println(" lux");
- }
- else
- {
-   /* If event.light = 0 lux the sensor is probably saturated
-      and no reliable data could be generated! */
-   Serial.println("Sensor overload");
- }
-```
+## API定義
+### sensors_type_t
+対応するセンサの種類が増えているため，センサタイプも追加になっています．
+|追加|センサの種類|内容|
+|:---:|:---|:---|
+||SENSOR_TYPE_ACCELEROMETER|Gravity + linear acceleration|
+||SENSOR_TYPE_MAGNETIC_FIELD|磁気センサ|
+||SENSOR_TYPE_ORIENTATION|方位|
+||SENSOR_TYPE_GYROSCOPE|ジャイロ|
+||SENSOR_TYPE_LIGHT|光|
+||SENSOR_TYPE_PRESSURE|圧力|
+||SENSOR_TYPE_PROXIMITY|近接|
+||SENSOR_TYPE_GRAVITY|重力|
+||SENSOR_TYPE_LINEAR_ACCELERATION|加速度(重力なし)|
+||SENSOR_TYPE_ROTATION_VECTOR|回転方向|
+||SENSOR_TYPE_RELATIVE_HUMIDITY|湿度|
+||SENSOR_TYPE_AMBIENT_TEMPERATURE|温度|
+||SENSOR_TYPE_VOLTAGE|電圧|
+||SENSOR_TYPE_CURRENT|電流|
+||SENSOR_TYPE_COLOR|色|
+|○|SENSOR_TYPE_SIMPLE|単純な値|
+|○|SENSOR_TYPE_ANGLE|角度|
+|○|SENSOR_TYPE_1AXIS_GYRO|1軸ジャイロ|
+|○|SENSOR_TYPE_DISTANCE|距離|
+|○|SENSOR_TYPE_LARGE_INT|longの整数|
+|○|SENSOR_TYPE_DUST|塵|
 
-Similarly, we can get the basic technical capabilities of this sensor with the following code:
 
-```
- sensor_t sensor;
- 
- sensor_t sensor;
- tsl.getSensor(&sensor);
 
- /* Display the sensor details */
- Serial.println("------------------------------------");
- Serial.print  ("Sensor:       "); Serial.println(sensor.name);
- Serial.print  ("Driver Ver:   "); Serial.println(sensor.version);
- Serial.print  ("Unique ID:    "); Serial.println(sensor.sensor_id);
- Serial.print  ("Max Value:    "); Serial.print(sensor.max_value); Serial.println(" lux");
- Serial.print  ("Min Value:    "); Serial.print(sensor.min_value); Serial.println(" lux");
- Serial.print  ("Resolution:   "); Serial.print(sensor.resolution); Serial.println(" lux");  
- Serial.println("------------------------------------");
- Serial.println("");
-```
+### sensors_vec_t
+|型|名前|内容|
+|:---|:---|:---|
+|union|3軸データ||
+|int8_t|status|要調査|
+|uint8_t[3]|reserved|予約|
+
+
+### sensors_color_t
+|型|名前|内容|
+|:---|:---|:---|
+|union|色データ|rgbを格納するfloatの3つ組|
+|uint32_t|rgba|24-bit RGBA|
+
+### 色データ
+|型|名前|内容|
+|:---|:---|:---|
+|float[3]|c||
+|floatの3つ組struct|r, g, b|赤, 緑, 青|
+
+
+
+### sensors_event_t型
+|型|名前|内容|
+|:---|:---|:---|
+|int32_t|version|must be sizeof(struct sensors_event_t)|
+|int32_t|sensor_id|unique sensor identifier|
+|int32_t|type|sensor type|
+|int32_t|reserved0|reserved
+|int32_t|timestamp|time is in milliseconds|
+|union|センサの値|各種の型変数のいずれか|
+
+### センサの値
+センサの返す値の種類もセンサ種類の増加に伴い追加されています．
+|追加|型|名前|内容|
+|:---|:---|:---|:---|
+||float[4]|data||
+||sensors_vec_t|acceleration|acceleration values are in meter per second per second (m/s^2)|
+||sensors_vec_t|magnetic|magnetic vector values are in micro-Tesla (uT)|
+||sensors_vec_t|orientation|orientation values are in degrees|
+||sensors_vec_t|gyro|gyroscope values are in rad/s|
+||float|temperature|temperature is in degrees centigrade (Celsius)|
+||float|distance|distance in centimeters|
+||float|light|light in SI lux units|
+||float|pressure|pressure in hectopascal (hPa)|
+||float|relative_humidity|relative humidity in percent|
+||float|current|current in milliamps (mA)|
+||float|voltage|voltage in volts (V)|
+|○|float|angle|angle (degree)|
+|○|float|roll|1 axis gyro (deg/s)|
+||float|dust||
+|○|uint32_t|value|output value of analogRead() or digitalRead()|
+||sensors_color_t|color|color in RGB component values|
+
+### sensor_t型
+|追加|型|名前|内容|
+|:---|:---|:---|:---|
+||char|name[12]|sensor name|
+||int32_t|version|version of the hardware + driver|
+||int32_t|sensor_id|unique sensor identifier|
+||int32_t|type|this sensor's type (ex. SENSOR_TYPE_LIGHT)|
+||float|max_value|maximum value of this sensor's value in SI units|
+||float|min_value|minimum value of this sensor's value in SI units|
+||float|resolution|smallest difference between two values reported by this sensor|
+||int32_t|min_delay|min delay in microseconds between events. zero = not a constant rate|
+
+
+
+### メンバ関数
+
+|追加|返り値の型|関数|引数|概要|変更点など|
+|:---:|:---|---:|:---|:---|:---|
+||bool|getEvent(sensors_event_t*)|センサの測定値を格納するための変数へのポインタ|センサの測定に成功したか否かをboolで返す||
+||void|getSensor(sensor_t*)|センサの性質を示すデータを格納する変数へのポインタ|なし||
+|△|bool|enableAutoRange(bool enabled)|センサレンジの自動調整を有効にするか否かを表す|自動レンジ調整をサポートしている場合はenableを返し，自動レンジ調整をサポートしていない場合はfalseを返す|自動レンジ調整がないセンサ対策のため，返り値の型をvoidからboolに変更．|
+|○|int|setMode(int mode)|センサのレンジ等の動作を切り替えるモードを整数で表して引数とする|動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 . 設定変更に失敗したら0, 設定変更に成功したら1|自動レンジ調整があるなら，手動もあるべきで，レンジ以外にも動作モードが存在するセンサもあるため，それを1つの関数にまとめる．|
+
+
+
+
+## 外部リンク
+- Adafruit Unified Sensor Driver - [https://github.com/adafruit/Adafruit_Sensor][AdafruitUSD]
+- Groveシールド - [https://www.seeedstudio.com/Base-Shield-V2-p-1378.html][shield]
+- Arduino M0 Pro - [https://store.arduino.cc/usa/arduino-m0-pro][M0Pro]
+- Arduino Due - [https://store.arduino.cc/usa/arduino-due][Due]
+- Arduino Uno R3 - [https://store.arduino.cc/usa/arduino-uno-rev3][Uno]
+- Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
+- Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
+- Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
+- ESpr one - [https://www.switch-science.com/catalog/2620/][ESPrOne]
+- ESPr one 32 - [https://www.switch-science.com/catalog/3555/][ESPrOne32]
+- Grove - [https://www.seeedstudio.io/category/Grove-c-1003.html][Grove]
+- Seed Studio - [https://www.seeedstudio.io/][SeedStudio]
+- Sparkfun Electronics - [https://www.sparkfun.com/][Sparkfun]
+- スイッチサイエンス - [https://www.switch-science.com/][SwitchScience]
+
+<!-- 以下は，外部リンクの定義 -->
+[Grove]:https://www.seeedstudio.io/category/Grove-c-1003.html
+[SeedStudio]:https://www.seeedstudio.io/
+[AdafruitUSD]:https://github.com/adafruit/Adafruit_Sensor
+[shield]:https://www.seeedstudio.com/Base-Shield-V2-p-1378.html
+[M0Pro]:https://store.arduino.cc/usa/arduino-m0-pro
+[Due]:https://store.arduino.cc/usa/arduino-due
+[Uno]:https://store.arduino.cc/usa/arduino-uno-rev3
+[Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
+[LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
+[ProMini]:https://www.sparkfun.com/products/11114
+[ESPrOne]:https://www.switch-science.com/catalog/2620/
+[ESPrOne32]:https://www.switch-science.com/catalog/3555/
+[Grove]:https://www.seeedstudio.io/category/Grove-c-1003.html
+[SeedStudio]:https://www.seeedstudio.io/
+[Arduino]:http://https://www.arduino.cc/
+[Sparkfun]:https://www.sparkfun.com/
+[SwitchScience]:https://www.switch-science.com/
+[AusExGrove3AxisDigitalAccelerometer1_5g]:http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/
+[AusExGrove3AxisDigitalGyro]:http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/
+[AusExGroveI2cTouchSensor]:http://wiki.seeedstudio.com/Grove-I2C_Touch_Sensor/
+[AusExGroveAnalog1AxisGyro]:http://wiki.seeedstudio.com/Grove-Single_Axis_Analog_Gyro/
+[AusExGroveAnalogCurrentSensor]:http://wiki.seeedstudio.com/Grove-Electricity_Sensor/
+[AusExGroveAnalogTemperatureSensor]:http://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/
+[AusExGroveGsr]:http://wiki.seeedstudio.com/Grove-GSR_Sensor/
+[AusExGroveRotaryAngleSensor]:http://wiki.seeedstudio.com/Grove-Rotary_Angle_Sensor/
+[AusExGroveSimpleLight]:http://wiki.seeedstudio.com/Grove-Light_Sensor/
+[AusExGroveSimpleMoisture]:http://wiki.seeedstudio.com/Grove-Moisture_Sensor/
+[AusExGroveSimpleSound]:http://wiki.seeedstudio.com/Grove-Loudness_Sensor/
+[AusExDigitalSwitch]:http://wiki.seeedstudio.com/Grove-Switch-P/
+[AusExGroveDustSensor]:http://wiki.seeedstudio.com/Grove-Dust_Sensor/
+[AusExGroveInfraredDistanceSensor]:http://wiki.seeedstudio.com/Grove-IR_Distance_Interrupter_v1.2/
+[AusExGroveInfraredReflectiveSensor]:http://wiki.seeedstudio.com/Grove-Infrared_Reflective_Sensor/
+[AusExGroveTouchSensor]:http://wiki.seeedstudio.com/Grove-Touch_Sensor/
+[AusExGroveUltrasonicRanger]:http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/
+[AusExGroveWaterSensor]:http://wiki.seeedstudio.com/Grove-Water_Sensor/
+
+
+
+<!--- コメント
+[Adafruit Unified Sensor Driver][AdafruitUSD]
+[Groveシールド][shield]
+[Arduino M0 Pro][M0Pro]
+[Arduino Due][Due]
+[Arduino Uno R3][Uno]
+[Arduino Mega2560 R3][Mega]
+[Arduino Leonardo Ethernet][LeonardoEth]
+[Arduino Pro mini 328 - 3.3V/8MHz][ProMini]
+[ESpr one][ESPrOne]
+[ESPr one 32][ESPrOne32]
+[Grove][Grove]
+[Seed Studio][SeedStudio]
+[Arduino][Arduino]
+[Sparkfun][Sparkfun]
+[スイッチサイエンス][SwitchScience]
+--->

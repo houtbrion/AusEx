@@ -17,8 +17,8 @@
 /* Update by K. Townsend (Adafruit Industries) for lighter typedefs, and
  * extended sensor support to include color, voltage and current */
  
-#ifndef _ADAFRUIT_SENSOR_H
-#define _ADAFRUIT_SENSOR_H
+#ifndef _ADAFRUIT_SENSOR_EXTENDED_H
+#define _ADAFRUIT_SENSOR_EXTENDED_H
 
 #if ARDUINO >= 100
  #include "Arduino.h"
@@ -41,6 +41,9 @@
 #define SENSORS_DPS_TO_RADS               (0.017453293F)          /**< Degrees/s to rad/s multiplier */
 #define SENSORS_GAUSS_TO_MICROTESLA       (100)                   /**< Gauss to micro-Tesla multiplier */
 
+#define SENSORS_NAME_LENGTH		  32
+
+
 /** Sensor types */
 typedef enum
 {
@@ -58,7 +61,13 @@ typedef enum
   SENSOR_TYPE_AMBIENT_TEMPERATURE   = (13),
   SENSOR_TYPE_VOLTAGE               = (15),
   SENSOR_TYPE_CURRENT               = (16),
-  SENSOR_TYPE_COLOR                 = (17)
+  SENSOR_TYPE_COLOR                 = (17),
+  SENSOR_TYPE_SIMPLE                = (18),
+  SENSOR_TYPE_ANGLE		    = (19),
+  SENSOR_TYPE_1AXIS_GYRO	    = (20),
+  SENSOR_TYPE_DISTANCE              = (21),
+  SENSOR_TYPE_LARGE_INT	            = (22),
+  SENSOR_TYPE_DUST		    = (23)
 } sensors_type_t;
 
 /** struct sensors_vec_s is used to return a vector in a common format. */
@@ -118,6 +127,11 @@ typedef struct
         float           relative_humidity;    /**< relative humidity in percent */
         float           current;              /**< current in milliamps (mA) */
         float           voltage;              /**< voltage in volts (V) */
+        float           angle;                /**< angle (degree) */
+	float           roll;                 /**< 1 axis gyro (deg/s) */
+	float		dust;		      /**< */
+	uint32_t        value;                /**< output value of analogRead() or digitalRead() */
+	long		lvalue;               /**< output value of sensor that outputs large value */
         sensors_color_t color;                /**< color in RGB component values */
     };
 } sensors_event_t;
@@ -126,7 +140,7 @@ typedef struct
 /** struct sensor_s is used to describe basic information about a specific sensor. */
 typedef struct
 {
-    char     name[12];                        /**< sensor name */
+    char     name[SENSORS_NAME_LENGTH];                        /**< sensor name */
     int32_t  version;                         /**< version of the hardware + driver */
     int32_t  sensor_id;                       /**< unique sensor identifier */
     int32_t  type;                            /**< this sensor's type (ex. SENSOR_TYPE_LIGHT) */
@@ -136,19 +150,22 @@ typedef struct
     int32_t  min_delay;                       /**< min delay in microseconds between events. zero = not a constant rate */
 } sensor_t;
 
-class Adafruit_Sensor {
+class Adafruit_SensorEx {
  public:
   // Constructor(s)
-  Adafruit_Sensor() {}
-  virtual ~Adafruit_Sensor() {}
+  Adafruit_SensorEx() {}
+  virtual ~Adafruit_SensorEx() {}
 
   // These must be defined by the subclass
-  virtual void enableAutoRange(bool enabled) {};
+  virtual bool enableAutoRange(bool enabled) = 0 ; /* レンジの変更がそもそもできないものはfalseを返す． */
+  virtual int setMode(int mode) =0 ; /* 動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 . 設定変更に失敗したら0, 設定変更に成功したら1 */
   virtual bool getEvent(sensors_event_t*) = 0;
-  virtual void getSensor(sensor_t*) = 0;
+  virtual void getSensor(sensor_t*) = 0 ;
+  // virtual void getSensor(sensor_t*) = 0;
   
  private:
   bool _autoRange;
 };
 
-#endif
+#endif /*  _ADAFRUIT_SENSOR_EXTENDED_H */
+
