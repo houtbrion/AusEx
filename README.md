@@ -84,6 +84,7 @@ loop(){
 |                 | [Leonardo Ethernet][LeonardoEth] |        |ATmega32U4  |         |
 |                 | [M0 Pro][M0Pro]            |ARM M0+ |ATSAMD21G18A|3.3V     |
 |[Sparkfun][Sparkfun] | [Pro mini 328][ProMini]      |AVR     |ATmega328P  |3.3V 8MHz|
+|[スイッチサイエンス][SwitchScience] | [ESPr Developer][ESPrDeveloper]      |Xtensa   |ESP8266       |3.3V     |
 |[スイッチサイエンス][SwitchScience] | [ESPr one 32][ESPrOne32]      |Xtensa   |ESP32       |3.3V     |
 
 どの機種で動いたかは，各デバイス用のドライバによって違うので，各ドライバのREADME.mdを参照してください．
@@ -104,7 +105,9 @@ Groveのシールドと組み合わせ場合に，動作がおかしくなる，
 |[スイッチサイエンス][SwitchScience] | [ESPr one][ESPrOne]         |Xtensa   |ESP8266   |3.3V     |
 
 マイコンが壊れてしまい，新品を買い直してジャンパ線で配線を頑張る気持ちがなくなったため，
-断念してしまいました．
+断念していましたが，[ESPr developer][ESPrDev]と[ESPr Developer用GROVEシールド][ESPrDevShield]を
+購入して，検証作業を再開しました．
+
 
 ### アナログセンサについて
 ESP8266のアナログ端子は1.0Vの仕様のため，ハードウェア的に変換が必要だったりします．
@@ -230,7 +233,8 @@ ESP8266のアナログ端子は1.0Vの仕様のため，ハードウェア的に
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
-- ESpr one - [https://www.switch-science.com/catalog/2620/][ESPrOne]
+- ESPr developer - [https://www.switch-science.com/catalog/2652/][ESPrDev]
+- ESPr Developer用GROVEシールド - [https://www.switch-science.com/catalog/2811/][ESPrDevShield]
 - ESPr one 32 - [https://www.switch-science.com/catalog/3555/][ESPrOne32]
 - Grove - [https://www.seeedstudio.io/category/Grove-c-1003.html][Grove]
 - Seed Studio - [https://www.seeedstudio.io/][SeedStudio]
@@ -248,6 +252,8 @@ ESP8266のアナログ端子は1.0Vの仕様のため，ハードウェア的に
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114
+[ESPrDev]:https://www.switch-science.com/catalog/2652/
+[ESPrDevShield]:https://www.switch-science.com/catalog/2811/
 [ESPrOne]:https://www.switch-science.com/catalog/2620/
 [ESPrOne32]:https://www.switch-science.com/catalog/3555/
 [Grove]:https://www.seeedstudio.io/category/Grove-c-1003.html

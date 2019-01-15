@@ -24,6 +24,7 @@ Arduinoのアナログ端子に出力される信号を読み取り，信号レ�
 |       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
 |       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ×   |      |
 | ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |○||
+|ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |||
 |ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |×|　|
 
 ## 外部リンク
@@ -39,6 +40,8 @@ Arduinoのアナログ端子に出力される信号を読み取り，信号レ�
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
+- ESPr developer - [https://www.switch-science.com/catalog/2652/][ESPrDev]
+- ESPr Developer用GROVEシールド - [https://www.switch-science.com/catalog/2811/][ESPrDevShield]
 - ESpr one - [https://www.switch-science.com/catalog/2620/][ESPrOne]
 - ESPr one 32 - [https://www.switch-science.com/catalog/3555/][ESPrOne32]
 - Grove - [https://www.seeedstudio.io/category/Grove-c-1003.html][Grove]
@@ -60,6 +63,8 @@ Arduinoのアナログ端子に出力される信号を読み取り，信号レ�
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114
+[ESPrDev]:https://www.switch-science.com/catalog/2652/
+[ESPrDevShield]:https://www.switch-science.com/catalog/2811
 [ESPrOne]:https://www.switch-science.com/catalog/2620/
 [ESPrOne32]:https://www.switch-science.com/catalog/3555/
 [Grove]:https://www.seeedstudio.io/category/Grove-c-1003.html

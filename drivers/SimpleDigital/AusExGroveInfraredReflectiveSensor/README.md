@@ -34,12 +34,16 @@ Adafruitのセンサ統合ライブラリと同じAPIに修正してみるプロ
 |AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
 |       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
 |       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
-|       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ×   |欄外参照      |
-| ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |×|欄外参照|
-|ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |×|欄外参照|
+|       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ×   |*1      |
+| ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |×|*1|
+|ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |△|*2|
+|ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |×|*1|
 
-3.3Vの機械とつなぐと，感度の調整がうまくいかず，
-常時ONか常時OFFしかできなかった．
+<d1>
+<dt>＊1</dt><dd>感度の調整がうまくいかず，常時ONか常時OFFしかできなかった．</dd>
+<dt>＊2</dt><dd>他の3.3V駆動のマイコンよりはましなものの，感度の調整がうまくいかない．</dd>
+</d1>
+
 
 ## 外部リンク
 
@@ -53,6 +57,8 @@ Adafruitのセンサ統合ライブラリと同じAPIに修正してみるプロ
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
+- ESPr developer - [https://www.switch-science.com/catalog/2652/][ESPrDev]
+- ESPr Developer用GROVEシールド - [https://www.switch-science.com/catalog/2811/][ESPrDevShield]
 - ESpr one - [https://www.switch-science.com/catalog/2620/][ESPrOne]
 - ESPr one 32 - [https://www.switch-science.com/catalog/3555/][ESPrOne32]
 - Grove - [https://www.seeedstudio.io/category/Grove-c-1003.html][Grove]
@@ -75,6 +81,8 @@ Adafruitのセンサ統合ライブラリと同じAPIに修正してみるプロ
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114
+[ESPrDev]:https://www.switch-science.com/catalog/2652/
+[ESPrDevShield]:https://www.switch-science.com/catalog/2811
 [ESPrOne]:https://www.switch-science.com/catalog/2620/
 [ESPrOne32]:https://www.switch-science.com/catalog/3555/
 [Grove]:https://www.seeedstudio.io/category/Grove-c-1003.html

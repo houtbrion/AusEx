@@ -1,6 +1,6 @@
 #include "AusExGroveWaterSensor.h"
 
-#define SENSOR_PIN 13
+#define SENSOR_PIN 14
 
 GroveWaterSensorAusEx groveWaterSensor = GroveWaterSensorAusEx(SENSOR_PIN);
 

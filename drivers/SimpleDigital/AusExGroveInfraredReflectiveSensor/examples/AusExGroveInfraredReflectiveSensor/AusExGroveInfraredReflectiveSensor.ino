@@ -1,6 +1,6 @@
 #include "AusExGroveInfraredReflectiveSensor.h"
 
-#define SENSOR_PIN 2
+#define SENSOR_PIN 12
 
 GroveInfraredReflectiveSensorAusEx analogSensor = GroveInfraredReflectiveSensorAusEx(SENSOR_PIN);
 

@@ -33,6 +33,7 @@ wikiのページには，ライセンス条項の記載がないので，
 |       | Leonardo Ethernet |Arduino|○||
 |       | Pro mini 3.3V | Sparkfun |○||
 | ARM/M0+ | M0 Pro |Arduino|○||
+|ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |||
 |ESP32 | ESPr one 32 | スイッチサイエンス |×|　|
 
 ## 外部リンク
@@ -52,6 +53,8 @@ wikiのページには，ライセンス条項の記載がないので，
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
+- ESPr developer - [https://www.switch-science.com/catalog/2652/][ESPrDev]
+- ESPr Developer用GROVEシールド - [https://www.switch-science.com/catalog/2811/][ESPrDevShield]
 - ESpr one - [https://www.switch-science.com/catalog/2620/][ESPrOne]
 - ESPr one 32 - [https://www.switch-science.com/catalog/3555/][ESPrOne32]
 - Grove - [https://www.seeedstudio.io/category/Grove-c-1003.html][Grove]
@@ -73,6 +76,8 @@ wikiのページには，ライセンス条項の記載がないので，
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114
+[ESPrDev]:https://www.switch-science.com/catalog/2652/
+[ESPrDevShield]:https://www.switch-science.com/catalog/2811
 [ESPrOne]:https://www.switch-science.com/catalog/2620/
 [ESPrOne32]:https://www.switch-science.com/catalog/3555/
 [Grove]:https://www.seeedstudio.io/category/Grove-c-1003.html

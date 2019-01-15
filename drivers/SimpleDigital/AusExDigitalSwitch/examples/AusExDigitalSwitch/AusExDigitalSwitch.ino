@@ -1,6 +1,6 @@
 #include "AusExDigitalSwitch.h"
 
-#define SENSOR_PIN 14
+#define SENSOR_PIN 12
 
 GroveDigitalSwitchAusEx analogSensor = GroveDigitalSwitchAusEx(SENSOR_PIN);
 
