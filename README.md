@@ -84,7 +84,7 @@ loop(){
 |                 | [Leonardo Ethernet][LeonardoEth] |        |ATmega32U4  |         |
 |                 | [M0 Pro][M0Pro]            |ARM M0+ |ATSAMD21G18A|3.3V     |
 |[Sparkfun][Sparkfun] | [Pro mini 328][ProMini]      |AVR     |ATmega328P  |3.3V 8MHz|
-|[スイッチサイエンス][SwitchScience] | [ESPr Developer][ESPrDeveloper]      |Xtensa   |ESP8266       |3.3V     |
+|[スイッチサイエンス][SwitchScience] | [ESPr Developer][ESPrDev]      |Xtensa   |ESP8266       |3.3V     |
 |[スイッチサイエンス][SwitchScience] | [ESPr one 32][ESPrOne32]      |Xtensa   |ESP32       |3.3V     |
 
 どの機種で動いたかは，各デバイス用のドライバによって違うので，各ドライバのREADME.mdを参照してください．
