@@ -35,6 +35,7 @@ loop(){
 ついては，I2Cのみの対応になっています(GroveではSPI接続機器が存在しないため)．
 
 - Grove - 3-Axis Digital Accelerometer(±1.5g) [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/][AusExGrove3AxisDigitalAccelerometer1_5g]
+- Grove - 3-Axis Digital Accelerometer(±16g) [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-16g/][AusExGrove3AxisDigitalAccelerometer16g]
 - Grove - 3-Axis Digital Gyro [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/][AusExGrove3AxisDigitalGyro]
 - Grove - I2C Touch Sensor [http://wiki.seeedstudio.com/Grove-I2C_Touch_Sensor/][AusExGroveI2cTouchSensor]
 - Grove-Single Axis Analog Gyro [http://wiki.seeedstudio.com/Grove-Single_Axis_Analog_Gyro/][AusExGroveAnalog1AxisGyro]
@@ -52,6 +53,9 @@ loop(){
 - Grove - Touch Sensor [http://wiki.seeedstudio.com/Grove-Touch_Sensor/][AusExGroveTouchSensor]
 - Grove - Ultrasonic Ranger [http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/][AusExGroveUltrasonicRanger]
 - Grove - Water Sensor [http://wiki.seeedstudio.com/Grove-Water_Sensor/][AusExGroveWaterSensor]
+
+ただし， Grove - 3-Axis Digital Accelerometer(±16g)については， Grove - 3-Axis Digital Accelerometer(±16g)専用ではなく，
+搭載されているチップ(ADXL345)共通のドライバとして作成した．
 
 ## ディレクトリ構成
 
@@ -262,6 +266,7 @@ ESP8266のアナログ端子は1.0Vの仕様のため，ハードウェア的に
 [Sparkfun]:https://www.sparkfun.com/
 [SwitchScience]:https://www.switch-science.com/
 [AusExGrove3AxisDigitalAccelerometer1_5g]:http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/
+[AusExGrove3AxisDigitalAccelerometer16g]:http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-16g/
 [AusExGrove3AxisDigitalGyro]:http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/
 [AusExGroveI2cTouchSensor]:http://wiki.seeedstudio.com/Grove-I2C_Touch_Sensor/
 [AusExGroveAnalog1AxisGyro]:http://wiki.seeedstudio.com/Grove-Single_Axis_Analog_Gyro/
