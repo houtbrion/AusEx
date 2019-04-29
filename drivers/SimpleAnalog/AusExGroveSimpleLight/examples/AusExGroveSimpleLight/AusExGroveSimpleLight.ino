@@ -1,10 +1,10 @@
 #include "AusExGroveSimpleLight.h"
 
-#define SENSOR_PIN 25
+#define SENSOR_PIN A0
 
-GroveSimpleLightAusEx groveSimpleLightSensor = GroveSimpleLightAusEx(SENSOR_PIN);
+AusExGroveSimpleLight groveSimpleLightSensor = AusExGroveSimpleLight(SENSOR_PIN);
 
-void setup()  
+void setup()
 {
   Serial.begin(9600);
   groveSimpleLightSensor.begin();

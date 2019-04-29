@@ -25,12 +25,16 @@
 |AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
 |       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
 |       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] | ○     | 
 |       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ○   |      |
 | ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |○||
 |ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |×|下記参照|
 |ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |○|　|
 
 一度，水に濡らして値が1→0に変化すると，拭いても元(0→1)に戻らない．
+
+## 使い方
+特別な動作モードの切り替えとかはなく，0/1を返すだけのセンサなので，setMode()とgetMode()の利用は無意味．
 
 ## 外部リンク
 
@@ -42,6 +46,7 @@
 - Arduino M0 Pro - [https://store.arduino.cc/usa/arduino-m0-pro][M0Pro]
 - Arduino Due - [https://store.arduino.cc/usa/arduino-due][Due]
 - Arduino Uno R3 - [https://store.arduino.cc/usa/arduino-uno-rev3][Uno]
+- Arduino Uno WiFi - [https://store.arduino.cc/usa/arduino-uno-wifi-rev2][UnoWiFi]
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
@@ -67,6 +72,7 @@
 [M0Pro]:https://store.arduino.cc/usa/arduino-m0-pro
 [Due]:https://store.arduino.cc/usa/arduino-due
 [Uno]:https://store.arduino.cc/usa/arduino-uno-rev3
+[UnoWiFi]:https://store.arduino.cc/usa/arduino-uno-wifi-rev2
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114

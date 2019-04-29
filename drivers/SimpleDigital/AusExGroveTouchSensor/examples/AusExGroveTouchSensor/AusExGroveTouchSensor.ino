@@ -1,8 +1,9 @@
 #include "AusExGroveTouchSensor.h"
 
-#define SENSOR_PIN 13
 
-GroveTouchSensorAusEx groveTouchSensor = GroveTouchSensorAusEx(SENSOR_PIN);
+#define SENSOR_PIN 3
+
+AusExGroveTouchSensor groveTouchSensor = AusExGroveTouchSensor(SENSOR_PIN);
 
 void setup()  
 {

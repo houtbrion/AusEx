@@ -30,10 +30,15 @@
 |AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
 |       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
 |       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
-|       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ×   |      |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] | ○     |      |
+|       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ○   |      |
 | ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |○||
 |ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |○||
 |ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |○|　|
+
+## 使い方
+このセンサは単にスイッチが繋がっているだけで，スイッチのON/OFFでArduinoの端子の電圧がHIGHかLOWかが変わるだけの非常に単純なものです．
+そのため，標準のAPIしか必要ありませんし，センサ値の読み替えも不要なため，測定結果はuint32_tの変数に0か1かが格納されるだけです．
 
 
 ## 外部リンク
@@ -72,6 +77,7 @@
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114
+[UnoWiFi]:https://store.arduino.cc/usa/arduino-uno-wifi-rev2
 [ESPrDev]:https://www.switch-science.com/catalog/2652/
 [ESPrDevShield]:https://www.switch-science.com/catalog/2811
 [ESPrOne]:https://www.switch-science.com/catalog/2620/

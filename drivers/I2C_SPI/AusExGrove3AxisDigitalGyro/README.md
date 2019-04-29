@@ -26,6 +26,10 @@
 ベースとなるコードはSeeedStudioの[Githubのプログラム][github]であり，
 『MIT License』となっているので，それに従います．
 
+## 使い方
+センサのチップ「ITG3200」は特別な動作モード設定などはないため，
+AusEXに共通のapiいか存在しませんし，共通apiのgetModeやsetModeは
+-1を返すだけの中身は空の実装です．
 
 ## 動作検証
 
@@ -34,10 +38,14 @@
 |AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
 |       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
 |       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] | ○     | 
 |       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ×   |      |
 | ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |○||
 |ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |○||
-|ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |×|　|
+|ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] ||未検証|
+
+Arduino Pro miniは，動作確認に利用した自作の拡張基板が原因の可能性もあるので，動作しないと
+確定したわけではありません．暇ができたら，基板から外して試してみます．
 
 
 ## 外部リンク
@@ -50,6 +58,7 @@
 - Arduino M0 Pro - [https://store.arduino.cc/usa/arduino-m0-pro][M0Pro]
 - Arduino Due - [https://store.arduino.cc/usa/arduino-due][Due]
 - Arduino Uno R3 - [https://store.arduino.cc/usa/arduino-uno-rev3][Uno]
+- Arduino Uno WiFi - [https://store.arduino.cc/usa/arduino-uno-wifi-rev2][UnoWiFi]
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
@@ -73,6 +82,7 @@
 [M0Pro]:https://store.arduino.cc/usa/arduino-m0-pro
 [Due]:https://store.arduino.cc/usa/arduino-due
 [Uno]:https://store.arduino.cc/usa/arduino-uno-rev3
+[UnoWiFi]:https://store.arduino.cc/usa/arduino-uno-wifi-rev2
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114

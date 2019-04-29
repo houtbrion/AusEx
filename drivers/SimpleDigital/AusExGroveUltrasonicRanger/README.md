@@ -29,15 +29,21 @@
 | :--- | :--- | :--- | :---: | :--- |
 |AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
 |       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
-|       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | △     |  欄外参照    |
+|       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |   |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] | ○     | 
 |       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ×   |      |
 | ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |×||
-|ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |×|算出される距離がおかしい上に，2回に一回程度しか読み取りが成功しない|
+|ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |×||
 |ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |×|　|
 
+このセンサの動作電圧は3.2～5.2Vのはずですが，3.3V動作の装置ではまともに動いてくれません．
+センサに給電する電圧を精密に調整する回路を付加しないとダメかもしれない．
+
+## 使い方
+このセンサは超音波の反射で距離を測定するセンサで，センサの値は距離がfloatで出力される．
+特別な測定モードは存在しないので，getMode()とsetMode()は-1を返すのみ．
 
 
-Leonardoは距離が短く算出される(実際の距離の2/3ぐらい)
 
 
 ## 外部リンク
@@ -50,6 +56,7 @@ Leonardoは距離が短く算出される(実際の距離の2/3ぐらい)
 - Arduino M0 Pro - [https://store.arduino.cc/usa/arduino-m0-pro][M0Pro]
 - Arduino Due - [https://store.arduino.cc/usa/arduino-due][Due]
 - Arduino Uno R3 - [https://store.arduino.cc/usa/arduino-uno-rev3][Uno]
+- Arduino Uno WiFi - [https://store.arduino.cc/usa/arduino-uno-wifi-rev2][UnoWiFi]
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
@@ -75,6 +82,7 @@ Leonardoは距離が短く算出される(実際の距離の2/3ぐらい)
 [M0Pro]:https://store.arduino.cc/usa/arduino-m0-pro
 [Due]:https://store.arduino.cc/usa/arduino-due
 [Uno]:https://store.arduino.cc/usa/arduino-uno-rev3
+[UnoWiFi]:https://store.arduino.cc/usa/arduino-uno-wifi-rev2
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114

@@ -16,9 +16,7 @@
 あえて宣言しません．気になる人はseeed studioに確認してください．
 
 
-## 使い方
 
-添付のサンプルプログラムを参照ください．
 
 ## 動作検証
 そもそも，センサ自体の挙動が不安定である(値が読めない場合が多い)ことと，5V専用であるため，Uno,Mega,Leonardo以外は検証していない．
@@ -28,12 +26,15 @@
 |AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
 |       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
 |       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] | ○     | 
 |       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |     |未検証      |
 | ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] ||未検証|
 |ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |||
 |ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] ||未検証|
 
-
+## 使い方
+このホコリセンサは特別な動作モードなどはなく，センサ値の変換も特に必要ではないため，
+標準APIのみでホコリセンサのクラスは構成されており，出力はfloatの0～28,000(pcs/リットル)です．
 
 ## 外部リンク
 
@@ -69,6 +70,7 @@
 [M0Pro]:https://store.arduino.cc/usa/arduino-m0-pro
 [Due]:https://store.arduino.cc/usa/arduino-due
 [Uno]:https://store.arduino.cc/usa/arduino-uno-rev3
+[UnoWiFi]:https://store.arduino.cc/usa/arduino-uno-wifi-rev2
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114

@@ -1,7 +1,7 @@
 #include "AusExI2cTemplate.h"
 
 
-_TEMPLATE_CLASS groveI2cDigitalSensor;
+AUSEX_I2C_TEMPLATE_CLASS groveI2cDigitalSensor=AUSEX_I2C_TEMPLATE_CLASS(&Wire);
 
 void setup()  
 {
@@ -22,7 +22,7 @@ void loop()
 {
   sensors_event_t event;
   if (groveI2cDigitalSensor.getEvent(&event)) {
-    Serial.print("sensor value = "); Serial.println(event._SENSOR_RETURN_VALUE);
+    Serial.print("sensor value = "); Serial.println(event.AUSEX_I2C_TEMPLATE_SENSOR_RETURN_VALUE);
   } else {
     Serial.println("read sensor error.");
   }

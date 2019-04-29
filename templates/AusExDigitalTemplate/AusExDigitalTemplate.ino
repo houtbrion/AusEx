@@ -2,7 +2,7 @@
 
 #define SENSOR_PIN 2  // センサはデジタルの2番ポートに接続
 
-_TEMPLATE_CLASS digitalSensor = _TEMPLATE_CLASS(SENSOR_PIN);
+AUSEX_DIGITAL_TEMPLATE_CLASS digitalSensor = AUSEX_DIGITAL_TEMPLATE_CLASS(SENSOR_PIN);
 
 void setup()  
 {
@@ -23,7 +23,7 @@ void loop()
 {
   sensors_event_t event;
   if (digitalSensor.getEvent(&event)) {
-    Serial.print("sensor value = "); Serial.println(event._SENSOR_RETURN_VALUE);
+    Serial.print("sensor value = "); Serial.println(event.AUSEX_DIGITAL_TEMPLATE_SENSOR_RETURN_VALUE);
   } else {
     Serial.println("read sensor error.");
   }

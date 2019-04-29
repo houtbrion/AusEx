@@ -1,16 +1,16 @@
 #include "AusExGroveInfraredReflectiveSensor.h"
 
-#define SENSOR_PIN 12
+#define SENSOR_PIN 13
 
-GroveInfraredReflectiveSensorAusEx analogSensor = GroveInfraredReflectiveSensorAusEx(SENSOR_PIN);
+AusExGroveInfraredReflectiveSensor irSensor = AusExGroveInfraredReflectiveSensor(SENSOR_PIN);
 
 void setup()  
 {
   Serial.begin(9600);
   delay(3000);
-  analogSensor.begin();
+  irSensor.begin();
   sensor_t sensor;
-  analogSensor.getSensor(&sensor);
+  irSensor.getSensor(&sensor);
   Serial.println("---------------");
   Serial.print("Sensor name    :") ; Serial.println(sensor.name);
   Serial.print("Driver version : "); Serial.println(sensor.version);
@@ -23,7 +23,7 @@ void setup()
 void loop()  
 {
   sensors_event_t event;
-  if (analogSensor.getEvent(&event)) {
+  if (irSensor.getEvent(&event)) {
     Serial.print("sensor value = "); Serial.println(event.value);
   } else {
     Serial.println("read sensor error.");

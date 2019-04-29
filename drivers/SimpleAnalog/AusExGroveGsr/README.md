@@ -28,18 +28,22 @@ wikiのページには，ライセンス条項の記載がないので，
 
 |CPU| 機種 |ベンダ| 結果 | 備考 |
 | :--- | :--- | :--- | :---: | :--- |
-|AVR| Uno  |Arduino|○||
-|       | Mega |Arduino|○||
-|       | Leonardo Ethernet |Arduino|○||
-|       | Pro mini 3.3V | Sparkfun |○||
-| ARM/M0+ | M0 Pro |Arduino|○||
-|ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |||
-|ESP32 | ESPr one 32 | スイッチサイエンス |×|　|
+|AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
+|       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
+|       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] | ○     | 
+|       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ○   |      |
+| ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |○||
+|ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] ||未確認　|
+
+
+## 使い方
+
+センサのメンバ関数は共通のもののみ，センサからの出力値はAD変換器の出力そのままのため，
+0～1023の非負整数．
+
 
 ## 外部リンク
-
-
-
 
 
 - Seeed Studio技術Wiki [http://wiki.seeedstudio.com/Grove-GSR_Sensor/][SeedWiki]
@@ -50,6 +54,7 @@ wikiのページには，ライセンス条項の記載がないので，
 - Arduino M0 Pro - [https://store.arduino.cc/usa/arduino-m0-pro][M0Pro]
 - Arduino Due - [https://store.arduino.cc/usa/arduino-due][Due]
 - Arduino Uno R3 - [https://store.arduino.cc/usa/arduino-uno-rev3][Uno]
+- Arduino Uno WiFi - [https://store.arduino.cc/usa/arduino-uno-wifi-rev2][UnoWiFi]
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
@@ -73,6 +78,7 @@ wikiのページには，ライセンス条項の記載がないので，
 [M0Pro]:https://store.arduino.cc/usa/arduino-m0-pro
 [Due]:https://store.arduino.cc/usa/arduino-due
 [Uno]:https://store.arduino.cc/usa/arduino-uno-rev3
+[UnoWiFi]:https://store.arduino.cc/usa/arduino-uno-wifi-rev2
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114

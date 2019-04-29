@@ -2,7 +2,7 @@
 
 #define SENSOR_PIN A0
 
-GroveRotaryAngleSensorAusEx groveRotaryAngleSensor = GroveRotaryAngleSensorAusEx(SENSOR_PIN, (float)5.0);
+AusExGroveRotaryAngleSensor groveRotaryAngleSensor = AusExGroveRotaryAngleSensor(SENSOR_PIN, (float)5.0);
 
 void setup()  
 {

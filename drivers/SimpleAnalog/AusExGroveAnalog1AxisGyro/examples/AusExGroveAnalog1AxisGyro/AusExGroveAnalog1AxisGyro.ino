@@ -2,7 +2,7 @@
 
 #define SENSOR_PIN A0
 
-GroveAnalog1AxisGyroAusEx groveAnalog1AxisGyroU = GroveAnalog1AxisGyroAusEx(SENSOR_PIN);
+AusExGroveAnalog1AxisGyro groveAnalog1AxisGyroU = AusExGroveAnalog1AxisGyro(SENSOR_PIN);
 
 #define NUM_OF_TRY 1000
 float reference_Value = 0;

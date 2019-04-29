@@ -33,10 +33,27 @@ FreeScaleのMPR121で最大12個のタッチセンサを同居させているけ
 |AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
 |       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
 |       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] | ○     | 
 |       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ×   |      |
 | ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |○||
 |ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |○||
-|ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |○|　|
+|ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] ||未検証|
+
+Arduino Pro miniは，動作確認に利用した自作の拡張基板が原因の可能性もあるので，動作しないと
+確定したわけではありません．暇ができたら，基板から外して試してみます．
+
+## 使い方
+このタッチセンサはたくさん触れる部分があり，どこが触られているかを「uint32_t」の値1つに
+まとめて返してくるため，分離する必要があります．
+
+それをサポートするためにメンバ関数を1つ「getTouchState()」追加しています．
+この関数は第一引数にセンサから取得した値をとり，第2引数に何番目のパネルかを
+指定することで，そのパネルが触られているか否かをboolで返します．
+
+```
+bool getTouchState(uint32_t val, uint8_t num);
+```
+
 
 
 ## 外部リンク

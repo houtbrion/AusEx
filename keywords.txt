@@ -19,6 +19,7 @@ getEvent	KEYWORD2
 getSensor	KEYWORD2
 enableAutoRange	KEYWORD2
 setMode		KEYWORD2
+getMode		KEYWORD2
 
 
 #######################################

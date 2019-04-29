@@ -6,20 +6,26 @@
 
 一般的に，Arduinoでセンサ類を取り扱う場合のプログラムの構造は下のようになりますが，同じ対象を測定可能なセンサが複数種類あった場合に，プログラムの「loop()」の中身を極力変更しなくてすむようにすることが目的です．
 
+概ね以下のようなプログラムの構造でセンサから値を取得することが可能になります．センサを表すクラスのメンバ関数の引数などは
+あとで述べます．また，センサの種類による個別の違いについては，該当のライブラリ(センサドライバ)のディレクトリを参照してください．
 ```
-センサの定義
+// センサの定義
+クラス名 センサ変数 = クラス名(引数);
 
 setup(){
   // センサのセットアップを行う
+  センサ変数.begin();
+  センサ変数.getSensor();
 }
 
 loop(){
   // センサの値を読み取り，なにかの処理をする
+  センサ変数.getEvent();
 }
 ```
 
 ## ライセンスについて
-いろんなライブラリを変更するものなので，基本的に改造前のベースのソースプラグに従います．
+いろんなライブラリを変更するものなので，基本的に改造前のベースのソースに従います．
 各デバイスのドライバでインクルードしているこのライブラリ本体は，[Adafruit Unified Sensor Driver][AdafruitUSD]を
 拡張したものなので，Apache License v2.0となります．
 
@@ -29,10 +35,10 @@ loop(){
 
 ## 現在対応しているセンサ類
 今の所，手元にセンサがある(もしくは過去に持っていたもの)だけを作成したため，
-[Seeed Studio][SeedStudio]の[Grove][Grove]システムのいろいろなセンサ類だけが
-対象になっています．
+[Seeed Studio][SeedStudio]の[Grove][Grove]システムのいろいろなセンサ類が
+対象で，それ以外はほぼない状態です．
 そのため，SPIとI2Cの両方に対応しているチップが搭載されているGroveのモジュールに
-ついては，I2Cのみの対応になっています(GroveではSPI接続機器が存在しないため)．
+ついては，I2Cのみの対応になっていますが，SPI対応のモジュールが入手できたものはSPI対応もしていくつもりです．
 
 - Grove - 3-Axis Digital Accelerometer(±1.5g) [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/][AusExGrove3AxisDigitalAccelerometer1_5g]
 - Grove - 3-Axis Digital Accelerometer(±16g) [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-16g/][AusExGrove3AxisDigitalAccelerometer16g]
@@ -55,7 +61,9 @@ loop(){
 - Grove - Water Sensor [http://wiki.seeedstudio.com/Grove-Water_Sensor/][AusExGroveWaterSensor]
 
 ただし， Grove - 3-Axis Digital Accelerometer(±16g)については， Grove - 3-Axis Digital Accelerometer(±16g)専用ではなく，
-搭載されているチップ(ADXL345)共通のドライバとして作成した．
+搭載されているチップ(ADXL345)共通のドライバとして作成しているので，ディレクトリ名などもADXL345になってます．
+
+あと，Grove以外のモジュールでも，手近で安価に入手できる(秋葉の秋月やaitendoで安く買える)ものは追加しようかと思ってます．
 
 ## ディレクトリ構成
 
@@ -72,20 +80,22 @@ loop(){
 |I2C_SPI|I2CやSPIインターフェイスのデバイス|
 |SimpleAnalog|アナログ端子の電圧を読み取るタイプのデバイス|
 |SimpleDigital|デジタル端子のHIGH,LOWを読み取るタイプのデバイス|
-|Serial|シリアルで接続する機器|
+|Serial|シリアル(uART)で接続する機器|
 
 ## 利用準備(インストール)
 - このディレクトリをArduino IDEのライブラリ置き場にコピー
-- 使いたいドライバをArduino IDEのライブラリ置き場にコピー
+- 使いたいドライバをArduino IDEのライブラリ置き場にコピー(もしくはmove)
 - IDEのスケッチ例からインストールしたライブラリのサンプルプログラムを開く
 
 
 ## 検証に用いた機種
+検証に用いた機種のうち，代表的なものは以下の表のものです．
 |ベンダ            | 機種              |CPUアーキ| MCU       | 備考     |
 | :---            | :---              | :---   | :---       | :---    |
 |[Arduino][Arduino]         | [Uno R3][Uno]              |AVR     |ATmega328P  |         |
 |                 | [Mega 2560 R3][Mega]              |        |ATmega2560  |         |
 |                 | [Leonardo Ethernet][LeonardoEth] |        |ATmega32U4  |         |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] |  ATmega328P    | |
 |                 | [M0 Pro][M0Pro]            |ARM M0+ |ATSAMD21G18A|3.3V     |
 |[Sparkfun][Sparkfun] | [Pro mini 328][ProMini]      |AVR     |ATmega328P  |3.3V 8MHz|
 |[スイッチサイエンス][SwitchScience] | [ESPr Developer][ESPrDev]      |Xtensa   |ESP8266       |3.3V     |
@@ -97,8 +107,11 @@ loop(){
 
 ### アナログセンサについて
 ESP32の検証に用いた「ESPr One 32」のアナログ端子は，WiFiと同時に利用できないなどいろいろややこしいので，アナログ接続のセンサ類の検証は断念しました．
-
 気力が復活したらやるかもしれませんが，あまり期待しないでください．
+
+ESP8266はVDDが3.3Vなのに，アナログ端子の電圧は1.0Vという仕様のため，ハードウェア的に変換が必要だったりします．
+電圧の変換回路を作る気力がなかったため，現状は動作確認などは行っていません．
+自分でトライする方はご注意ください．
 
 ## 利用がうまくいかなかった機種
 Groveのシールドと組み合わせ場合に，動作がおかしくなる，というかシリアルポートが壊れるため，検証作業を断念した機種．
@@ -113,11 +126,43 @@ Groveのシールドと組み合わせ場合に，動作がおかしくなる，
 購入して，ESP8266のみ検証作業を再開しました．
 
 
-### アナログセンサについて
-ESP8266のアナログ端子は1.0Vの仕様のため，ハードウェア的に変換が必要だったりします．
-自分でやる際にには，ご注意ください．
 
 ## API定義
+
+### メンバ関数
+
+#### センサの値取得に関係する関数
+コンストラクタとbeginはセンサのI/F(アナログ, デジタル, I2C, SPI)などによって全部違ってくるので一覧にはできませんが，それ以外の部分は共通になっているので，以下の表にまとめておきます．
+
+
+|追加|返り値の型|関数|引数|概要|変更点など|
+|:---:|:---|---:|:---|:---|:---|
+||bool|getEvent(sensors_event_t*)|センサの測定値を格納するための変数へのポインタ|センサの測定に成功したか否かをboolで返す||
+||void|getSensor(sensor_t*)|センサの性質を示すデータを格納する変数へのポインタ|なし||
+|△|bool|enableAutoRange(bool)|センサレンジの自動調整を有効にするか否かを表す|自動レンジ調整をサポートしている場合はenableを返し，自動レンジ調整をサポートしていない場合はfalseを返す|自動レンジ調整がないセンサ対策のため，返り値の型をvoidからboolに変更．|
+|○|int|setMode(int)|センサのレンジ等の動作を切り替えるモードを整数で表して引数とする|動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 . 設定変更に失敗したら0, 設定変更に成功したら1|自動レンジ調整があるなら，手動もあるべきで，レンジ以外にも動作モードが存在するセンサもあるため，それを1つの関数にまとめる．|
+|○|int|getMode(void)|センサのレンジ等の動作を切り替えるモードを整数で表して返す．|動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 . それ以外のものは，現在の設定値を返す．|
+
+#### コンストラクタ
+|センサI/Fの種類|引数|注意事項など|
+|:---|:---|:---|
+|アナログ|クラス名(int ピン番号, float vdd=デフォルトの電圧, int32_t sensorID = -1)|ピン番号以外は省略可能|
+|デジタル|クラス名(int, int32_t sensorID = -1)|同上|
+|I2C|クラス名(TwoWire *theWire, int32_t sensorID = -1)|第一引数は省略不可であることに注意|
+|SPI|クラス名(uint8_t clock, uint8_t miso, uint8_t mosi, uint8_t cs, int32_t sensorID = -1)|ハードSPIの場合は，第一引数が0xFFを指定し，第2,3,4引数は適当な値で良い．|
+
+表の末尾のSPIの場合，ESP32は複数のハードウェアSPIインタフェースが存在するけど，現在は標準のSPIのみに対応．
+もし，複数のSPIインタフェースに対応する場合は，0xFF以外(0xFEなど)に異なるインタフェースを割り当てるつもり．
+
+
+#### begin()
+|センサI/Fの種類|引数|注意事項など|
+|:---|:---|:---|
+|アナログ|begin(void)||
+|デジタル|begin(bool pullUp=false)|I/Fのピンをプルアップするか否かを指定(デフォルトはしない)．|
+|I2C|begin(uint32_t addr=デフォルトのI2Cアドレス)|センサのI2Cアドレスを指定(省略可)．|
+|SPI|begin(void)||
+
 ### sensors_type_t
 対応するセンサの種類が増えているため，センサタイプも追加になっています．
 
@@ -216,24 +261,13 @@ ESP8266のアナログ端子は1.0Vの仕様のため，ハードウェア的に
 
 
 
-### メンバ関数
-
-|追加|返り値の型|関数|引数|概要|変更点など|
-|:---:|:---|---:|:---|:---|:---|
-||bool|getEvent(sensors_event_t*)|センサの測定値を格納するための変数へのポインタ|センサの測定に成功したか否かをboolで返す||
-||void|getSensor(sensor_t*)|センサの性質を示すデータを格納する変数へのポインタ|なし||
-|△|bool|enableAutoRange(bool enabled)|センサレンジの自動調整を有効にするか否かを表す|自動レンジ調整をサポートしている場合はenableを返し，自動レンジ調整をサポートしていない場合はfalseを返す|自動レンジ調整がないセンサ対策のため，返り値の型をvoidからboolに変更．|
-|○|int|setMode(int mode)|センサのレンジ等の動作を切り替えるモードを整数で表して引数とする|動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 . 設定変更に失敗したら0, 設定変更に成功したら1|自動レンジ調整があるなら，手動もあるべきで，レンジ以外にも動作モードが存在するセンサもあるため，それを1つの関数にまとめる．|
-
-
-
-
 ## 外部リンク
 - Adafruit Unified Sensor Driver - [https://github.com/adafruit/Adafruit_Sensor][AdafruitUSD]
 - Groveシールド - [https://www.seeedstudio.com/Base-Shield-V2-p-1378.html][shield]
 - Arduino M0 Pro - [https://store.arduino.cc/usa/arduino-m0-pro][M0Pro]
 - Arduino Due - [https://store.arduino.cc/usa/arduino-due][Due]
 - Arduino Uno R3 - [https://store.arduino.cc/usa/arduino-uno-rev3][Uno]
+- Arduino Uno WiFi - [https://store.arduino.cc/usa/arduino-uno-wifi-rev2][UnoWiFi]
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
@@ -253,6 +287,7 @@ ESP8266のアナログ端子は1.0Vの仕様のため，ハードウェア的に
 [M0Pro]:https://store.arduino.cc/usa/arduino-m0-pro
 [Due]:https://store.arduino.cc/usa/arduino-due
 [Uno]:https://store.arduino.cc/usa/arduino-uno-rev3
+[UnoWiFi]:https://store.arduino.cc/usa/arduino-uno-wifi-rev2
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114

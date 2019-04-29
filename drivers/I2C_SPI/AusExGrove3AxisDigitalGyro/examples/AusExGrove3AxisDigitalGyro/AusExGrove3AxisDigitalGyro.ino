@@ -1,9 +1,10 @@
 #include "AusExGrove3AxisDigitalGyro.h"
 
 
-Grove3AxisDigitalGyroAusEx groveDigitalGyro;
+//AusExGrove3AxisDigitalGyro groveDigitalGyro=AusExGrove3AxisDigitalGyro(&Wire);
+AusExGrove3AxisDigitalGyro groveDigitalGyro=AusExGrove3AxisDigitalGyro(&Wire,100,100);
 
-void setup()  
+void setup()
 {
   Serial.begin(9600);
   groveDigitalGyro.begin();

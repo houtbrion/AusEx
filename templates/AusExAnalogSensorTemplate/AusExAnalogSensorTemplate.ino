@@ -2,7 +2,7 @@
 
 #define SENSOR_PIN A3  // センサはアナログの3番ポートに接続
 
-_TEMPLATE_CLASS generalAnalogSensor = _TEMPLATE_CLASS(SENSOR_PIN);
+AUSEX_ANALOG_TEMPLATE_CLASS generalAnalogSensor = AUSEX_ANALOG_TEMPLATE_CLASS(SENSOR_PIN);
 
 void setup()  
 {
@@ -23,7 +23,7 @@ void loop()
 {
   sensors_event_t event;
   if (generalAnalogSensor.getEvent(&event)) {
-    Serial.print("sensor value = "); Serial.println(event._SENSOR_RETURN_VALUE);
+    Serial.print("sensor value = "); Serial.println(event.AUSEX_ANALOG_TEMPLATE_SENSOR_RETURN_VALUE);
   } else {
     Serial.println("read sensor error.");
   }

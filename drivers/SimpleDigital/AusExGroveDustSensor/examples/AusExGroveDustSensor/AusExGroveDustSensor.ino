@@ -1,15 +1,15 @@
 #include "AusExGroveDustSensor.h"
 
-#define SENSOR_PIN 3
+#define SENSOR_PIN 4
 
-GroveDustSensorAusEx analogSensor = GroveDustSensorAusEx(SENSOR_PIN);
+AusExGroveDustSensor dustSensor = AusExGroveDustSensor(SENSOR_PIN);
 
 void setup()  
 {
   Serial.begin(9600);
-  analogSensor.begin();
+  dustSensor.begin();
   sensor_t sensor;
-  analogSensor.getSensor(&sensor);
+  dustSensor.getSensor(&sensor);
   Serial.println("---------------");
   Serial.print("Sensor name    :") ; Serial.println(sensor.name);
   Serial.print("Driver version : "); Serial.println(sensor.version);
@@ -23,10 +23,10 @@ void setup()
 void loop()  
 {
   sensors_event_t event;
-  if (analogSensor.getEvent(&event)) {
+  if (dustSensor.getEvent(&event)) {
     Serial.print("sensor value = "); Serial.println(event.dust);
   } else {
     Serial.println("read sensor error.");
   }
-  delay(3000);
+  delay(30000);
 }

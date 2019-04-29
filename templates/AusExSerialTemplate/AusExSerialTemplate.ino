@@ -1,7 +1,7 @@
 #include "AusExSerialTemplate.h"
 
 SoftwareSerial sSerial(2,3);
-_TEMPLATE_CLASS serialSensor(&sSerial);
+AUSEX_SERIAL_TEMPLATE_CLASS serialSensor(&sSerial);
 
 
 void setup()  
@@ -23,7 +23,7 @@ void loop()
 {
   sensors_event_t event;
   if (serialSensor.getEvent(&event)) {
-    Serial.print("sensor value = "); Serial.println(event._SENSOR_RETURN_VALUE);
+    Serial.print("sensor value = "); Serial.println(event.AUSEX_SERIAL_TEMPLATE_SENSOR_RETURN_VALUE);
   } else {
     Serial.println("read sensor error.");
   }

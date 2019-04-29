@@ -34,10 +34,33 @@
 |AVR| [Uno R3][Uno]  |[Arduino][Arduino]|  ○    |      |
 |       | [Mega2560 R3][Mega] |[Arduino][Arduino] |  ○    |      |
 |       | [Leonardo Ethernet][LeonardoEth] |[Arduino][Arduino] | ○     |      |
+|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] | ○     | 
 |       | [Pro mini 3.3V][ProMini] | [Sparkfun][Sparkfun] |   ×   |      |
 | ARM/M0+ | [M0 Pro][M0Pro] |[Arduino][Arduino] |○||
 |ESP8266|[ESPr developer][ESPrDev]| [スイッチサイエンス][SwitchScience] |○||
 |ESP32 | [ESPr one 32][ESPrOne32] | [スイッチサイエンス][SwitchScience] |×|　|
+
+Arduino Pro miniは，動作確認に利用した自作の拡張基板が原因の可能性もあるので，動作しないと
+確定したわけではありません．暇ができたら，基板から外して試してみます．
+
+
+## 使い方
+このセンサチップ「MMA7660」はサンプリングレートが設定できるので，
+setMode()やgetMode()はサンプリングレートの設定を取り扱います．
+
+以下の定数定義はサンプリングレートの設定値なので，setMode()の引数や
+getMode()の返り値はこれを使ってプログラミングします．
+```
+#define MMA7660_AUTO_SLEEP_120  0X00//120 sample per second (default)
+#define MMA7660_AUTO_SLEEP_64 0X01
+#define MMA7660_AUTO_SLEEP_32 0X02
+#define MMA7660_AUTO_SLEEP_16 0X03
+#define MMA7660_AUTO_SLEEP_8  0X04
+#define MMA7660_AUTO_SLEEP_4  0X05
+#define MMA7660_AUTO_SLEEP_2  0X06
+#define MMA7660_AUTO_SLEEP_1  0X07
+```
+
 
 ## 外部リンク
 
@@ -49,6 +72,7 @@
 - Arduino M0 Pro - [https://store.arduino.cc/usa/arduino-m0-pro][M0Pro]
 - Arduino Due - [https://store.arduino.cc/usa/arduino-due][Due]
 - Arduino Uno R3 - [https://store.arduino.cc/usa/arduino-uno-rev3][Uno]
+- Arduino Uno WiFi - [https://store.arduino.cc/usa/arduino-uno-wifi-rev2][UnoWiFi]
 - Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
 - Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
 - Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
@@ -72,6 +96,7 @@
 [M0Pro]:https://store.arduino.cc/usa/arduino-m0-pro
 [Due]:https://store.arduino.cc/usa/arduino-due
 [Uno]:https://store.arduino.cc/usa/arduino-uno-rev3
+[UnoWiFi]:https://store.arduino.cc/usa/arduino-uno-wifi-rev2
 [Mega]:https://store.arduino.cc/usa/arduino-mega-2560-rev3
 [LeonardoEth]:https://store.arduino.cc/usa/arduino-leonardo-eth
 [ProMini]:https://www.sparkfun.com/products/11114

@@ -1,15 +1,15 @@
 #include "AusExGroveUltrasonicRanger.h"
 
-#define SENSOR_PIN 12
+#define SENSOR_PIN 3
 
-GroveUltrasonicRangerAusEx analogSensor = GroveUltrasonicRangerAusEx(SENSOR_PIN);
+AusExGroveUltrasonicRanger ultraSonicRanger = AusExGroveUltrasonicRanger(SENSOR_PIN);
 
 void setup()  
 {
   Serial.begin(9600);
-  analogSensor.begin();
+  ultraSonicRanger.begin();
   sensor_t sensor;
-  analogSensor.getSensor(&sensor);
+  ultraSonicRanger.getSensor(&sensor);
   Serial.println("---------------");
   Serial.print("Sensor name    :") ; Serial.println(sensor.name);
   Serial.print("Driver version : "); Serial.println(sensor.version);
@@ -22,7 +22,7 @@ void setup()
 void loop()  
 {
   sensors_event_t event;
-  if (analogSensor.getEvent(&event)) {
+  if (ultraSonicRanger.getEvent(&event)) {
     Serial.print("sensor value = "); Serial.println(event.distance);
   } else {
     Serial.println("read sensor error.");

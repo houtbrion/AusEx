@@ -2,17 +2,13 @@
 
 #include "AusExGroveAnalogTemperatureSensor.h"
 
-#ifndef ESP32
-Grove_Analog_Temperature_Sensor_AusEx groveTemperatureSensor=Grove_Analog_Temperature_Sensor_AusEx(A0);
-#else
-Grove_Analog_Temperature_Sensor_AusEx groveTemperatureSensor=Grove_Analog_Temperature_Sensor_AusEx(A0,-1);
-#endif /* ESP32 */
+AusExGroveAnalog1Temperature groveTemperatureSensor=AusExGroveAnalog1Temperature(A0);
 
 void setup()
 {
-#ifndef ESP8266
+
   while (!Serial); // for Leonardo/Micro/Zero
-#endif
+
   Serial.begin(9600);
   Serial.println("Temperature sensor Test"); Serial.println("");
   if (!groveTemperatureSensor.begin()){

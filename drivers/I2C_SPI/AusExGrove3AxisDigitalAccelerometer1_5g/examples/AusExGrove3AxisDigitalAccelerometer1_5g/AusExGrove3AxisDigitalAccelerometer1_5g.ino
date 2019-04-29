@@ -1,7 +1,23 @@
 #include "AusExGrove3AxisDigitalAccelerometer1_5g.h"
 
 
-Grove3AxisDigitalAccelerometer1_5gAusEx groveI2cDigitalSensor;
+AusExGrove3AxisDigitalAccelerometer1_5g groveI2cDigitalSensor=AusExGrove3AxisDigitalAccelerometer1_5g(&Wire);
+
+
+int calcSamplingRate(int val) {
+  int rate=-1;
+  switch(val){
+    case 0 : rate=120;break;
+    case 1 : rate=64;break;
+    case 2 : rate=32;break;
+    case 3 : rate=16;break;
+    case 4 : rate=8;break;
+    case 5 : rate=4;break;
+    case 6 : rate=2;break;
+    case 7 : rate=1;
+  }
+  return rate;
+}
 
 void setup()  
 {
@@ -17,6 +33,11 @@ void setup()
   Serial.print("Min Value:    "); Serial.println(sensor.min_value);
   Serial.print("Resolution:   "); Serial.println(sensor.resolution);
   Serial.println("---------------");
+  int rate=calcSamplingRate(groveI2cDigitalSensor.getMode());
+  Serial.print("default Sampling Rate = ");Serial.print(rate);Serial.println(" (times/s)");
+  Serial.println("set  64 to sampling rate ");
+  rate=calcSamplingRate(groveI2cDigitalSensor.getMode());
+  Serial.print("new Sampling Rate = ");Serial.print(rate);Serial.println(" (times/s)");
 }
 void loop()  
 {

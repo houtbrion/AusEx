@@ -1,7 +1,7 @@
 #include "AusExGroveI2cTouchSensor.h"
 
 
-GroveI2cTouchSensorAusEx groveI2cDigitalSensor;
+AusExGroveI2cTouchSensor groveI2cDigitalSensor=AusExGroveI2cTouchSensor(&Wire);
 
 void setup()  
 {
@@ -23,7 +23,7 @@ void loop()
   sensors_event_t event;
   if (groveI2cDigitalSensor.getEvent(&event)) {
     Serial.print("sensor value = "); Serial.println(event.value);
-    for (int i=0; i< _NUM_OF_SENSORS; i++){
+    for (int i=0; i< AUSEX_GROVE_I2C_TOUCH_NUM_OF_SENSORS; i++){
       Serial.print("pin no.");
       Serial.print(i);
       Serial.print(" = ");

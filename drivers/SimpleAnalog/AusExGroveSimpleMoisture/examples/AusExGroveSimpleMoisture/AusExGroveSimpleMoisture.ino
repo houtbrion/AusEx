@@ -2,7 +2,7 @@
 
 #define SENSOR_PIN A0
 
-GroveSimpleMoistureAusEx groveSimpleMoistureSensor = GroveSimpleMoistureAusEx(SENSOR_PIN);
+AusExGroveSimpleMoisture groveSimpleMoistureSensor = AusExGroveSimpleMoisture(SENSOR_PIN);
 
 void setup()  
 {

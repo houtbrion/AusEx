@@ -159,9 +159,9 @@ class Adafruit_SensorEx {
   // These must be defined by the subclass
   virtual bool enableAutoRange(bool enabled) = 0 ; /* レンジの変更がそもそもできないものはfalseを返す． */
   virtual int setMode(int mode) =0 ; /* 動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 . 設定変更に失敗したら0, 設定変更に成功したら1 */
+  virtual int getMode() =0 ; /* 動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 */
   virtual bool getEvent(sensors_event_t*) = 0;
   virtual void getSensor(sensor_t*) = 0 ;
-  // virtual void getSensor(sensor_t*) = 0;
   
  private:
   bool _autoRange;
