@@ -90,12 +90,13 @@ loop(){
 
 ## 検証に用いた機種
 検証に用いた機種のうち，代表的なものは以下の表のものです．
+
 |ベンダ            | 機種              |CPUアーキ| MCU       | 備考     |
 | :---            | :---              | :---   | :---       | :---    |
 |[Arduino][Arduino]         | [Uno R3][Uno]              |AVR     |ATmega328P  |         |
 |                 | [Mega 2560 R3][Mega]              |        |ATmega2560  |         |
 |                 | [Leonardo Ethernet][LeonardoEth] |        |ATmega32U4  |         |
-|       | [Uno WiFi][UnoWiFi] |[Arduino][Arduino] |  ATmega328P    | |
+|       | [Uno WiFi][UnoWiFi] | |  ATmega328P    | |
 |                 | [M0 Pro][M0Pro]            |ARM M0+ |ATSAMD21G18A|3.3V     |
 |[Sparkfun][Sparkfun] | [Pro mini 328][ProMini]      |AVR     |ATmega328P  |3.3V 8MHz|
 |[スイッチサイエンス][SwitchScience] | [ESPr Developer][ESPrDev]      |Xtensa   |ESP8266       |3.3V     |
