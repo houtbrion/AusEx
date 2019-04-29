@@ -31,6 +31,8 @@
 # Debug files
 *.dSYM/
 
+build/
+
 # vim
 *~
 *.swp
