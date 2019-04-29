@@ -72,7 +72,7 @@ loop(){
 |このディレクトリ|[Adafruit Unified Sensor Driver][AdafruitUSD]を拡張したセンサ等のAPI定義|
 |drivers|動作を確認できたArduinoライブラリ形式の各種デバイス用ドライバ|
 |templates|ドライバ開発用のテンプレートを入れたディレクトリ|
-|working|開発中のソースや調査に用いた資料など|
+
 
 ### ドライバディレクトリの中身
 |名前|内容|
