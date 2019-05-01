@@ -59,6 +59,7 @@ loop(){
 - Grove - Touch Sensor [http://wiki.seeedstudio.com/Grove-Touch_Sensor/][AusExGroveTouchSensor]
 - Grove - Ultrasonic Ranger [http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/][AusExGroveUltrasonicRanger]
 - Grove - Water Sensor [http://wiki.seeedstudio.com/Grove-Water_Sensor/][AusExGroveWaterSensor]
+- Grove - PIR Motion Sensor [http://wiki.seeedstudio.com/Grove-PIR_Motion_Sensor/][AusExGrovePirSensor]
 
 ただし， Grove - 3-Axis Digital Accelerometer(±16g)については， Grove - 3-Axis Digital Accelerometer(±16g)専用ではなく，
 搭載されているチップ(ADXL345)共通のドライバとして作成しているので，ディレクトリ名などもADXL345になってます．
@@ -320,6 +321,7 @@ Groveのシールドと組み合わせ場合に，動作がおかしくなる，
 [AusExGroveTouchSensor]:http://wiki.seeedstudio.com/Grove-Touch_Sensor/
 [AusExGroveUltrasonicRanger]:http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/
 [AusExGroveWaterSensor]:http://wiki.seeedstudio.com/Grove-Water_Sensor/
+[AusExGrovePirSensor]:http://wiki.seeedstudio.com/Grove-PIR_Motion_Sensor/
 
 
 
