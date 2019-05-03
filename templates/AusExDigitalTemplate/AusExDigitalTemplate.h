@@ -30,7 +30,7 @@ public:
 private:
   int _pin;
   int _mode;
-  uint32_t _sensorID;
+  int32_t _sensorID;
   AUSEX_DIGITAL_TEMPLATE_SENSOR_VALUE_TYPE calcValue(int);
   bool _autoRange;
 };

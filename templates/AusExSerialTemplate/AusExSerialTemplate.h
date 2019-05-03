@@ -21,10 +21,10 @@
 
 class AUSEX_SERIAL_TEMPLATE_CLASS : public Adafruit_SensorEx {
 public:
-  AUSEX_SERIAL_TEMPLATE_CLASS(uint32_t sensorID = -1);
-  AUSEX_SERIAL_TEMPLATE_CLASS(HardwareSerial *port, uint32_t sensorID = -1);
-  AUSEX_SERIAL_TEMPLATE_CLASS(SoftwareSerial *port, uint32_t sensorID = -1);
-  AUSEX_SERIAL_TEMPLATE_CLASS(SoftwareSerial *port, bool multi, uint32_t sensorID = -1);
+  AUSEX_SERIAL_TEMPLATE_CLASS(int32_t sensorID = -1);
+  AUSEX_SERIAL_TEMPLATE_CLASS(HardwareSerial *port, int32_t sensorID = -1);
+  AUSEX_SERIAL_TEMPLATE_CLASS(SoftwareSerial *port, int32_t sensorID = -1);
+  AUSEX_SERIAL_TEMPLATE_CLASS(SoftwareSerial *port, bool multi, int32_t sensorID = -1);
   bool begin(long baud);
   bool begin(long baud, byte s_config);
   bool getEvent(sensors_event_t*);
@@ -38,7 +38,7 @@ private:
   HardwareSerial *_h_port;
   uint8_t mode; /* 0:ハードシリアル, 1:ソフトシリアル 2:ソフトシリアルかつマルチポート */
   bool _multi;
-  uint32_t _sensorID;
+  int32_t _sensorID;
 
   AUSEX_SERIAL_TEMPLATE_SENSOR_VALUE_TYPE calcValue(String);
   bool _autoRange;

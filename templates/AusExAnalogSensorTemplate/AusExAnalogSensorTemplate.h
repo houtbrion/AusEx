@@ -21,7 +21,6 @@
 class AUSEX_ANALOG_TEMPLATE_CLASS : public Adafruit_SensorEx {
 public:
   AUSEX_ANALOG_TEMPLATE_CLASS(int, float vdd=AUSEX_ANALOG_TEMPLATE_DEFAULT_VDD, int32_t sensorID = -1);
-  //AUSEX_ANALOG_TEMPLATE_CLASS(int,float, int32_t sensorID = -1);
   bool begin(void);
   bool getEvent(sensors_event_t*);
   void getSensor(sensor_t*);
@@ -32,7 +31,7 @@ public:
 private:
   int _pin;
   float _vdd;
-  uint32_t _sensorID;
+  int32_t _sensorID;
   AUSEX_ANALOG_TEMPLATE_SENSOR_VALUE_TYPE calcValue(int);
   bool _autoRange;
 };

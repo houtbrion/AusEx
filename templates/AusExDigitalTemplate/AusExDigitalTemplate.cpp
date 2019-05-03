@@ -6,7 +6,6 @@
 AUSEX_DIGITAL_TEMPLATE_CLASS::AUSEX_DIGITAL_TEMPLATE_CLASS(int pinNumber, int32_t sensorID){
   _pin=pinNumber;
   _sensorID=sensorID;
-  //_pullUp=false;
 }
 
 bool AUSEX_DIGITAL_TEMPLATE_CLASS::begin(bool pullUp){

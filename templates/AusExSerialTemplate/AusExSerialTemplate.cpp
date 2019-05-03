@@ -4,7 +4,7 @@
  * 
  */
 
-AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(uint32_t sensorID = -1){
+AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(int32_t sensorID = -1){
   _h_port = &Serial;
   mode=0;
   _sensorID=sensorID;
@@ -12,7 +12,7 @@ AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(uint32_t sensorID = -1)
 }
 
 
-AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(HardwareSerial *port, uint32_t sensorID = -1){
+AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(HardwareSerial *port, int32_t sensorID = -1){
   _h_port = port;
   mode=0;
   _sensorID=sensorID;
@@ -20,14 +20,14 @@ AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(HardwareSerial *port, u
 }
 
 
-AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(SoftwareSerial *port, uint32_t sensorID = -1){
+AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(SoftwareSerial *port, int32_t sensorID = -1){
   _port = port;
   mode=1;
   _sensorID=sensorID;
   _multi = false;
 }
 
-AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(SoftwareSerial *port, bool multi, uint32_t sensorID = -1){
+AUSEX_SERIAL_TEMPLATE_CLASS::AUSEX_SERIAL_TEMPLATE_CLASS(SoftwareSerial *port, bool multi, int32_t sensorID = -1){
   _port = port;
   _sensorID=sensorID;
   _multi = multi;

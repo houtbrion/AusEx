@@ -1,12 +1,6 @@
 #include "AusExAnalogSensorTemplate.h"
 
-/*
-AUSEX_ANALOG_TEMPLATE_CLASS::AUSEX_ANALOG_TEMPLATE_CLASS(int pinNumber, int32_t sensorID){
-  _pin=pinNumber;
-  _sensorID=sensorID;
-  _vdd=AUSEX_ANALOG_TEMPLATE_DEFAULT_VDD;
-}
-*/
+
 
 AUSEX_ANALOG_TEMPLATE_CLASS::AUSEX_ANALOG_TEMPLATE_CLASS(int pinNumber,float vdd, int32_t sensorID){
   _pin=pinNumber;

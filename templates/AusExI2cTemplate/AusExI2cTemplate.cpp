@@ -3,7 +3,7 @@
 /*
  * 
  */
-AUSEX_I2C_TEMPLATE_CLASS::AUSEX_I2C_TEMPLATE_CLASS(TwoWire *theWire, uint32_t sensorID = -1){
+AUSEX_I2C_TEMPLATE_CLASS::AUSEX_I2C_TEMPLATE_CLASS(TwoWire *theWire, int32_t sensorID = -1){
   _i2c_if=theWire;
   //_i2c_addr=AUSEX_I2C_TEMPLATE_SENSOR_DEFAULT_I2C_ADDR;
   _sensorID=sensorID;

@@ -21,7 +21,7 @@
 
 class AUSEX_I2C_TEMPLATE_CLASS : public Adafruit_SensorEx {
 public:
-  AUSEX_I2C_TEMPLATE_CLASS(TwoWire *theWire, uint32_t sensorID = -1);
+  AUSEX_I2C_TEMPLATE_CLASS(TwoWire *theWire, int32_t sensorID = -1);
   bool begin(uint32_t addr=AUSEX_I2C_TEMPLATE_SENSOR_DEFAULT_I2C_ADDR);
   bool getEvent(sensors_event_t*);
   void getSensor(sensor_t*);
@@ -32,7 +32,7 @@ public:
 private:
   TwoWire *_i2c_if;
   int _i2c_addr;
-  uint32_t _sensorID;
+  int32_t _sensorID;
   AUSEX_I2C_TEMPLATE_SENSOR_VALUE_TYPE calcValue(int);
   void write(uint8_t _register, uint8_t _data);
   int8_t read(uint8_t _register);
