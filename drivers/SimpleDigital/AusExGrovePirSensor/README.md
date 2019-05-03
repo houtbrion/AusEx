@@ -5,8 +5,8 @@
 Adafruitのセンサ統合ライブラリと同じAPIに修正してみるプロジェクトの一部で，一般的な
 デジタル端子のHigh,Lowを読み取るタイプのドライバです．
 
-ドライバの名前は[GrovePIRセンサ][ProductPage]から取っていますが，パナソニックのPirセンサ
-等でも動作するため，名前の由来は動作確認に[GrovePIRセンサ][ProductPage]を使いましたという
+ドライバの名前は[GrovePIRセンサ][ProductPage]から取っていますが，他社製のPirセンサ
+でも動作するため，名前の由来は動作確認に[GrovePIRセンサ][ProductPage]を使いましたという
 だけに近い状態です．
 
 ## ライセンスについて
@@ -57,6 +57,7 @@ ESP8266は誤判定が多い．
 - Seed Studio - [https://www.seeedstudio.io/][SeedStudio]
 - Sparkfun Electronics - [https://www.sparkfun.com/][Sparkfun]
 - スイッチサイエンス - [https://www.switch-science.com/][SwitchScience]
+
 
 [Grove]:https://www.seeedstudio.io/category/Grove-c-1003.html
 [SeedStudio]:https://www.seeedstudio.io/
