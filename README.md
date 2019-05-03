@@ -40,6 +40,7 @@ loop(){
 そのため，SPIとI2Cの両方に対応しているチップが搭載されているGroveのモジュールに
 ついては，I2Cのみの対応になっていますが，SPI対応のモジュールが入手できたものはSPI対応もしていくつもりです．
 
+- Grove - Barometer Sensor (BMP180) [http://wiki.seeedstudio.com/Grove-Barometer_Sensor-BMP180/][GroveBarometerSensorBMP180]
 - Grove - 3-Axis Digital Accelerometer(±1.5g) [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/][AusExGrove3AxisDigitalAccelerometer1_5g]
 - Grove - 3-Axis Digital Accelerometer(±16g) [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-16g/][AusExGrove3AxisDigitalAccelerometer16g]
 - Grove - 3-Axis Digital Gyro [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/][AusExGrove3AxisDigitalGyro]
@@ -282,6 +283,7 @@ Groveのシールドと組み合わせ場合に，動作がおかしくなる，
 - スイッチサイエンス - [https://www.switch-science.com/][SwitchScience]
 
 <!-- 以下は，外部リンクの定義 -->
+[GroveBarometerSensorBMP180]:http://wiki.seeedstudio.com/Grove-Barometer_Sensor-BMP180/
 [Grove]:https://www.seeedstudio.io/category/Grove-c-1003.html
 [SeedStudio]:https://www.seeedstudio.io/
 [AdafruitUSD]:https://github.com/adafruit/Adafruit_Sensor
