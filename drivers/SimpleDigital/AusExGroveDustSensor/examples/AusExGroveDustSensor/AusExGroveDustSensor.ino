@@ -17,16 +17,20 @@ void setup()
   Serial.print("Max Value:    "); Serial.println(sensor.max_value);
   Serial.print("Min Value:    "); Serial.println(sensor.min_value);
   Serial.print("Resolution:   "); Serial.println(sensor.resolution);
+  Serial.print("Delay :       "); Serial.println(sensor.min_delay);
+  Serial.print("Init Delay :  "); Serial.println(sensor.init_delay);
   Serial.println("---------------");
+  Serial.print("Please wait until ");Serial.print(sensor.init_delay);Serial.println(" ms for sensor stability");
 }
 
 void loop()  
 {
   sensors_event_t event;
   if (dustSensor.getEvent(&event)) {
-    Serial.print("sensor value = "); Serial.println(event.dust);
+    Serial.print("measure time = "); Serial.print(event.timestamp);
+    Serial.print(" , sensor value = "); Serial.println(event.dust);
   } else {
     Serial.println("read sensor error.");
   }
-  delay(30000);
+  delay(3000);
 }

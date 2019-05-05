@@ -39,10 +39,16 @@ bool AUSEX_GROVE_DUST_SENSOR_CLASS::getEvent(sensors_event_t* event){
   event->version   = sizeof(sensors_event_t);
   event->sensor_id = _sensorID;
   event->type      = AUSEX_GROVE_DUST_SENSOR_TYPE;
-  event->timestamp = millis();
-
-  /* Calculate the actual lux value */
-  event->AUSEX_GROVE_DUST_SENSOR_RETURN_VALUE = measure();
+  unsigned long timeDiff = millis() - _lastTime;
+  if (AUSEX_GROVE_DUST_SENSOR_MIN_DELAY > timeDiff) {
+    event->timestamp = _lastTime;
+    event->AUSEX_GROVE_DUST_SENSOR_RETURN_VALUE = _oldData;
+  } else {
+    _lastTime=millis();
+    event->timestamp = _lastTime;
+    _oldData = measure();
+    event->AUSEX_GROVE_DUST_SENSOR_RETURN_VALUE = _oldData;
+  }
   return true;
 }
 

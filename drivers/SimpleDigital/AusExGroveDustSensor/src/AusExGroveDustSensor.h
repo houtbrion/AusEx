@@ -13,7 +13,7 @@
 #define AUSEX_GROVE_DUST_SENSOR_MAX_VALUE 28000 // 0~28,000 / 0 ~ 8000 pcs/liter / pcs/0.01cf
 #define AUSEX_GROVE_DUST_SENSOR_RESOLUTION 1
 #define AUSEX_GROVE_DUST_SENSOR_MIN_DELAY SAMPLING_TIME
-#define AUSEX_GROVE_DUST_SENSOR_INIT_DELAY 0
+#define AUSEX_GROVE_DUST_SENSOR_INIT_DELAY 60000
 
 
 
@@ -37,6 +37,8 @@ private:
   uint32_t _sensorID;
   bool _autoRange;
   float measure(void);
+  unsinged long _lastTime;
+  AUSEX_GROVE_DUST_SENSOR_VALUE_TYPE _oldData;
 };
 
 
