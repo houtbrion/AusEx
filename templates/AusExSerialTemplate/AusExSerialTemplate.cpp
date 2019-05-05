@@ -119,6 +119,7 @@ void AUSEX_SERIAL_TEMPLATE_CLASS::getSensor(sensor_t* sensor){
   sensor->max_value   = AUSEX_SERIAL_TEMPLATE_SENSOR_MAX_VALUE;
   sensor->resolution  = AUSEX_SERIAL_TEMPLATE_SENSOR_RESOLUTION;
   sensor->min_delay   = AUSEX_SERIAL_TEMPLATE_SENSOR_MIN_DELAY;
+  sensor->init_delay   = AUSEX_SERIAL_TEMPLATE_SENSOR_INIT_DELAY;
 }
 
 

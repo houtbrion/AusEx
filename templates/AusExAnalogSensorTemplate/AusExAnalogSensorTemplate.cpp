@@ -41,6 +41,7 @@ void AUSEX_ANALOG_TEMPLATE_CLASS::getSensor(sensor_t* sensor){
   sensor->max_value   = AUSEX_ANALOG_TEMPLATE_SENSOR_MAX_VALUE;
   sensor->resolution  = AUSEX_ANALOG_TEMPLATE_SENSOR_RESOLUTION;
   sensor->min_delay   = AUSEX_ANALOG_TEMPLATE_SENSOR_MIN_DELAY;
+  sensor->init_delay  = AUSEX_ANALOG_TEMPLATE_SENSOR_INIT_DELAY;
 }
 
 
