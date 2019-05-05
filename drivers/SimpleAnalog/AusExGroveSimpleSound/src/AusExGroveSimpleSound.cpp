@@ -47,6 +47,7 @@ void AUSEX_GROVE_SIMPLE_SOUND_CLASS::getSensor(sensor_t* sensor){
   sensor->max_value   = AUSEX_GROVE_SIMPLE_SOUND_SENSOR_MAX_VALUE;
   sensor->resolution  = AUSEX_GROVE_SIMPLE_SOUND_SENSOR_RESOLUTION;
   sensor->min_delay   = AUSEX_GROVE_SIMPLE_SOUND_SENSOR_MIN_DELAY;
+  sensor->init_delay  = AUSEX_GROVE_SIMPLE_SOUND_SENSOR_INIT_DELAY;
 }
 
 

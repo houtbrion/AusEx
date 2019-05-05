@@ -271,6 +271,7 @@ void AUSEX_BMP180_CLASS::getSensor(sensor_t* sensor){
   sensor->max_value   = AUSEX_BMP180_SENSOR_MAX_VALUE;
   sensor->resolution  = AUSEX_BMP180_SENSOR_RESOLUTION;
   sensor->min_delay   = AUSEX_BMP180_SENSOR_MIN_DELAY;
+  sensor->init_value  = AUSEX_BMP180_SENSOR_INIT_DELAY;
 }
 
 

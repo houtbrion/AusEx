@@ -54,6 +54,7 @@ void AUSEX_GROVE_TOUCH_CLASS::getSensor(sensor_t* sensor){
   sensor->max_value   = AUSEX_GROVE_TOUCH_SENSOR_MAX_VALUE;
   sensor->resolution  = AUSEX_GROVE_TOUCH_SENSOR_RESOLUTION;
   sensor->min_delay   = AUSEX_GROVE_TOUCH_SENSOR_MIN_DELAY;
+  sensor->init_delay  = AUSEX_GROVE_TOUCH_SENSOR_INIT_DELAY;
 }
 
 

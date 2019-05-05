@@ -81,9 +81,9 @@ typedef struct {
         };
         /* Orientation sensors */
         struct {
-            float roll;    /**< Rotation around the longitudinal axis (the plane body, 'X axis'). Roll is positive and increasing when moving downward. -90°<=roll<=90° */
-            float pitch;   /**< Rotation around the lateral axis (the wing span, 'Y axis'). Pitch is positive and increasing when moving upwards. -180°<=pitch<=180°) */
-            float heading; /**< Angle between the longitudinal axis (the plane body) and magnetic north, measured clockwise when viewing from the top of the device. 0-359° */
+            float roll;    /**< Rotation around the longitudinal axis (the plane body, 'X axis'). Roll is positive and increasing when moving downward. -90ï½°<=roll<=90ï½° */
+            float pitch;   /**< Rotation around the lateral axis (the wing span, 'Y axis'). Pitch is positive and increasing when moving upwards. -180ï½°<=pitch<=180ï½°) */
+            float heading; /**< Angle between the longitudinal axis (the plane body) and magnetic north, measured clockwise when viewing from the top of the device. 0-359ï½° */
         };
     };
     int8_t status;
@@ -148,6 +148,7 @@ typedef struct
     float    min_value;                       /**< minimum value of this sensor's value in SI units */
     float    resolution;                      /**< smallest difference between two values reported by this sensor */
     int32_t  min_delay;                       /**< min delay in microseconds between events. zero = not a constant rate */
+    int32_t  init_delay;                      /**< é›»æºæŠ•å…¥ã‚„åˆæœŸåŒ–ã‹ã‚‰è¨ˆæ¸¬çµæžœãŒå®‰å®šã™ã‚‹ã¾ã§ã«å¿…è¦ãªå¾…ã¡æ™‚é–“ */
 } sensor_t;
 
 class Adafruit_SensorEx {
@@ -157,9 +158,9 @@ class Adafruit_SensorEx {
   virtual ~Adafruit_SensorEx() {}
 
   // These must be defined by the subclass
-  virtual bool enableAutoRange(bool enabled) = 0 ; /* ƒŒƒ“ƒW‚Ì•ÏX‚ª‚»‚à‚»‚à‚Å‚«‚È‚¢‚à‚Ì‚Ífalse‚ð•Ô‚·D */
-  virtual int setMode(int mode) =0 ; /* “®ìƒ‚[ƒh(ƒŒƒ“ƒW‚àŠÜ‚Þ)‚ÌÝ’è‚ð•ÏX‚·‚é‚½‚ß‚ÌŠÖ”‚Å“®ìƒ‚[ƒh‚ª‚È‚¢ƒZƒ“ƒT‚Í -1 . Ý’è•ÏX‚ÉŽ¸”s‚µ‚½‚ç0, Ý’è•ÏX‚É¬Œ÷‚µ‚½‚ç1 */
-  virtual int getMode() =0 ; /* “®ìƒ‚[ƒh(ƒŒƒ“ƒW‚àŠÜ‚Þ)‚ÌÝ’è‚ð•ÏX‚·‚é‚½‚ß‚ÌŠÖ”‚Å“®ìƒ‚[ƒh‚ª‚È‚¢ƒZƒ“ƒT‚Í -1 */
+  virtual bool enableAutoRange(bool enabled) = 0 ; /* ãƒ¬ãƒ³ã‚¸ã®å¤‰æ›´ãŒãã‚‚ãã‚‚ã§ããªã„ã‚‚ã®ã¯falseã‚’è¿”ã™ï¼Ž */
+  virtual int setMode(int mode) =0 ; /* å‹•ä½œãƒ¢ãƒ¼ãƒ‰(ãƒ¬ãƒ³ã‚¸ã‚‚å«ã‚€)ã®è¨­å®šã‚’å¤‰æ›´ã™ã‚‹ãŸã‚ã®é–¢æ•°ã§å‹•ä½œãƒ¢ãƒ¼ãƒ‰ãŒãªã„ã‚»ãƒ³ã‚µã¯ -1 . è¨­å®šå¤‰æ›´ã«å¤±æ•—ã—ãŸã‚‰0, è¨­å®šå¤‰æ›´ã«æˆåŠŸã—ãŸã‚‰1 */
+  virtual int getMode() =0 ; /* å‹•ä½œãƒ¢ãƒ¼ãƒ‰(ãƒ¬ãƒ³ã‚¸ã‚‚å«ã‚€)ã®è¨­å®šã‚’å¤‰æ›´ã™ã‚‹ãŸã‚ã®é–¢æ•°ã§å‹•ä½œãƒ¢ãƒ¼ãƒ‰ãŒãªã„ã‚»ãƒ³ã‚µã¯ -1 */
   virtual bool getEvent(sensors_event_t*) = 0;
   virtual void getSensor(sensor_t*) = 0 ;
   

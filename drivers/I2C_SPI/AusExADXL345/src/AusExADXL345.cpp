@@ -312,6 +312,7 @@ void AusExADXL345::getSensor(sensor_t *sensor) {
   sensor->max_value   = AUSEX_ADXL345_SENSOR_MAX_VALUE;  /* -16g = 156.9064 m/s^2  */
   sensor->min_value   = AUSEX_ADXL345_SENSOR_MIN_VALUE;  /*  16g = 156.9064 m/s^2  */
   sensor->resolution  = AUSEX_ADXL345_SENSOR_RESOLUTION; /*  4mg = 0.0392266 m/s^2 */ 
+  sensor->init_delay  = AUSEX_ADXL345_SENSOR_INIT_DELAY;
 }
 /**************************************************************************/
 /*! 
