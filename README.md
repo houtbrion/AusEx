@@ -261,6 +261,7 @@ Groveのシールドと組み合わせ場合に，動作がおかしくなる，
 ||float|min_value|minimum value of this sensor's value in SI units|
 ||float|resolution|smallest difference between two values reported by this sensor|
 ||int32_t|min_delay|min delay in microseconds between events. zero = not a constant rate|
+|○|int32_t|init_delay|電源投入もしくはデバイス初期化から測定値が安定するまでの所要時間|
 
 
 

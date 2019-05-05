@@ -1,6 +1,6 @@
 #include "AusExGrovePirSensor.h"
 
-#define SENSOR_PIN 13
+#define SENSOR_PIN 4
 
 AusExGrovePirSensor pirSensor = AusExGrovePirSensor(SENSOR_PIN, 1);
 
@@ -18,6 +18,7 @@ void setup()
   Serial.print("Min Value:    "); Serial.println(sensor.min_value);
   Serial.print("Resolution:   "); Serial.println(sensor.resolution);
   Serial.println("---------------");
+  delay(sensor.init_delay);
 }
 void loop()  
 {
