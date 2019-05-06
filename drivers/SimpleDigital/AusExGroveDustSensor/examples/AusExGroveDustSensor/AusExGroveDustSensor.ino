@@ -20,7 +20,7 @@ void setup()
   Serial.print("Delay :       "); Serial.println(sensor.min_delay);
   Serial.print("Init Delay :  "); Serial.println(sensor.init_delay);
   Serial.println("---------------");
-  Serial.print("Please wait until ");Serial.print(sensor.init_delay);Serial.println(" ms for sensor stability");
+  Serial.print("Please wait until ");Serial.print(sensor.init_delay);Serial.println(" micro secs for sensor stability");
 }
 
 void loop()  

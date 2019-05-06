@@ -18,7 +18,7 @@ void setup()
   Serial.print("Min Value:    "); Serial.println(sensor.min_value);
   Serial.print("Resolution:   "); Serial.println(sensor.resolution);
   Serial.println("---------------");
-  delay(sensor.init_delay);
+  delay(sensor.init_delay/1000);
 }
 void loop()  
 {

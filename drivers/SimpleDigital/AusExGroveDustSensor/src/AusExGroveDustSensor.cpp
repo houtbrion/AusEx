@@ -24,10 +24,10 @@ float AUSEX_GROVE_DUST_SENSOR_CLASS::measure(void){
   unsigned long lowpulseoccupancy = 0;
   float ratio = 0;
   float concentration = 0;
-  while ((millis() - starttime) < AUSEX_GROVE_DUST_SENSOR_MIN_DELAY ) {
+  while ((millis() - starttime)*1000 < AUSEX_GROVE_DUST_SENSOR_MIN_DELAY ) {
     lowpulseoccupancy+=pulseIn(_pin, LOW);
   }
-  ratio = lowpulseoccupancy/(AUSEX_GROVE_DUST_SENSOR_MIN_DELAY*10.0);  // Integer percentage 0=>100
+  ratio = lowpulseoccupancy*1000/(AUSEX_GROVE_DUST_SENSOR_MIN_DELAY*10.0);  // Integer percentage 0=>100
   concentration = 1.1*pow(ratio,3)-3.8*pow(ratio,2)+520*ratio+0.62; // using spec sheet curve
   return concentration;
 }
@@ -40,7 +40,7 @@ bool AUSEX_GROVE_DUST_SENSOR_CLASS::getEvent(sensors_event_t* event){
   event->sensor_id = _sensorID;
   event->type      = AUSEX_GROVE_DUST_SENSOR_TYPE;
   unsigned long timeDiff = millis() - _lastTime;
-  if (AUSEX_GROVE_DUST_SENSOR_MIN_DELAY > timeDiff) {
+  if (AUSEX_GROVE_DUST_SENSOR_MIN_DELAY > timeDiff*1000) {
     event->timestamp = _lastTime;
     event->AUSEX_GROVE_DUST_SENSOR_RETURN_VALUE = _oldData;
   } else {
