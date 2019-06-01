@@ -1,0 +1,35 @@
+  
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+AusExTCS34725	KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin		KEYWORD2
+getEvent	KEYWORD2
+getSensor	KEYWORD2
+enableAutoRange	KEYWORD2
+setMode		KEYWORD2
+getMode		KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+AUSEX_TCS34725_SENSOR_NAME LITERAL1
+AUSEX_TCS34725_SENSOR_TYPE LITERAL1
+AUSEX_TCS34725_SENSOR_LIBRARY_VERSION LITERAL1
+AUSEX_TCS34725_SENSOR_RETURN_VALUE LITERAL1
+AUSEX_TCS34725_SENSOR_VALUE_TYPE LITERAL1
+AUSEX_TCS34725_SENSOR_MIN_VALUE LITERAL1
+AUSEX_TCS34725_SENSOR_MAX_VALUE LITERAL1
+AUSEX_TCS34725_SENSOR_RESOLUTION LITERAL1
+AUSEX_TCS34725_SENSOR_MIN_DELAY LITERAL1
+AUSEX_TCS34725_SENSOR_DEFAULT_I2C_ADDR LITERAL1
+
+

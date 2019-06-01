@@ -1,0 +1,24 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+AusExSHT2x	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin		KEYWORD2
+getEvent	KEYWORD2
+getSensor	KEYWORD2
+enableAutoRange	KEYWORD2
+setMode		KEYWORD2
+getMode		KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+
+AUSEX_SHT2X_SENSOR_LIBRARY_VERSION	LITERAL1
+__AUSEX_SHT2X_H__			PREPROCESSOR

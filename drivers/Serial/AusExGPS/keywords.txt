@@ -1,0 +1,32 @@
+  
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+AusExGPS	KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin		KEYWORD2
+getEvent	KEYWORD2
+getSensor	KEYWORD2
+enableAutoRange	KEYWORD2
+setMode		KEYWORD2
+getMode		KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+
+AUSEX_GPS_NAME			LITERAL1
+AUSEX_GPS_TYPE			LITERAL1
+AUSEX_GPS_LIBRARY_VERSION	LITERAL1
+AUSEX_GPS_RETURN_VALUE		LITERAL1
+AUSEX_GPS_VALUE_TYPE		LITERAL1
+
+__AUSEX_GPS_H__			PREPROCESSOR

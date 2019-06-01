@@ -67,7 +67,11 @@ typedef enum
   SENSOR_TYPE_1AXIS_GYRO	    = (20),
   SENSOR_TYPE_DISTANCE              = (21),
   SENSOR_TYPE_LARGE_INT	            = (22),
-  SENSOR_TYPE_DUST		    = (23)
+  SENSOR_TYPE_DUST		    = (23),
+  SENSOR_TYPE_IRREMOTE              = (24),
+  SENSOR_TYPE_POSITION              = (25),
+  SENSOR_TYPE_DATE                  = (26),
+  SENSOR_TYPE_SPEED                 = (27)
 } sensors_type_t;
 
 /** struct sensors_vec_s is used to return a vector in a common format. */
@@ -104,6 +108,32 @@ typedef struct {
     uint32_t rgba;         /**< 24-bit RGBA value */
 } sensors_color_t;
 
+/** output of IR remote receiver **/
+typedef struct {
+    uint8_t  overflow;    // ir data is too long
+    uint8_t  decode_type; // VENDOR
+    uint16_t address;     // used by Panasonic and Sharp
+    uint32_t value;       // parsed data
+} sensors_irremote_t;
+
+typedef struct {
+    float longtitude;
+    float latitude;
+    float altitude;
+    float dop;
+} sensors_position_t;
+
+typedef struct {
+    uint16_t year;
+    uint8_t  month;
+    uint8_t  day;
+    uint8_t  dayOfWeek;
+    uint8_t  hour;
+    uint8_t  minute;
+    uint8_t  second;
+    int16_t  millisecond;
+} sensors_date_t;
+
 /* Sensor event (36 bytes) */
 /** struct sensor_event_s is used to provide a single sensor event in a common format. */
 typedef struct
@@ -115,24 +145,28 @@ typedef struct
     int32_t timestamp;                        /**< time is in milliseconds */
     union
     {
-        float           data[4];
-        sensors_vec_t   acceleration;         /**< acceleration values are in meter per second per second (m/s^2) */
-        sensors_vec_t   magnetic;             /**< magnetic vector values are in micro-Tesla (uT) */
-        sensors_vec_t   orientation;          /**< orientation values are in degrees */
-        sensors_vec_t   gyro;                 /**< gyroscope values are in rad/s */
-        float           temperature;          /**< temperature is in degrees centigrade (Celsius) */
-        float           distance;             /**< distance in centimeters */
-        float           light;                /**< light in SI lux units */
-        float           pressure;             /**< pressure in hectopascal (hPa) */
-        float           relative_humidity;    /**< relative humidity in percent */
-        float           current;              /**< current in milliamps (mA) */
-        float           voltage;              /**< voltage in volts (V) */
-        float           angle;                /**< angle (degree) */
-	float           roll;                 /**< 1 axis gyro (deg/s) */
-	float		dust;		      /**< */
-	uint32_t        value;                /**< output value of analogRead() or digitalRead() */
-	long		lvalue;               /**< output value of sensor that outputs large value */
-        sensors_color_t color;                /**< color in RGB component values */
+        float             data[4];
+        sensors_vec_t     acceleration;       /**< acceleration values are in meter per second per second (m/s^2) */
+        sensors_vec_t     magnetic;           /**< magnetic vector values are in micro-Tesla (uT) */
+        sensors_vec_t     orientation;        /**< orientation values are in degrees */
+        sensors_vec_t     gyro;               /**< gyroscope values are in rad/s */
+        float             temperature;        /**< temperature is in degrees centigrade (Celsius) */
+        float             distance;           /**< distance in centimeters */
+        float             light;              /**< light in SI lux units */
+        float             pressure;           /**< pressure in hectopascal (hPa) */
+        float             relative_humidity;  /**< relative humidity in percent */
+        float             current;            /**< current in milliamps (mA) */
+        float             voltage;            /**< voltage in volts (V) */
+        float             angle;              /**< angle (degree) */
+	float             roll;               /**< 1 axis gyro (deg/s) */
+	float		  dust;		      /**< */
+	uint32_t          value;              /**< output value of analogRead() or digitalRead() */
+	long		  lvalue;             /**< output value of sensor that outputs large value */
+        sensors_color_t   color;              /**< color in RGB component values */
+        sensors_irremote_t irremote;
+	sensors_position_t position;
+	sensors_date_t     date;
+	float             speed;
     };
 } sensors_event_t;
 

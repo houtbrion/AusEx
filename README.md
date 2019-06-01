@@ -36,9 +36,9 @@ loop(){
 ## 現在対応しているセンサ類
 今の所，手元にセンサがある(もしくは過去に持っていたもの)だけを作成したため，
 [Seeed Studio][SeedStudio]の[Grove][Grove]システムのいろいろなセンサ類が
-対象で，それ以外はほぼない状態です．
-そのため，SPIとI2Cの両方に対応しているチップが搭載されているGroveのモジュールに
-ついては，I2Cのみの対応になっていますが，SPI対応のモジュールが入手できたものはSPI対応もしていくつもりです．
+対象で，それ以外は非常に少ない状態です．
+
+現状実装されているドライバのうち，代表的なものは以下の通り．
 
 - Grove - Barometer Sensor (BMP180) [http://wiki.seeedstudio.com/Grove-Barometer_Sensor-BMP180/][GroveBarometerSensorBMP180]
 - Grove - 3-Axis Digital Accelerometer(±1.5g) [http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/][AusExGrove3AxisDigitalAccelerometer1_5g]
@@ -62,10 +62,12 @@ loop(){
 - Grove - Water Sensor [http://wiki.seeedstudio.com/Grove-Water_Sensor/][AusExGroveWaterSensor]
 - Grove - PIR Motion Sensor [http://wiki.seeedstudio.com/Grove-PIR_Motion_Sensor/][AusExGrovePirSensor]
 
+
+
 ただし， Grove - 3-Axis Digital Accelerometer(±16g)については， Grove - 3-Axis Digital Accelerometer(±16g)専用ではなく，
 搭載されているチップ(ADXL345)共通のドライバとして作成しているので，ディレクトリ名などもADXL345になってます．
 
-あと，Grove以外のモジュールでも，手近で安価に入手できる(秋葉の秋月やaitendoで安く買える)ものは追加しようかと思ってます．
+
 
 ## ディレクトリ構成
 
@@ -216,7 +218,6 @@ Groveのシールドと組み合わせ場合に，動作がおかしくなる，
 |floatの3つ組struct|r, g, b|赤, 緑, 青|
 
 
-
 ### sensors_event_t型
 |型|名前|内容|
 |:---|:---|:---|
@@ -325,7 +326,6 @@ Groveのシールドと組み合わせ場合に，動作がおかしくなる，
 [AusExGroveUltrasonicRanger]:http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/
 [AusExGroveWaterSensor]:http://wiki.seeedstudio.com/Grove-Water_Sensor/
 [AusExGrovePirSensor]:http://wiki.seeedstudio.com/Grove-PIR_Motion_Sensor/
-
 
 
 <!--- コメント
