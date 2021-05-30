@@ -1,4 +1,4 @@
-#include "AusExBmp180.h"
+#include "AusExBMP180.h"
 
 
 AUSEX_BMP180_CLASS AusExBMP180=AUSEX_BMP180_CLASS(&Wire);

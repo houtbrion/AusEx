@@ -1,4 +1,4 @@
-AusExTCS34725#include "AusExTCS34725.h"
+#include "AusExTCS34725.h"
 
 
 AUSEX_TCS34725_CLASS colorSensor=AUSEX_TCS34725_CLASS(&Wire);

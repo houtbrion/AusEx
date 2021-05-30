@@ -37,7 +37,7 @@ private:
   uint32_t _sensorID;
   bool _autoRange;
   float measure(void);
-  unsinged long _lastTime;
+  unsigned long _lastTime;
   AUSEX_GROVE_DUST_SENSOR_VALUE_TYPE _oldData;
 };
 

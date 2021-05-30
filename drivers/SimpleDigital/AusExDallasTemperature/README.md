@@ -13,6 +13,11 @@ Adafruitのセンサ統合ライブラリと同じAPIに修正してみるプロ
 このライブラリが利用している[Arduino Library for Maxim Temperature Integrated Circuits][DallasArduino]
 がLGPLですので，それを踏襲します．
 
+## インストール
+本ライブラリを利用する場合，IDEのライブラリ管理メニューで「OneWire」と「DallasTemperature」を
+インストールしてください．
+
+
 ## 動作検証
 動作確認には，秋月電子の[デジタル温度センサ（１ｗｉｒｅ）ＤＳ１８Ｂ２０＋][ProductPage]を利用しました．
 
