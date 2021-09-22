@@ -33,7 +33,7 @@
 
 class AusExSHT2x {
 public:
-  AusExSHT2x(TwoWire *theWire, uint8_t type, int32_t tempSensorId=-1, int32_t humiditySensorId=-1);
+  AusExSHT2x(TwoWire *theWire, uint32_t type, int32_t tempSensorId=-1, int32_t humiditySensorId=-1);
   bool begin(uint32_t addr=AUSEX_SHT2X_SENSOR_DEFAULT_I2C_ADDR);
 
   class Temperature : public Adafruit_SensorEx {
@@ -73,7 +73,7 @@ public:
 
 
 private:
-  uint8_t _type;
+  uint32_t _type;
   TwoWire *_i2c_if;
   uint8_t _i2c_addr;
   unsigned long lastTime;
