@@ -4,7 +4,7 @@
  * 
  */
 
-AusExAM232X::AusExAM232X(TwoWire * theWire ,uint8_t am232xType,  int32_t tempSensorId, int32_t humiditySensorId):
+AusExAM232X::AusExAM232X(TwoWire * theWire, int32_t am232xType, uint32_t tempSensorId, int32_t humiditySensorId):
   _i2c_if(theWire),
   _type(am232xType),
   _temp(this,tempSensorId),

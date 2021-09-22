@@ -32,7 +32,7 @@
 
 class AusExAM232X {
 public:
-  AusExAM232X(TwoWire *theWire, uint8_t type, int32_t tempSensorId=-1, int32_t humiditySensorId=-1);
+  AusExAM232X(TwoWire *theWire, int32_t type, uint32_t tempSensorId=-1, int32_t humiditySensorId=-1);
   bool begin(uint32_t addr=AUSEX_AM232X_SENSOR_DEFAULT_I2C_ADDR);
 
 
@@ -73,7 +73,7 @@ public:
 
 
 private:
-  uint8_t _type;
+  uint32_t _type;
   TwoWire *_i2c_if;
   uint8_t _i2c_addr;
   byte rdptr[8];
