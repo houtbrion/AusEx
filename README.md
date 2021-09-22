@@ -61,7 +61,7 @@ loop(){
 - Grove - Ultrasonic Ranger [http://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/][AusExGroveUltrasonicRanger]
 - Grove - Water Sensor [http://wiki.seeedstudio.com/Grove-Water_Sensor/][AusExGroveWaterSensor]
 - Grove - PIR Motion Sensor [http://wiki.seeedstudio.com/Grove-PIR_Motion_Sensor/][AusExGrovePirSensor]
-
+- TI HDC1000系温湿度センサ
 
 
 ただし， Grove - 3-Axis Digital Accelerometer(±16g)については， Grove - 3-Axis Digital Accelerometer(±16g)専用ではなく，
