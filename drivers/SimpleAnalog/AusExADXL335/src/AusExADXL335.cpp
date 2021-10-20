@@ -1,7 +1,5 @@
 #include "AusExADXL335.h"
 
-//#define DEBUG
-
 AUSEX_ADXL335_CLASS::AUSEX_ADXL335_CLASS(int pinX, int pinY, int pinZ, float vdd, float calX, float calY, float calZ, float sens, int32_t sensorID){
   _pinX=pinX;
   _pinY=pinY;
@@ -40,7 +38,7 @@ bool AUSEX_ADXL335_CLASS::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _sensorID;
   event->type      = AUSEX_ADXL335_SENSOR_TYPE;
   event->timestamp = millis();
@@ -79,8 +77,3 @@ int AUSEX_ADXL335_CLASS::getMode() {
   return -1;
 }
 
-/*
-AUSEX_ADXL335_SENSOR_VALUE_TYPE AUSEX_ADXL335_CLASS::calcValue(int val){
-  return val;
-}
-*/

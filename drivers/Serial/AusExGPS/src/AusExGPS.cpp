@@ -99,7 +99,7 @@ void AUSEX_GPS_CLASS::Speed::getSensor(sensor_t* sensor){
   sensor->name[sizeof(sensor->name)- 1] = 0;
   sensor->version     = AUSEX_GPS_LIBRARY_VERSION;
   sensor->sensor_id   = _id;
-  sensor->type        = SENSOR_TYPE_SPEED;
+  sensor->type        = SENSOR_TYPE_SPEED_KNOT;
   sensor->min_value   = AUSEX_GPS_MIN_VALUE;
   sensor->max_value   = AUSEX_GPS_MAX_VALUE;
   sensor->resolution  = AUSEX_GPS_RESOLUTION;
@@ -138,7 +138,7 @@ bool AUSEX_GPS_CLASS::readGPS(int8_t type){
     case SENSOR_TYPE_POSITION    : if ((gps.hdop.isValid()) && (gps.location.isValid()) && (gps.altitude.isValid())) return true; else return false;
     case SENSOR_TYPE_DATE        : if ((gps.date.isValid()) && (gps.time.isValid()) ) return true; else return false;
     case SENSOR_TYPE_ORIENTATION : if (gps.course.isValid()) return true; else return false;
-    case SENSOR_TYPE_SPEED       : if (gps.speed.isValid()) return true; else return false;
+    case SENSOR_TYPE_SPEED_KNOT  : if (gps.speed.isValid()) return true; else return false;
   }
   if (gps.satellites.isValid()) {
     _sat = gps.satellites.value();
@@ -151,7 +151,7 @@ bool AUSEX_GPS_CLASS::readGPS(int8_t type){
 bool AUSEX_GPS_CLASS::Position::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_POSITION;
   event->timestamp = millis();
@@ -166,7 +166,7 @@ bool AUSEX_GPS_CLASS::Position::getEvent(sensors_event_t* event){
 bool AUSEX_GPS_CLASS::Date::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_DATE;
   event->timestamp = millis();
@@ -184,7 +184,7 @@ bool AUSEX_GPS_CLASS::Date::getEvent(sensors_event_t* event){
 bool AUSEX_GPS_CLASS::Orientation::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_ORIENTATION;
   event->timestamp = millis();
@@ -196,11 +196,11 @@ bool AUSEX_GPS_CLASS::Orientation::getEvent(sensors_event_t* event){
 bool AUSEX_GPS_CLASS::Speed::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
-  event->type      = SENSOR_TYPE_SPEED;
+  event->type      = SENSOR_TYPE_SPEED_KNOT;
   event->timestamp = millis();
-  bool flag = _parent->readGPS(SENSOR_TYPE_SPEED);
+  bool flag = _parent->readGPS(SENSOR_TYPE_SPEED_KNOT);
   event->speed=_parent->_spd;
   return flag;
 }

@@ -4,16 +4,7 @@
 #define NO_MEASURE NAN
 
 #define AUSEX_DHT_CLASS AusExDHT
-//#define AUSEX_DHT_SENSOR_NAME "AusExDHT"
-//#define AUSEX_DHT_SENSOR_TYPE SENSOR_TYPE_SIMPLE
 #define AUSEX_DHT_SENSOR_LIBRARY_VERSION 1
-//#define AUSEX_DHT_SENSOR_RETURN_VALUE value
-//#define AUSEX_DHT_SENSOR_VALUE_TYPE uint32_t
-//#define AUSEX_DHT_SENSOR_MIN_VALUE 0
-//#define AUSEX_DHT_SENSOR_MAX_VALUE 1
-//#define AUSEX_DHT_SENSOR_RESOLUTION 1
-//#define AUSEX_DHT_SENSOR_MIN_DELAY 0
-//#define AUSEX_DHT_SENSOR_INIT_DELAY 0
 
 // Define types of sensors.
 #define DHT11 11
@@ -67,13 +58,6 @@ public:
   int setMode(int);
   int getMode();
   bool enableAutoRange(bool);
-/*
-  bool getEvent(sensors_event_t*);
-  void getSensor(sensor_t*);
-  
-  int setMode(int);
-  int getMode();
-*/
 
 private:
   int _pin;
@@ -93,7 +77,6 @@ private:
   Temperature _temp;
   Humidity _humidity;
   void setName(sensor_t* );
-  //void setMinDelay(sensor_t* );
   int32_t getMinDelay(uint8_t);
   bool getTemperature(sensors_event_t*);
   bool getHumidity(sensors_event_t*);
@@ -102,12 +85,6 @@ private:
   uint32_t expectPulse(bool level);
   float dataToTemperature(void);
   float dataToHumidity(void);
-/*
-  int _mode;
-  int32_t _sensorID;
-  AUSEX_DHT_SENSOR_VALUE_TYPE calcValue(int);
-  bool _autoRange;
-*/
 };
 
 class AusExDhtInterruptLock {

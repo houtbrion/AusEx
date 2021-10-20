@@ -21,10 +21,10 @@
 #define _ADAFRUIT_SENSOR_EXTENDED_H
 
 #if ARDUINO >= 100
- #include "Arduino.h"
- #include "Print.h"
+  #include "Arduino.h"
+  #include "Print.h"
 #else
- #include "WProgram.h"
+  #include "WProgram.h"
 #endif
 
 /* Intentionally modeled after sensors.h in the Android API:
@@ -41,38 +41,60 @@
 #define SENSORS_DPS_TO_RADS               (0.017453293F)          /**< Degrees/s to rad/s multiplier */
 #define SENSORS_GAUSS_TO_MICROTESLA       (100)                   /**< Gauss to micro-Tesla multiplier */
 
-#define SENSORS_NAME_LENGTH		  32
+#define SENSORS_NAME_LENGTH               32
 
 
 /** Sensor types */
 typedef enum
 {
-  SENSOR_TYPE_ACCELEROMETER         = (1),   /**< Gravity + linear acceleration */
-  SENSOR_TYPE_MAGNETIC_FIELD        = (2),
-  SENSOR_TYPE_ORIENTATION           = (3),
-  SENSOR_TYPE_GYROSCOPE             = (4),
-  SENSOR_TYPE_LIGHT                 = (5),
-  SENSOR_TYPE_PRESSURE              = (6),
-  SENSOR_TYPE_PROXIMITY             = (8),
-  SENSOR_TYPE_GRAVITY               = (9),
-  SENSOR_TYPE_LINEAR_ACCELERATION   = (10),  /**< Acceleration not including gravity */
-  SENSOR_TYPE_ROTATION_VECTOR       = (11),
-  SENSOR_TYPE_RELATIVE_HUMIDITY     = (12),
-  SENSOR_TYPE_AMBIENT_TEMPERATURE   = (13),
-  SENSOR_TYPE_VOLTAGE               = (15),
-  SENSOR_TYPE_CURRENT               = (16),
-  SENSOR_TYPE_COLOR                 = (17),
-  SENSOR_TYPE_SIMPLE                = (18),
-  SENSOR_TYPE_ANGLE		    = (19),
-  SENSOR_TYPE_1AXIS_GYRO	    = (20),
-  SENSOR_TYPE_DISTANCE              = (21),
-  SENSOR_TYPE_LARGE_INT	            = (22),
-  SENSOR_TYPE_DUST		    = (23),
-  SENSOR_TYPE_IRREMOTE              = (24),
-  SENSOR_TYPE_POSITION              = (25),
-  SENSOR_TYPE_DATE                  = (26),
-  SENSOR_TYPE_SPEED                 = (27)
+    SENSOR_TYPE_ACCELEROMETER         = (1),   /**< Gravity + linear acceleration */
+    SENSOR_TYPE_MAGNETIC_FIELD        = (2),
+    SENSOR_TYPE_ORIENTATION           = (3),
+    SENSOR_TYPE_GYROSCOPE             = (4),
+    SENSOR_TYPE_LIGHT                 = (5),
+    SENSOR_TYPE_PRESSURE              = (6),
+    SENSOR_TYPE_PROXIMITY             = (8),
+    SENSOR_TYPE_GRAVITY               = (9),
+    SENSOR_TYPE_LINEAR_ACCELERATION   = (10),  /**< Acceleration not including gravity */
+    SENSOR_TYPE_ROTATION_VECTOR       = (11),
+    SENSOR_TYPE_RELATIVE_HUMIDITY     = (12),
+    SENSOR_TYPE_AMBIENT_TEMPERATURE   = (13),
+    SENSOR_TYPE_VOLTAGE               = (15),
+    SENSOR_TYPE_CURRENT               = (16),
+    SENSOR_TYPE_COLOR                 = (17),
+    SENSOR_TYPE_SIMPLE                = (18),
+    SENSOR_TYPE_ANGLE                 = (19),
+    SENSOR_TYPE_1AXIS_GYRO            = (20),
+    SENSOR_TYPE_DISTANCE              = (21),
+    SENSOR_TYPE_LARGE_INT             = (22),
+    SENSOR_TYPE_DUST                  = (23),
+    SENSOR_TYPE_IRREMOTE              = (24),
+    SENSOR_TYPE_POSITION              = (25),
+    SENSOR_TYPE_DATE                  = (26),
+    SENSOR_TYPE_SPEED_KNOT            = (27),
+    SENSOR_TYPE_SIMPLE_ANALOG         = (28)
 } sensors_type_t;
+
+/** unit type **/
+typedef enum
+{
+    UNIT_TYPE_UNDEF           = (1),  /* C */
+    UNIT_TYPE_CELCIUS         = (2),  /* C */
+    UNIT_TYPE_PERCENTAGE      = (3),  /* % */
+    UNIT_TYPE_METER_PER_SEC_2 = (4),  /* m/s^2 */
+    UNIT_TYPE_MICRO_TESLA     = (5),  /* micro Tesla */
+    UNIT_TYPE_RAD_PER_SEC     = (6),  /* radian/sec */
+    UNIT_TYPE_LUX             = (7),  /* lux */
+    UNIT_TYPE_HECTO_PASCAL    = (8),  /* hPa */
+    UNIT_TYPE_VOLT            = (9),  /* V */
+    UNIT_TYPE_MILLI_ANPERE    = (10), /* mA */
+    UNIT_TYPE_DEGREE          = (11), /* degree */
+    UNIT_TYPE_DEGREE_PER_SEC  = (12), /* degree / s */
+    UNIT_TYPE_CENTI_METER     = (13), /* cm */
+    UNIT_TYPE_PCS_PER_CF      = (14), /* pcs/0.01cf */
+    UNIT_TYPE_METER           = (15), /* m */
+    UNIT_TYPE_KNOT            = (16)  /* knot */
+} unit_type_t;
 
 /** struct sensors_vec_s is used to return a vector in a common format. */
 typedef struct {
@@ -138,35 +160,35 @@ typedef struct {
 /** struct sensor_event_s is used to provide a single sensor event in a common format. */
 typedef struct
 {
-    int32_t version;                          /**< must be sizeof(struct sensors_event_t) */
+    int32_t size;                             /**< must be sizeof(struct sensors_event_t) */
     int32_t sensor_id;                        /**< unique sensor identifier */
     int32_t type;                             /**< sensor type */
     int32_t reserved0;                        /**< reserved */
-    int32_t timestamp;                        /**< time is in milliseconds */
+    unsigned long timestamp;                       /**< current time in milliseconds */
     union
     {
-        float             data[4];
-        sensors_vec_t     acceleration;       /**< acceleration values are in meter per second per second (m/s^2) */
-        sensors_vec_t     magnetic;           /**< magnetic vector values are in micro-Tesla (uT) */
-        sensors_vec_t     orientation;        /**< orientation values are in degrees */
-        sensors_vec_t     gyro;               /**< gyroscope values are in rad/s */
-        float             temperature;        /**< temperature is in degrees centigrade (Celsius) */
-        float             distance;           /**< distance in centimeters */
-        float             light;              /**< light in SI lux units */
-        float             pressure;           /**< pressure in hectopascal (hPa) */
-        float             relative_humidity;  /**< relative humidity in percent */
-        float             current;            /**< current in milliamps (mA) */
-        float             voltage;            /**< voltage in volts (V) */
-        float             angle;              /**< angle (degree) */
-	float             roll;               /**< 1 axis gyro (deg/s) */
-	float		  dust;		      /**< */
-	uint32_t          value;              /**< output value of analogRead() or digitalRead() */
-	long		  lvalue;             /**< output value of sensor that outputs large value */
-        sensors_color_t   color;              /**< color in RGB component values */
+        float              data[4];
+        sensors_vec_t      acceleration;       /**< acceleration values are in meter per second per second (m/s^2) */
+        sensors_vec_t      magnetic;           /**< magnetic vector values are in micro-Tesla (uT) */
+        sensors_vec_t      orientation;        /**< orientation values are in degrees */
+        sensors_vec_t      gyro;               /**< gyroscope values are in rad/s */
+        float              temperature;        /**< temperature is in degrees centigrade (Celsius) */
+        float              distance;           /**< distance in centimeters */
+        float              light;              /**< light in SI lux units */
+        float              pressure;           /**< pressure in hectopascal (hPa) */
+        float              relative_humidity;  /**< relative humidity in percent */
+        float              current;            /**< current in milliamps (mA) */
+        float              voltage;            /**< voltage in volts (V) */
+        float              angle;              /**< angle (degree) */
+        float              roll;               /**< 1 axis gyro (deg/s) */
+        float              dust;               /**< */
+        uint32_t           value;              /**< output value of analogRead() or digitalRead() */
+        long               lvalue;             /**< output value of sensor that outputs large value */
+        sensors_color_t    color;              /**< color in RGB component values */
         sensors_irremote_t irremote;
-	sensors_position_t position;
-	sensors_date_t     date;
-	float             speed;
+        sensors_position_t position;
+        sensors_date_t     date;
+        float              speed;
     };
 } sensors_event_t;
 
@@ -174,7 +196,7 @@ typedef struct
 /** struct sensor_s is used to describe basic information about a specific sensor. */
 typedef struct
 {
-    char     name[SENSORS_NAME_LENGTH];                        /**< sensor name */
+    char     name[SENSORS_NAME_LENGTH];       /**< sensor name */
     int32_t  version;                         /**< version of the hardware + driver */
     int32_t  sensor_id;                       /**< unique sensor identifier */
     int32_t  type;                            /**< this sensor's type (ex. SENSOR_TYPE_LIGHT) */
@@ -186,20 +208,20 @@ typedef struct
 } sensor_t;
 
 class Adafruit_SensorEx {
- public:
-  // Constructor(s)
-  Adafruit_SensorEx() {}
-  virtual ~Adafruit_SensorEx() {}
+    public:
+        // Constructor(s)
+        Adafruit_SensorEx() {}
+        virtual ~Adafruit_SensorEx() {}
 
-  // These must be defined by the subclass
-  virtual bool enableAutoRange(bool enabled) = 0 ; /* レンジの変更がそもそもできないものはfalseを返す． */
-  virtual int setMode(int mode) =0 ; /* 動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 . 設定変更に失敗したら0, 設定変更に成功したら1 */
-  virtual int getMode() =0 ; /* 動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 */
-  virtual bool getEvent(sensors_event_t*) = 0;
-  virtual void getSensor(sensor_t*) = 0 ;
+        // These must be defined by the subclass
+        virtual bool enableAutoRange(bool enabled) = 0 ; /* レンジの変更がそもそもできないものはfalseを返す． */
+        virtual int setMode(int mode) =0 ; /* 動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 . 設定変更に失敗したら0, 設定変更に成功したら1 */
+        virtual int getMode() =0 ; /* 動作モード(レンジも含む)の設定を変更するための関数で動作モードがないセンサは -1 */
+        virtual bool getEvent(sensors_event_t*) = 0;
+        virtual void getSensor(sensor_t*) = 0 ;
   
- private:
-  bool _autoRange;
+    private:
+        bool _autoRange;
 };
 
 #endif /*  _ADAFRUIT_SENSOR_EXTENDED_H */

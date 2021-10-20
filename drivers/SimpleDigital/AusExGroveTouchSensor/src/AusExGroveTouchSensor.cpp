@@ -6,16 +6,7 @@
 AUSEX_GROVE_TOUCH_CLASS::AUSEX_GROVE_TOUCH_CLASS(int pinNumber, int32_t sensorID ){
   _pin=pinNumber;
   _sensorID=sensorID;
-  //_pullUp=false;
 }
-
-/*
-_TEMPLATE_CLASS::_TEMPLATE_CLASS(int pinNumber,bool pullUp, int32_t sensorID ){
-  _pin=pinNumber;
-  _sensorID=sensorID;
-  _pullUp=pullUp;
-}
-*/
 
 bool AUSEX_GROVE_TOUCH_CLASS::begin(bool pullUp){
   if (pullUp) {
@@ -30,7 +21,7 @@ bool AUSEX_GROVE_TOUCH_CLASS::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _sensorID;
   event->type      = AUSEX_GROVE_TOUCH_SENSOR_TYPE;
   event->timestamp = millis();

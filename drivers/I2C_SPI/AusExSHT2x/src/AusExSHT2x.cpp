@@ -149,7 +149,7 @@ bool AusExSHT2x::Temperature::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_AMBIENT_TEMPERATURE;
   bool flag=_parent->getTemperature(event);
@@ -160,7 +160,7 @@ bool AusExSHT2x::Humidity::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_RELATIVE_HUMIDITY;
   bool flag=_parent->getHumidity(event);

@@ -12,8 +12,6 @@ AusExSHT31::AusExSHT31(TwoWire * theWire , int32_t tempSensorId, int32_t humidit
   _humidity(this,humiditySensorId)
 {}
 
-
-
 AusExSHT31::Temperature::Temperature(AUSEX_SHT31_CLASS * parent, int32_t id):
   _parent(parent),
   _id(id)
@@ -212,7 +210,7 @@ bool AusExSHT31::Temperature::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_AMBIENT_TEMPERATURE;
   bool flag=_parent->getTemperature(event);
@@ -224,7 +222,7 @@ bool AusExSHT31::Humidity::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_RELATIVE_HUMIDITY;
   bool flag=_parent->getHumidity(event);

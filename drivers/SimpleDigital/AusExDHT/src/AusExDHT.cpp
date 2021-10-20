@@ -127,15 +127,9 @@ bool AusExDHT::readDHT(void) {
     // First expect a low signal for ~80 microseconds followed by a high signal
     // for ~80 microseconds again.
     if (expectPulse(LOW) == DHT_TIMEOUT) {
-      //DEBUG_PRINTLN(F("DHT timeout waiting for start signal low pulse."));
-      //_lastresult = false;
-      //return _lastresult;]
       return false;
     }
     if (expectPulse(HIGH) == DHT_TIMEOUT) {
-      //DEBUG_PRINTLN(F("DHT timeout waiting for start signal high pulse."));
-      //_lastresult = false;
-      //return _lastresult;
       return false;
     }
 
@@ -159,9 +153,6 @@ bool AusExDHT::readDHT(void) {
     uint32_t lowCycles  = cycles[2*i];
     uint32_t highCycles = cycles[2*i+1];
     if ((lowCycles == DHT_TIMEOUT) || (highCycles == DHT_TIMEOUT)) {
-      //DEBUG_PRINTLN(F("DHT timeout waiting for pulse."));
-      //_lastresult = false;
-      //return _lastresult;
       return false;
     }
     data[i/8] <<= 1;
@@ -175,25 +166,11 @@ bool AusExDHT::readDHT(void) {
     // stored data.
   }
 
-  //DEBUG_PRINTLN(F("Received from DHT:"));
-  //DEBUG_PRINT(data[0], HEX); DEBUG_PRINT(F(", "));
-  //DEBUG_PRINT(data[1], HEX); DEBUG_PRINT(F(", "));
-  //DEBUG_PRINT(data[2], HEX); DEBUG_PRINT(F(", "));
-  //DEBUG_PRINT(data[3], HEX); DEBUG_PRINT(F(", "));
-  //DEBUG_PRINT(data[4], HEX); DEBUG_PRINT(F(" =? "));
-  //DEBUG_PRINTLN((data[0] + data[1] + data[2] + data[3]) & 0xFF, HEX);
-
   // Check we read 40 bits and that the checksum matches.
   if (data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF)) {
-    //_lastresult = true;
-    //return _lastresult;
     return true;
-  }
-  else {
-    //DEBUG_PRINTLN(F("DHT checksum failure!"));
-    //_lastresult = false;
-    //return _lastresult;
-    return true;
+  } else {
+    return false;
   }
 }
 
@@ -244,7 +221,6 @@ float AusExDHT::dataToHumidity(void){
 
 bool AusExDHT::measure(){
   if (false==readDHT()){
-    //Serial.println("******* read DHT sensor Fail*******");
     return false;
   }
   oldTemperature=dataToTemperature();
@@ -274,28 +250,6 @@ void AusExDHT::setName(sensor_t* sensor) {
   }
   sensor->name[sizeof(sensor->name)- 1] = 0;
 }
-/*
-void AUSEX_DHT_CLASS::setMinDelay(sensor_t* sensor) {
-  switch(_type) {
-    case DHT11:
-      sensor->min_delay = 1000000L;  // 1 second (in microseconds)
-      break;
-    case DHT12:
-      sensor->min_delay = 2000000L;  // 2 second (in microseconds)
-      break;
-    case DHT21:
-      sensor->min_delay = 2000000L;  // 2 seconds (in microseconds)
-      break;
-    case DHT22:
-      sensor->min_delay = 2000000L;  // 2 seconds (in microseconds)
-      break;
-    default:
-      // Default to slowest sample rate in case of unknown type.
-      sensor->min_delay = 2000000L;  // 2 seconds (in microseconds)
-      break;
-  }
-}
-*/
 int32_t AusExDHT::getMinDelay(uint8_t type) {
   switch(type) {
     case DHT11:
@@ -364,7 +318,6 @@ void AusExDHT::Humidity::getSensor(sensor_t* sensor) {
   sensor->sensor_id       = _id;
   // Set type and characteristics.
   sensor->type            = SENSOR_TYPE_RELATIVE_HUMIDITY;
-  //_parent->setMinDelay(sensor);
   sensor->min_delay =_parent->getMinDelay(_parent->_type);
   switch (_parent->_type) {
     case DHT11:
@@ -406,12 +359,10 @@ bool AusExDHT::getTemperature(sensors_event_t* event){
   }
   if ((float) measure_delay > timeDiff) {
     /* 時刻が経過していない場合は，古いデータを返す */
-    //Serial.println("********** no measure *********");
     event->timestamp = lastTime;
     event->temperature = oldTemperature;
     return true;
   } else {
-    //Serial.println("+++++++++++++  measure +++++++++++++");
     bool flag=measure();
     lastTime=millis();
     event->timestamp = lastTime;
@@ -423,21 +374,16 @@ bool AusExDHT::getTemperature(sensors_event_t* event){
 bool AusExDHT::getHumidity(sensors_event_t* event){
   unsigned long currentTime=millis();
   float timeDiff=currentTime - lastTime;
-  //Serial.print("current time = ");Serial.println(currentTime);
-  //Serial.print("lastTime     = ");Serial.println(lastTime);
   if (0 > timeDiff) {
     timeDiff=0;
     lastTime=0;
   }
-  //Serial.print("diff         = ");Serial.println(timeDiff);
   if ((float)measure_delay > timeDiff) {
     /* 時刻が経過していない場合は，古いデータを返す */
-    //Serial.println("********** no measure *********");
     event->timestamp = lastTime;
     event->relative_humidity = oldHumidity;
     return true;
   } else {
-    //Serial.println("+++++++++++++  measure +++++++++++++");
     bool flag=measure();
     lastTime=millis();
     event->timestamp = lastTime;
@@ -450,7 +396,7 @@ bool AusExDHT::Temperature::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size   = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_AMBIENT_TEMPERATURE;
   bool flag=_parent->getTemperature(event);
@@ -462,9 +408,9 @@ bool AusExDHT::Humidity::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size   = sizeof(sensors_event_t);
   event->sensor_id = _id;
-  event->type      = SENSOR_TYPE_AMBIENT_TEMPERATURE;
+  event->type      = SENSOR_TYPE_RELATIVE_HUMIDITY;
   bool flag=_parent->getHumidity(event);
   return flag;
 }
@@ -480,12 +426,6 @@ bool AusExDHT::Temperature::enableAutoRange(bool enabled) {
 bool AusExDHT::Humidity::enableAutoRange(bool enabled) {
   return _parent->enableAutoRange(enabled);
 }
-
-/*
-AUSEX_DHT_SENSOR_VALUE_TYPE AUSEX_DHT_CLASS::calcValue(int val){
-  return val;
-}
-*/
 
 
 int AusExDHT::setMode(int mode){

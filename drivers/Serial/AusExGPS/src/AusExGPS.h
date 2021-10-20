@@ -25,7 +25,6 @@
 
 class AUSEX_GPS_CLASS {
 public:
-  //AUSEX_GPS_CLASS(serial_t *port, int32_t positionID = -1, int32_t dateID = -1, int32_t orientationID = -1, int32_t speedID = -1);
   AUSEX_GPS_CLASS(SoftwareSerial *port, int32_t positionID = -1, int32_t dateID = -1, int32_t orientationID = -1, int32_t speedID = -1);
   bool begin(uint32_t bps, byte conf = SERIAL_8N1 );
   bool enableAutoRange(bool enabled);
@@ -113,8 +112,6 @@ private:
   Date            _dateTime;
   Orientation     _orientation;
   Speed           _speed;
-  //bool            _autoRange;
-
   bool              readGPS(int8_t);
 };
 

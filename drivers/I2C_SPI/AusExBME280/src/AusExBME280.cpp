@@ -40,11 +40,6 @@ AusExBME280::Pressure::Pressure(AUSEX_BME280_CLASS * parent, int32_t id):
 {}
 
 bool AusExBME280::begin(uint32_t addr){
-  /*
-  oldTemperature=NO_MEASURE;
-  oldHumidity=NO_MEASURE;
-  oldPressure=NO_MEASURE;
-  */
   bool flag;
   if (_i2c) {
     // i2c接続の場合
@@ -148,7 +143,7 @@ bool AusExBME280::Temperature::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_AMBIENT_TEMPERATURE;
   bool flag=_parent->getTemperature(event);
@@ -159,7 +154,7 @@ bool AusExBME280::Humidity::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_RELATIVE_HUMIDITY;
   bool flag=_parent->getHumidity(event);
@@ -170,7 +165,7 @@ bool AusExBME280::Pressure::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_PRESSURE;
   bool flag=_parent->getPressure(event);

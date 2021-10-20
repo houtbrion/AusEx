@@ -98,41 +98,41 @@ uint8_t    getRateParam(int);
 
 
 class AusExADXL345 : public Adafruit_SensorEx {
- public:
-  AusExADXL345(TwoWire *theWire, int32_t sensorID = -1);
-  AusExADXL345(uint8_t clock, uint8_t miso, uint8_t mosi, uint8_t cs, int32_t sensorID = -1);
+    public:
+        AusExADXL345(TwoWire *theWire, int32_t sensorID = -1);
+        AusExADXL345(uint8_t clock, uint8_t miso, uint8_t mosi, uint8_t cs, int32_t sensorID = -1);
 
-  bool       begin(uint32_t addr=AUSEX_ADXL345_SENSOR_DEFAULT_I2C_ADDR);
-  bool       enableAutoRange(bool enabled);
-  int        setMode(int mode);
-  int        getMode();
-  bool       getEvent(sensors_event_t*);
-  void       getSensor(sensor_t*);
-  int getModeParam(uint8_t, uint8_t);
-  uint8_t getRangeParam(int);
-  uint8_t getRateParam(int);
+        bool       begin(uint32_t addr=AUSEX_ADXL345_SENSOR_DEFAULT_I2C_ADDR);
+        bool       enableAutoRange(bool enabled);
+        int        setMode(int mode);
+        int        getMode();
+        bool       getEvent(sensors_event_t*);
+        void       getSensor(sensor_t*);
+        int getModeParam(uint8_t, uint8_t);
+        uint8_t getRangeParam(int);
+        uint8_t getRateParam(int);
 
- private:
-  void       setRange(uint8_t );
-  uint8_t    getRange(void);
-  void       setDataRate(uint8_t );
-  uint8_t getDataRate(void);
-  inline uint8_t  i2cread(void);
-  inline void     i2cwrite(uint8_t );
-  void       writeRegister(uint8_t , uint8_t );
-  uint8_t    readRegister(uint8_t );
-  int16_t    read16(uint8_t );
-  uint8_t    getDeviceID(void);
-  int16_t    getX(void), getY(void), getZ(void);
+    private:
+        void       setRange(uint8_t );
+        uint8_t    getRange(void);
+        void       setDataRate(uint8_t );
+        uint8_t getDataRate(void);
+        inline uint8_t  i2cread(void);
+        inline void     i2cwrite(uint8_t );
+        void       writeRegister(uint8_t , uint8_t );
+        uint8_t    readRegister(uint8_t );
+        int16_t    read16(uint8_t );
+        uint8_t    getDeviceID(void);
+        int16_t    getX(void), getY(void), getZ(void);
 
-  int32_t _sensorID;
-  uint8_t _range;
-  uint8_t _rate;
-  uint8_t _clk, _do, _di, _cs;
-  bool    _i2c;
-  int8_t  _i2caddr;
-  TwoWire *_i2c_if;
-  bool _autoRange;
+        int32_t _sensorID;
+        uint8_t _range;
+        uint8_t _rate;
+        uint8_t _clk, _do, _di, _cs;
+        bool    _i2c;
+        int8_t  _i2caddr;
+        TwoWire *_i2c_if;
+        bool _autoRange;
 };
 
 

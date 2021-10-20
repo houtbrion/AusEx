@@ -1,7 +1,5 @@
 #include "AusExGroveAnalogCurrentSensor.h"
 
-//#define DEBUG
-
 /*
  * 
  */
@@ -12,6 +10,7 @@ AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS
   _mode=0;
   sensorMaxValue=AUSEX_GROVE_ANALOG_CURRENT_SENSOR_AVE_MAX_VALUE;
 }
+
 AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS(int pinNumber,float vdd, int32_t sensorID){
   _pin=pinNumber;
   _sensorID=sensorID;
@@ -21,7 +20,6 @@ AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS
 }
 
 bool AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::begin(void){
-  //pinMode(_pin, INPUT);
   return true;
 }
 
@@ -29,7 +27,7 @@ bool AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _sensorID;
   event->type      = AUSEX_GROVE_ANALOG_CURRENT_SENSOR_TYPE;
   uint32_t start_time = millis();
@@ -37,9 +35,6 @@ bool AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::getEvent(sensors_event_t* event){
   int sensorValue=0;
   while((millis()-start_time) <AUSEX_GROVE_ANALOG_CURRENT_SENSOR_MIN_DELAY_MILLI) {
     sensorValue = analogRead(_pin);
-#ifdef DEBUG
-    Serial.print("********** SensorValue = ");Serial.println(sensorValue);
-#endif
     if (sensorValue > sensorMax) {
       sensorMax = sensorValue;
     }
@@ -86,10 +81,8 @@ int AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::setMode(int mode) {
 int AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::getMode(void) {
   return _mode;
 }
+
 AUSEX_GROVE_ANALOG_CURRENT_SENSOR_VALUE_TYPE AUSEX_GROVE_ANALOG_CURRENT_SENSOR_CLASS::calcValue(int val){
-#ifdef DEBUG
-  Serial.print("********** calc val = ");Serial.println(val);
-#endif
   if (_mode == 0 ) return (float)val/1024*_vdd/800*2000000/1.414;
   return (float)val/1024*_vdd/800*2000000;
 }

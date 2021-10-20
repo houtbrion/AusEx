@@ -12,7 +12,10 @@ uint32_t delayMS;
 
 void setup()  
 {
-  Serial.begin(9600);
+  Serial.begin(9600) ;                                      // シリアル通信の初期化
+  while (!Serial) {
+    ; // シリアルポートが開くのを待つ
+  }
   // Initialize device.
   dht.begin();
   Serial.println(F("DHTxx Unified Sensor Example"));

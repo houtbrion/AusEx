@@ -11,8 +11,6 @@ AusExAM232X::AusExAM232X(TwoWire * theWire, int32_t am232xType, uint32_t tempSen
   _humidity(this,humiditySensorId)
 {}
 
-
-
 AusExAM232X::Temperature::Temperature(AUSEX_AM232X_CLASS * parent, int32_t id):
   _parent(parent),
   _id(id)
@@ -137,7 +135,7 @@ bool AusExAM232X::Temperature::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_AMBIENT_TEMPERATURE;
   bool flag=_parent->getTemperature(event);
@@ -148,7 +146,7 @@ bool AusExAM232X::Humidity::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _id;
   event->type      = SENSOR_TYPE_RELATIVE_HUMIDITY;
   bool flag=_parent->getHumidity(event);

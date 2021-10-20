@@ -6,15 +6,7 @@
 AUSEX_GROVE_DIGITAL_SWITCH_CLASS::AUSEX_GROVE_DIGITAL_SWITCH_CLASS(int pinNumber, int32_t sensorID ){
   _pin=pinNumber;
   _sensorID=sensorID;
-  //_pullUp=false;
 }
-/*
-AUSEX_GROVE_DIGITAL_SWITCH_CLASS::AUSEX_GROVE_DIGITAL_SWITCH_CLASS(int pinNumber,bool pullUp, int32_t sensorID ){
-  _pin=pinNumber;
-  _sensorID=sensorID;
-  _pullUp=pullUp;
-}
-*/
 
 bool AUSEX_GROVE_DIGITAL_SWITCH_CLASS::begin(bool pullUp){
   if (pullUp) {
@@ -29,7 +21,7 @@ bool AUSEX_GROVE_DIGITAL_SWITCH_CLASS::getEvent(sensors_event_t* event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
 
-  event->version   = sizeof(sensors_event_t);
+  event->size   = sizeof(sensors_event_t);
   event->sensor_id = _sensorID;
   event->type      = AUSEX_GROVE_DIGITAL_SWITCH_TYPE;
   event->timestamp = millis();

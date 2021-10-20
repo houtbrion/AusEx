@@ -15,7 +15,7 @@ bool AUSEX_GROVE_ANALOG_TEMPERATURE_CLASS::begin(void){
 bool AUSEX_GROVE_ANALOG_TEMPERATURE_CLASS::getEvent(sensors_event_t *event){
   /* Clear the event */
   memset(event, 0, sizeof(sensors_event_t));
-  event->version   = sizeof(sensors_event_t);
+  event->size      = sizeof(sensors_event_t);
   event->sensor_id = _sensorID;
   event->type      = AUSEX_GROVE_ANALOG_TEMPERATURE_SENSOR_TYPE;
   event->timestamp = millis();

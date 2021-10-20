@@ -19,7 +19,6 @@
 class AUSEX_GROVE_IR_DISTANCE_CLASS : public Adafruit_SensorEx {
 public:
   AUSEX_GROVE_IR_DISTANCE_CLASS(int pinNumber, int32_t sensorID = -1);
-  //_TEMPLATE_CLASS(int pinNumber,bool pullUp, int32_t sensorID = -1);
   bool begin(bool pullUp=false);
   bool getEvent(sensors_event_t*);
   void getSensor(sensor_t*);
@@ -29,7 +28,6 @@ public:
 
 private:
   int _pin;
-  //int _pullUp;
   uint32_t _sensorID;
   AUSEX_GROVE_IR_DISTANCE_SENSOR_VALUE_TYPE calcValue(int);
   bool _autoRange;

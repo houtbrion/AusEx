@@ -66,7 +66,7 @@ AusExHDC10XX::Temperature::Temperature(AusExHDC10XX * parent, int32_t id):
 
 bool AusExHDC10XX::Temperature::getEvent(sensors_event_t* event) {
 	memset(event, 0, sizeof(sensors_event_t));
-	event->version     = sizeof(sensors_event_t);
+	event->size        = sizeof(sensors_event_t);
 	event->sensor_id   = _id;
 	event->type        = SENSOR_TYPE_AMBIENT_TEMPERATURE;
 	event->timestamp   = millis();
@@ -121,7 +121,7 @@ AusExHDC10XX::Humidity::Humidity(AusExHDC10XX * parent, int32_t id):
 
 bool AusExHDC10XX::Humidity::getEvent(sensors_event_t* event){
 	memset(event, 0, sizeof(sensors_event_t));
-	event->version           = sizeof(sensors_event_t);
+	event->size              = sizeof(sensors_event_t);
 	event->sensor_id         = _id;
 	event->type              = SENSOR_TYPE_RELATIVE_HUMIDITY;
 	event->timestamp         = millis();

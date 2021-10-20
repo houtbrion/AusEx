@@ -19,8 +19,6 @@
 class AUSEX_GROVE_ULTRASONIC_RANGER_CLASS : public Adafruit_SensorEx {
 public:
   AUSEX_GROVE_ULTRASONIC_RANGER_CLASS(int pinNumber, int32_t sensorID = -1);
-  //_TEMPLATE_CLASS(int pinNumber,bool pullUp, int32_t sensorID = -1);
-  //bool begin(void);
   bool begin(bool pullUp=false);
   bool getEvent(sensors_event_t*);
   void getSensor(sensor_t*);
