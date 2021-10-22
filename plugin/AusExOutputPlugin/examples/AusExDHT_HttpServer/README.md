@@ -1,4 +1,4 @@
-# AusExDHT_WebServer
+# AusExDHT_HttpServer
 
 このサンプルプログラムは，Arduinoをwebサーバにし，センサでの測定結果をhttpクライアントに送信するプログラムとなっています．
 
