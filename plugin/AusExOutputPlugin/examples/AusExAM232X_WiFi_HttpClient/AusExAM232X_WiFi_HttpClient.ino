@@ -24,7 +24,7 @@
 
 #define WAIT_TIME 5000           // 測定の待ち時間
 
-#define HOSTNAME "arduinoMega"   // syslog形式のログ出力に利用
+#define HOSTNAME "esp32"   // syslog形式のログ出力に利用
 #define APP_NAME "foo"           // syslog形式のログ出力に利用
 
 #include <WiFi.h>
