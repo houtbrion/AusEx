@@ -7,16 +7,17 @@
 #define AUSEX_OUTPUT_CHANNEL_SOFT_SERIAL        2
 #define AUSEX_OUTPUT_CHANNEL_FILE               3
 #define AUSEX_OUTPUT_CHANNEL_ETHERNET_CLIENT    4
-#define AUSEX_OUTPUT_CHANNEL_HTTP_CLIENT        5
-#define AUSEX_OUTPUT_CHANNEL_MQTT_CLIENT        6
+#define AUSEX_OUTPUT_CHANNEL_WIFI_CLIENT        5
+#define AUSEX_OUTPUT_CHANNEL_HTTP_CLIENT        6
+#define AUSEX_OUTPUT_CHANNEL_MQTT_CLIENT        7
 
 #define LOG_HEADER ""
 //#define DEFAULT_CONTENT_TYPE "text/plain"
 #define DEFAULT_CONTENT_TYPE "application/json;charset=utf8"
 
-#if !defined(__USE_SD__) && !defined(__USE_SERIAL__) && !defined(__USE_SOFT_SERIAL__) && !defined(__USE_ETHERNET_CLIENT__) && !defined(__USE_HTTP_CLIENT__) && !defined(__USE_MQTT_CLIENT__)
-#error " you must define __USE_SD__ and/or __USE_SERIAL__ , __USE_SOFT_SERIAL__ , __USE_ETHERNET_CLIENT__ , __USE_HTTP_CLIENT__ , __USE_MQTT_CLIENT__"
-#endif /* not __USE_SD__ and not __USE_SERIAL__ and not __USE_SOFT_SERIAL__ and not __USE_ETHERNET_CLIENT__ and not __USE_HTTP_CLIENT__ and not __USE_MQTT_CLIENT__*/
+#if !defined(__USE_SD__) && !defined(__USE_SERIAL__) && !defined(__USE_SOFT_SERIAL__) && !defined(__USE_ETHERNET_CLIENT__) && !defined(__USE_WIFI_CLIENT__) && !defined(__USE_HTTP_CLIENT__) && !defined(__USE_MQTT_CLIENT__)
+#error " you must define __USE_SD__ and/or __USE_SERIAL__ , __USE_SOFT_SERIAL__ , __USE_ETHERNET_CLIENT__ , __USE_WIFI_CLIENT__ , __USE_HTTP_CLIENT__ , __USE_MQTT_CLIENT__"
+#endif /* not __USE_SD__ and not __USE_SERIAL__ and not __USE_SOFT_SERIAL__ and not __USE_ETHERNET_CLIENT__ and not __USE_WIFI_CLIENT__ and not __USE_HTTP_CLIENT__ and not __USE_MQTT_CLIENT__*/
 
 #ifdef __USE_SD__
 #include <SPI.h>
@@ -35,13 +36,17 @@
 #include <Ethernet.h>
 #endif /* __USE_ETHERNET_CLIENT__ */
 
+#ifdef __USE_WIFI_CLIENT__
+#include <WiFi.h>
+#endif /* __USE_WIFI_CLIENT__ */
+
 #ifdef __USE_HTTP_CLIENT__
-#include <Ethernet.h>
+//#include <Ethernet.h>
 #include <ArduinoHttpClient.h>
 #endif /* __USE_HTTP_CLIENT__ */
 
 #ifdef __USE_MQTT_CLIENT__
-#include <Ethernet.h>
+//#include <Ethernet.h>
 #include <ArduinoMqttClient.h>
 #endif /* __USE_MQTT_CLIENT__ */
 
@@ -75,6 +80,9 @@ typedef union OutputChannel {
 #ifdef __USE_ETHERNET_CLIENT__
     EthernetClient * client;
 #endif /* __USE_ETHERNET_CLIENT__ */
+#ifdef __USE_WIFI_CLIENT__
+    WiFiClient * wifi_client;
+#endif /* __USE_WIFI_CLIENT__ */
 #ifdef __USE_HTTP_CLIENT__
     HttpClient * httpClient;
 #endif /* __USE_HTTP_CLIENT__ */

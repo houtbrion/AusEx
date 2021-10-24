@@ -1,6 +1,6 @@
 #include "AusExDHT.h"
 
-#define SENSOR_PIN 14  // センサはデジタルの2番ポートに接続
+#define SENSOR_PIN 2  // センサはデジタルの2番ポートに接続
 // Uncomment the type of sensor in use:
 //#define DHTTYPE    DHT11     // DHT 11
 #define DHTTYPE    DHT22     // DHT 22 (AM2302)

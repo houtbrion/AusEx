@@ -2,7 +2,8 @@
 
 AuxExSensorIO::AuxExSensorIO() {}
 
-void AuxExSensorIO::SetIO(uint8_t type, OutputChannel outputChannel, format_type_t format=FORMAT_TYPE_PLAIN_TEXT)
+//void AuxExSensorIO::SetIO(uint8_t type, OutputChannel outputChannel, format_type_t format=FORMAT_TYPE_PLAIN_TEXT)
+void AuxExSensorIO::SetIO(uint8_t type, OutputChannel outputChannel, format_type_t format)
 {
     channelType = type;
     formatType = format;
@@ -136,6 +137,21 @@ bool AuxExSensorIO::InfoOutputJson(sensor_t sensor) {
             channel.client->println(F("}"));
             return true;
 #endif /* __USE_ETHERNET_CLIENT__ */
+#ifdef __USE_WIFI_CLIENT__
+        case AUSEX_OUTPUT_CHANNEL_WIFI_CLIENT :
+            channel.wifi_client->println(F("{"));
+            channel.wifi_client->print  (F("\"type\": "));
+	        channel.wifi_client->print  (sensor.type);
+	        channel.wifi_client->println(F(","));
+            channel.wifi_client->print  (F("\"name\": \"")); channel.wifi_client->print(sensor.name);channel.wifi_client->println(F("\","));
+            channel.wifi_client->print  (F("\"version\": ")); channel.wifi_client->print(sensor.version);channel.wifi_client->println(F(","));
+            channel.wifi_client->print  (F("\"id\":   ")); channel.wifi_client->print(sensor.sensor_id);channel.wifi_client->println(F(","));
+            channel.wifi_client->print  (F("\"max_value\":   ")); channel.wifi_client->print(sensor.max_value);channel.wifi_client->println(F(","));
+            channel.wifi_client->print  (F("\"min_value\":   ")); channel.wifi_client->print(sensor.min_value);channel.wifi_client->println(F(","));
+            channel.wifi_client->print  (F("\"resolution\":  ")); channel.wifi_client->println(sensor.resolution);
+            channel.wifi_client->println(F("}"));
+            return true;
+#endif /* __USE_WIFI_CLIENT__ */
 #ifdef __USE_HTTP_CLIENT__
         case AUSEX_OUTPUT_CHANNEL_HTTP_CLIENT :
             String workString="{\n\"type\": "+String(sensor.type)+",\n"
@@ -170,8 +186,8 @@ bool AuxExSensorIO::InfoOutputJson(sensor_t sensor) {
             channel.mqttClient->endMessage();
             return true;
 #endif /* __USE_MQTT_CLIENT__ */
-        default:
-            return false;
+        //default:
+            //return false;
     }
     return false;
 }
@@ -1234,6 +1250,270 @@ bool AuxExSensorIO::InfoOutputPlain(sensor_t sensor) {
             }
             return false;
 #endif /* __USE_ETHERNET_CLIENT__ */
+#ifdef __USE_WIFI_CLIENT__
+        case AUSEX_OUTPUT_CHANNEL_WIFI_CLIENT :
+            if ( sensor.type == SENSOR_TYPE_AMBIENT_TEMPERATURE ) {
+                channel.wifi_client->println(F("Temperature Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("C"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("C"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("C"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_RELATIVE_HUMIDITY ) {
+                channel.wifi_client->println(F("Humidity Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("%"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("%"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("%"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_ACCELEROMETER ) {
+                channel.wifi_client->println(F("Accelerometer"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("m/s^2"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("m/s^2"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("m/s^2"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_MAGNETIC_FIELD ) {
+                channel.wifi_client->println(F("Magnetic Field Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("microT"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("microT"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("microT"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_GYROSCOPE ) {
+                channel.wifi_client->println(F("Gyroscope"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("Rad/s"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("Rad/s"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("Rad/s"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_LIGHT ) {
+                channel.wifi_client->println(F("Light Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("lux"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("lux"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("lux"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_PRESSURE ) {
+                channel.wifi_client->println(F("Barometric Pressure Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("hPa"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("hPa"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("hPa"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_PROXIMITY ) {
+                channel.wifi_client->println(F("Proximity Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_GRAVITY ) {
+                channel.wifi_client->println(F("Gravity Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_LINEAR_ACCELERATION ) {
+                channel.wifi_client->println(F("Linear Acceleration Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("m/s^2"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("m/s^2"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("m/s^2"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_ROTATION_VECTOR ) {
+                channel.wifi_client->println(F("Rotation Vector Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_VOLTAGE ) {
+                channel.wifi_client->println(F("Voltage Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("V"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("V"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("V"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_CURRENT ) {
+                channel.wifi_client->println(F("Current Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("mA"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("mA"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("mA"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_COLOR ) {
+                channel.wifi_client->println(F("Color Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_SIMPLE ) {
+                channel.wifi_client->println(F("Simple Digital Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_ANGLE ) {
+                channel.wifi_client->println(F("Angle Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("deg"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("deg"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("deg"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_1AXIS_GYRO ) {
+                channel.wifi_client->println(F("1 axis Gyro Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("deg/s"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("deg/s"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("deg/s"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_DISTANCE ) {
+                channel.wifi_client->println(F("Distance Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("cm"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("cm"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("cm"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_LARGE_INT ) {
+                channel.wifi_client->println(F("Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_DUST ) {
+                channel.wifi_client->println(F("Dust Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("pcs/0.01cf"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("pcs/0.01cf"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("pcs/0.01cf"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_IRREMOTE ) {
+                channel.wifi_client->println(F("IR Remote Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_POSITION ) {
+                channel.wifi_client->println(F("Position Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("[deg|m]"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("[deg|m]"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("[deg|m]"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_DATE ) {
+                channel.wifi_client->println(F("Clock"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_SPEED_KNOT ) {
+                channel.wifi_client->println(F("Speed Sensor (knot)"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("knot"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("knot"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("knot"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_ORIENTATION ) {
+                channel.wifi_client->println(F("Orientation Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("deg"));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("deg"));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("deg"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_SIMPLE_ANALOG ) {
+                channel.wifi_client->println(F("Simple Analog Sensor"));
+                channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            return false;
+#endif /* __USE_WIFI_CLIENT__ */
 #ifdef __USE_HTTP_CLIENT__
         case AUSEX_OUTPUT_CHANNEL_HTTP_CLIENT :
             if ( sensor.type == SENSOR_TYPE_AMBIENT_TEMPERATURE ) {
@@ -1918,8 +2198,8 @@ bool AuxExSensorIO::InfoOutputPlain(sensor_t sensor) {
             }
             return false;
 #endif /* __USE_MQTT_CLIENT__ */
-        default:
-            return false;
+        //default:
+            //return false;
     }
     return false;
 }
@@ -2990,6 +3270,270 @@ bool AuxExSensorIO::InfoOutputSyslog(sensor_t sensor) {
             }
             return false;
 #endif /* __USE_ETHERNET_CLIENT__ */
+#ifdef __USE_WIFI_CLIENT__
+        case AUSEX_OUTPUT_CHANNEL_WIFI_CLIENT :
+            if ( sensor.type == SENSOR_TYPE_AMBIENT_TEMPERATURE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Temperature Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("C"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("C"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("C"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_RELATIVE_HUMIDITY ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Humidity Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("%"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("%"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("%"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_ACCELEROMETER ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Accelerometer"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("m/s^2"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("m/s^2"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("m/s^2"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_MAGNETIC_FIELD ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Magnetic Field Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("microT"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("microT"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("microT"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_GYROSCOPE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Gyroscope"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("Rad/s"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("Rad/s"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("Rad/s"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_LIGHT ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Light Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("lux"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("lux"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("lux"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_PRESSURE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Barometric Pressure Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("hPa"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("hPa"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("hPa"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_PROXIMITY ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Proximity Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_GRAVITY ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Gravity Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_LINEAR_ACCELERATION ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Linear Acceleration Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("m/s^2"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("m/s^2"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("m/s^2"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_ROTATION_VECTOR ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Rotation Vector Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_VOLTAGE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Voltage Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("V"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("V"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("V"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_CURRENT ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Current Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("mA"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("mA"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("mA"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_COLOR ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Color Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_SIMPLE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Simple Digital Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_ANGLE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Angle Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("deg"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("deg"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("deg"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_1AXIS_GYRO ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("1 axis Gyro Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("deg/s"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("deg/s"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("deg/s"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_DISTANCE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Distance Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("cm"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("cm"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("cm"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_LARGE_INT ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_DUST ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Dust Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("pcs/0.01cf"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("pcs/0.01cf"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("pcs/0.01cf"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_IRREMOTE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("IR Remote Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_POSITION ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Position Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("[deg|m]"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("[deg|m]"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("[deg|m]"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_DATE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Clock"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_SPEED_KNOT ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Speed Sensor(knot)"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("knot"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("knot"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("knot"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_ORIENTATION ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Orientation Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F("deg"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F("deg"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F("deg"));
+                return true;
+            }
+            if ( sensor.type == SENSOR_TYPE_SIMPLE_ANALOG ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->println(F("Simple Analog Sensor"));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Sensor Type: ")); channel.wifi_client->println(sensor.name);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Driver Ver:  ")); channel.wifi_client->println(sensor.version);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Unique ID:   ")); channel.wifi_client->println(sensor.sensor_id);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Max Value:   ")); channel.wifi_client->print(sensor.max_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Min Value:   ")); channel.wifi_client->print(sensor.min_value); channel.wifi_client->println(F(""));
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print  (F("Resolution:  ")); channel.wifi_client->print(sensor.resolution); channel.wifi_client->println(F(""));
+                return true;
+            }
+            return false;
+#endif /* __USE_WIFI_CLIENT__ */
 #ifdef __USE_HTTP_CLIENT__
         case AUSEX_OUTPUT_CHANNEL_HTTP_CLIENT :
             if ( sensor.type == SENSOR_TYPE_AMBIENT_TEMPERATURE ) {
@@ -3700,8 +4244,8 @@ bool AuxExSensorIO::InfoOutputSyslog(sensor_t sensor) {
             }
             return false;
 #endif /* __USE_MQTT_CLIENT__ */
-        default:
-            return false;
+        //default:
+            //return false;
     }
     return false;
 }
@@ -5052,6 +5596,330 @@ bool AuxExSensorIO::EventOutputJson(sensors_event_t event) {
             channel.client->println(F("}"));
             return true;
 #endif /* __USE_ETHERNET_CLIENT__ */
+#ifdef __USE_WIFI_CLIENT__
+        case AUSEX_OUTPUT_CHANNEL_WIFI_CLIENT :
+            channel.wifi_client->println(F("{"));
+            channel.wifi_client->print  (F("\"id\": "));
+            channel.wifi_client->print  (event.sensor_id);
+            channel.wifi_client->println(F(","));
+            channel.wifi_client->print  (F("\"type\": "));
+            channel.wifi_client->print  (event.type);
+            channel.wifi_client->println(F(","));
+            channel.wifi_client->print  (F("\"time\": "));
+            channel.wifi_client->print  (event.timestamp);
+            channel.wifi_client->println(F(","));
+            channel.wifi_client->println(F("\"data\": ["));
+            switch(event.type){
+                case SENSOR_TYPE_ACCELEROMETER:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"x\": "));
+                    channel.wifi_client->print  (event.acceleration.x);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_METER_PER_SEC_2);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"y\": "));
+                    channel.wifi_client->print  (event.acceleration.y);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_METER_PER_SEC_2);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"z\": "));
+                    channel.wifi_client->print  (event.acceleration.z);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_METER_PER_SEC_2);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_GYROSCOPE:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"x\": "));
+                    channel.wifi_client->print  (event.gyro.x);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_DEGREE_PER_SEC);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"y\": "));
+                    channel.wifi_client->print  (event.gyro.y);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_DEGREE_PER_SEC);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"z\": "));
+                    channel.wifi_client->print  (event.gyro.z);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_DEGREE_PER_SEC);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_LIGHT:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"light\": "));
+                    channel.wifi_client->print  (event.light);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_LUX);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_PRESSURE:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"air_pressure\": "));
+                    channel.wifi_client->print  (event.pressure);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_HECTO_PASCAL);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_LINEAR_ACCELERATION:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"x\": "));
+                    channel.wifi_client->print  (event.acceleration.x);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_METER_PER_SEC_2);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"y\": "));
+                    channel.wifi_client->print  (event.acceleration.y);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_METER_PER_SEC_2);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"z\": "));
+                    channel.wifi_client->print  (event.acceleration.z);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_METER_PER_SEC_2);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_RELATIVE_HUMIDITY:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"humidity\": "));
+                    channel.wifi_client->print  (event.relative_humidity);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_PERCENTAGE);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_AMBIENT_TEMPERATURE:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"temperature\": "));
+                    channel.wifi_client->print  (event.temperature);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_CELCIUS);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_CURRENT:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"current\": "));
+                    channel.wifi_client->print  (event.current);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_MILLI_ANPERE);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_COLOR:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"r\": "));
+                    channel.wifi_client->print  (event.color.r);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"g\": "));
+                    channel.wifi_client->print  (event.color.g);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"b\": "));
+                    channel.wifi_client->print  (event.color.b);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"rgba\": "));
+                    channel.wifi_client->print  (event.color.rgba);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_SIMPLE:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"value\": "));
+                    channel.wifi_client->print  (event.value);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_ANGLE:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"angle\": "));
+                    channel.wifi_client->print  (event.angle);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_DEGREE);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_1AXIS_GYRO:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"roll\": "));
+                    channel.wifi_client->print  (event.roll);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_DEGREE_PER_SEC);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_DISTANCE:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"distance\": "));
+                    channel.wifi_client->print  (event.distance);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_CENTI_METER);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_DUST:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"dust\": "));
+                    channel.wifi_client->print  (event.dust);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_PCS_PER_CF);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_POSITION:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"latitude\": "));
+                    channel.wifi_client->print  (event.position.latitude);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_DEGREE);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"longtitude\": "));
+                    channel.wifi_client->print  (event.position.longtitude);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_DEGREE);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"altitude\": "));
+                    channel.wifi_client->print  (event.position.altitude);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_METER);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"dop\": "));
+                    channel.wifi_client->print  (event.position.dop);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_DATE:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"year\": "));
+                    channel.wifi_client->print  (event.date.year);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"month\": "));
+                    channel.wifi_client->print  (event.date.month);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"day\": "));
+                    channel.wifi_client->print  (event.date.day);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"dayOfWeek\": "));
+                    channel.wifi_client->print  (event.date.dayOfWeek);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"hour\": "));
+                    channel.wifi_client->print  (event.date.hour);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"minute\": "));
+                    channel.wifi_client->print  (event.date.minute);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"second\": "));
+                    channel.wifi_client->print  (event.date.second);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("},"));
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"millisecond\": "));
+                    channel.wifi_client->print  (event.date.millisecond);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_SPEED_KNOT:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"speed_knot\": "));
+                    channel.wifi_client->print  (event.speed);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_KNOT);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                case SENSOR_TYPE_SIMPLE_ANALOG:
+                    channel.wifi_client->println(F("{"));
+                    channel.wifi_client->print  (F("\"value\": "));
+                    channel.wifi_client->print  (event.value);
+                    channel.wifi_client->println(F(","));
+                    channel.wifi_client->print  (F("\"unit\": "));
+                    channel.wifi_client->print  (UNIT_TYPE_UNDEF);
+                    channel.wifi_client->println(F("}"));
+                    break;
+                //case SENSOR_TYPE_MAGNETIC_FIELD:
+                //case SENSOR_TYPE_ORIENTATION:
+                //case SENSOR_TYPE_PROXIMITY:
+                //case SENSOR_TYPE_GRAVITY:
+                //case SENSOR_TYPE_ROTATION_VECTOR:
+                //case SENSOR_TYPE_VOLTAGE:
+                //case SENSOR_TYPE_LARGE_INT:
+                //case SENSOR_TYPE_IRREMOTE:
+                default:
+                    return false;
+            }
+            channel.wifi_client->println(F("]"));
+            channel.wifi_client->println(F("}"));
+            return true;
+#endif /* __USE_WIFI_CLIENT__ */
 #ifdef __USE_HTTP_CLIENT__
         case AUSEX_OUTPUT_CHANNEL_HTTP_CLIENT :
             String workString = "{\n\"id\": " + String(event.sensor_id) + ",\n"
@@ -5521,8 +6389,8 @@ bool AuxExSensorIO::EventOutputJson(sensors_event_t event) {
             channel.mqttClient->endMessage();
             return true;
 #endif /* __USE_MQTT_CLIENT__ */
-        default:
-            return false;
+        //default:
+        //    return false;
     }
     return false;
 }
@@ -5948,6 +6816,103 @@ bool AuxExSensorIO::EventOutputPlain(sensors_event_t event) {
             }
             return true;
 #endif /* __USE_ETHERNET_CLIENT__ */
+#ifdef __USE_WIFI_CLIENT__
+        case AUSEX_OUTPUT_CHANNEL_WIFI_CLIENT :
+            channel.wifi_client->print(F("Sensor_ID="));channel.wifi_client->println(event.sensor_id);
+	        channel.wifi_client->print(F("Sensor_Type="));channel.wifi_client->println(event.type);
+	        channel.wifi_client->print(F("Data_Time="));channel.wifi_client->println(event.timestamp);
+            //if ( event.type == SENSOR_TYPE_MAGNETIC_FIELD ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_PROXIMITY ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_GRAVITY ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_ROTATION_VECTOR ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_VOLTAGE ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_LARGE_INT ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_IRREMOTE ) {
+            //}
+            if ( event.type == SENSOR_TYPE_AMBIENT_TEMPERATURE ) {
+                channel.wifi_client->print(F("Temperature="));channel.wifi_client->print(event.temperature);channel.wifi_client->println(F("C"));
+            }
+            if ( event.type == SENSOR_TYPE_RELATIVE_HUMIDITY ) {
+                channel.wifi_client->print(F("Humidity="));channel.wifi_client->print(event.relative_humidity);channel.wifi_client->println(F("%"));
+            }
+            if ( event.type == SENSOR_TYPE_ACCELEROMETER ) {
+	            channel.wifi_client->print(F("Acceleration.x="));channel.wifi_client->print(event.acceleration.x);channel.wifi_client->println(F("m/s^2"));
+	            channel.wifi_client->print(F("Acceleration.y="));channel.wifi_client->print(event.acceleration.y);channel.wifi_client->println(F("m/s^2"));
+	            channel.wifi_client->print(F("Acceleration.z="));channel.wifi_client->print(event.acceleration.z);channel.wifi_client->println(F("m/s^2"));
+            }
+            if ( event.type == SENSOR_TYPE_GYROSCOPE ) {
+	            channel.wifi_client->print(F("Gyro.x="));channel.wifi_client->print(event.gyro.x);channel.wifi_client->println(F("deg/s"));
+	            channel.wifi_client->print(F("Gyro.y="));channel.wifi_client->print(event.gyro.y);channel.wifi_client->println(F("deg/s"));
+	            channel.wifi_client->print(F("Gyro.z="));channel.wifi_client->print(event.gyro.z);channel.wifi_client->println(F("deg/s"));
+            }
+            if ( event.type == SENSOR_TYPE_LIGHT ) {
+                channel.wifi_client->print(F("Light="));channel.wifi_client->print(event.light);channel.wifi_client->println(F("lux"));
+            }
+            if ( event.type == SENSOR_TYPE_PRESSURE ) {
+                channel.wifi_client->print(F("AirPressure="));channel.wifi_client->print(event.pressure);channel.wifi_client->println(F("hPa"));
+            }
+            if ( event.type == SENSOR_TYPE_LINEAR_ACCELERATION ) {
+	            channel.wifi_client->print(F("LinearAcceleration.x="));channel.wifi_client->print(event.acceleration.x);channel.wifi_client->println(F("m/s^2"));
+	            channel.wifi_client->print(F("LinearAcceleration.y="));channel.wifi_client->print(event.acceleration.y);channel.wifi_client->println(F("m/s^2"));
+	            channel.wifi_client->print(F("LinearAcceleration.z="));channel.wifi_client->print(event.acceleration.z);channel.wifi_client->println(F("m/s^2"));
+            }
+            if ( event.type == SENSOR_TYPE_CURRENT ) {
+	            channel.wifi_client->print(F("Current="));channel.wifi_client->print(event.current);channel.wifi_client->println(F("mA"));
+            }
+            if ( event.type == SENSOR_TYPE_COLOR ) {
+	            channel.wifi_client->print(F("ColorR="));channel.wifi_client->println(event.color.r);
+	            channel.wifi_client->print(F("ColorG="));channel.wifi_client->println(event.color.g);
+	            channel.wifi_client->print(F("ColorG="));channel.wifi_client->println(event.color.b);
+	            channel.wifi_client->print(F("ColorRGBA="));channel.wifi_client->println(event.color.rgba);
+            }
+            if ( event.type == SENSOR_TYPE_SIMPLE ) {
+	            channel.wifi_client->print(F("Value="));channel.wifi_client->println(event.value);
+            }
+            if ( event.type == SENSOR_TYPE_ANGLE ) {
+	            channel.wifi_client->print(F("Angle="));channel.wifi_client->print(event.angle);channel.wifi_client->println(F("deg"));
+            }
+            if ( event.type == SENSOR_TYPE_1AXIS_GYRO ) {
+	            channel.wifi_client->print(F("1AxisGyro="));channel.wifi_client->print(event.roll);channel.wifi_client->println(F("deg/s"));
+            }
+            if ( event.type == SENSOR_TYPE_DISTANCE ) {
+	            channel.wifi_client->print(F("Distance="));channel.wifi_client->print(event.distance);channel.wifi_client->println(F("cm"));
+            }
+            if ( event.type == SENSOR_TYPE_DUST ) {
+	            channel.wifi_client->print(F("Dust="));channel.wifi_client->print(event.dust);channel.wifi_client->println(F("pcs/0.01cf"));
+            }
+            if ( event.type == SENSOR_TYPE_POSITION ) {
+	            channel.wifi_client->print(F("Latitude="));channel.wifi_client->print(event.position.latitude);channel.wifi_client->println(F("deg"));
+	            channel.wifi_client->print(F("Longtitude="));channel.wifi_client->print(event.position.longtitude);channel.wifi_client->println(F("deg"));
+	            channel.wifi_client->print(F("Altitude="));channel.wifi_client->print(event.position.altitude);channel.wifi_client->println(F("m"));
+	            channel.wifi_client->print(F("Dop="));channel.wifi_client->println(event.position.dop);
+            }
+            if ( event.type == SENSOR_TYPE_DATE ) {
+	            channel.wifi_client->print(F("Year="));channel.wifi_client->println(event.date.year);
+	            channel.wifi_client->print(F("Month="));channel.wifi_client->println(event.date.month);
+	            channel.wifi_client->print(F("Day="));channel.wifi_client->println(event.date.day);
+                channel.wifi_client->print(F("DayOfWeek="));channel.wifi_client->println(event.date.dayOfWeek);
+	            channel.wifi_client->print(F("Hour="));channel.wifi_client->println(event.date.hour);
+	            channel.wifi_client->print(F("Minute="));channel.wifi_client->println(event.date.minute);
+	            channel.wifi_client->print(F("Second="));channel.wifi_client->println(event.date.second);
+	            channel.wifi_client->print(F("Millisecond="));channel.wifi_client->println(event.date.millisecond);
+            }
+            if ( event.type == SENSOR_TYPE_SPEED_KNOT ) {
+	            channel.wifi_client->print(F("SpeedKnot="));channel.wifi_client->print(event.speed);channel.wifi_client->println(F("knot"));
+            }
+            if ( event.type == SENSOR_TYPE_ORIENTATION ) {
+	            channel.wifi_client->print(F("Orientation="));channel.wifi_client->print(event.orientation.heading);channel.wifi_client->println(F("deg"));
+            }
+            if ( event.type == SENSOR_TYPE_SIMPLE_ANALOG ) {
+	            channel.wifi_client->print(F("Value="));channel.wifi_client->println(event.value);
+            }
+            return true;
+#endif /* __USE_WIFI_CLIENT__ */
 #ifdef __USE_HTTP_CLIENT__
         case AUSEX_OUTPUT_CHANNEL_HTTP_CLIENT :
             String workString = "Sensor_ID=" + String(event.sensor_id) + "\n"
@@ -6149,9 +7114,10 @@ bool AuxExSensorIO::EventOutputPlain(sensors_event_t event) {
             channel.mqttClient->endMessage();
             return true;
 #endif /* __USE_MQTT_CLIENT__ */
-        default:
-            return false;
+        //default:
+        //    return false;
     }
+    return false;
 }
 
 
@@ -6584,6 +7550,103 @@ bool AuxExSensorIO::EventOutputSyslog(sensors_event_t event) {
             }
             return true;
 #endif /* __USE_ETHERNET_CLIENT__ */
+#ifdef __USE_WIFI_CLIENT__
+        case AUSEX_OUTPUT_CHANNEL_WIFI_CLIENT :
+            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Sensor_ID="));channel.wifi_client->println(event.sensor_id);
+	        channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Sensor_Type="));channel.wifi_client->println(event.type);
+	        channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Data_Time="));channel.wifi_client->println(event.timestamp);
+            //if ( event.type == SENSOR_TYPE_MAGNETIC_FIELD ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_PROXIMITY ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_GRAVITY ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_ROTATION_VECTOR ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_VOLTAGE ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_LARGE_INT ) {
+            //}
+            //if ( event.type == SENSOR_TYPE_IRREMOTE ) {
+            //}
+            if ( event.type == SENSOR_TYPE_AMBIENT_TEMPERATURE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Temperature="));channel.wifi_client->print(event.temperature);channel.wifi_client->println(F("C"));
+            }
+            if ( event.type == SENSOR_TYPE_RELATIVE_HUMIDITY ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Humidity="));channel.wifi_client->print(event.relative_humidity);channel.wifi_client->println(F("%"));
+            }
+            if ( event.type == SENSOR_TYPE_ACCELEROMETER ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Acceleration.x="));channel.wifi_client->print(event.acceleration.x);channel.wifi_client->println(F("m/s^2"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Acceleration.y="));channel.wifi_client->print(event.acceleration.y);channel.wifi_client->println(F("m/s^2"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Acceleration.z="));channel.wifi_client->print(event.acceleration.z);channel.wifi_client->println(F("m/s^2"));
+            }
+            if ( event.type == SENSOR_TYPE_GYROSCOPE ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Gyro.x="));channel.wifi_client->print(event.gyro.x);channel.wifi_client->println(F("deg/s"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Gyro.y="));channel.wifi_client->print(event.gyro.y);channel.wifi_client->println(F("deg/s"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Gyro.z="));channel.wifi_client->print(event.gyro.z);channel.wifi_client->println(F("deg/s"));
+            }
+            if ( event.type == SENSOR_TYPE_LIGHT ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Light="));channel.wifi_client->print(event.light);channel.wifi_client->println(F("lux"));
+            }
+            if ( event.type == SENSOR_TYPE_PRESSURE ) {
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("AirPressure="));channel.wifi_client->print(event.pressure);channel.wifi_client->println(F("hPa"));
+            }
+            if ( event.type == SENSOR_TYPE_LINEAR_ACCELERATION ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("LinearAcceleration.x="));channel.wifi_client->print(event.acceleration.x);channel.wifi_client->println(F("m/s^2"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("LinearAcceleration.y="));channel.wifi_client->print(event.acceleration.y);channel.wifi_client->println(F("m/s^2"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("LinearAcceleration.z="));channel.wifi_client->print(event.acceleration.z);channel.wifi_client->println(F("m/s^2"));
+            }
+            if ( event.type == SENSOR_TYPE_CURRENT ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Current="));channel.wifi_client->print(event.current);channel.wifi_client->println(F("mA"));
+            }
+            if ( event.type == SENSOR_TYPE_COLOR ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("ColorR="));channel.wifi_client->println(event.color.r);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("ColorG="));channel.wifi_client->println(event.color.g);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("ColorG="));channel.wifi_client->println(event.color.b);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("ColorRGBA="));channel.wifi_client->println(event.color.rgba);
+            }
+            if ( event.type == SENSOR_TYPE_SIMPLE ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Value="));channel.wifi_client->println(event.value);
+            }
+            if ( event.type == SENSOR_TYPE_ANGLE ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Angle="));channel.wifi_client->print(event.angle);channel.wifi_client->println(F("deg"));
+            }
+            if ( event.type == SENSOR_TYPE_1AXIS_GYRO ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("1AxisGyro="));channel.wifi_client->print(event.roll);channel.wifi_client->println(F("deg/s"));
+            }
+            if ( event.type == SENSOR_TYPE_DISTANCE ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Distance="));channel.wifi_client->print(event.distance);channel.wifi_client->println(F("cm"));
+            }
+            if ( event.type == SENSOR_TYPE_DUST ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Dust="));channel.wifi_client->print(event.dust);channel.wifi_client->println(F("pcs/0.01cf"));
+            }
+            if ( event.type == SENSOR_TYPE_POSITION ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Latitude="));channel.wifi_client->print(event.position.latitude);channel.wifi_client->println(F("deg"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Longtitude="));channel.wifi_client->print(event.position.longtitude);channel.wifi_client->println(F("deg"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Altitude="));channel.wifi_client->print(event.position.altitude);channel.wifi_client->println(F("m"));
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Dop="));channel.wifi_client->println(event.position.dop);
+            }
+            if ( event.type == SENSOR_TYPE_DATE ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Year="));channel.wifi_client->println(event.date.year);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Month="));channel.wifi_client->println(event.date.month);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Day="));channel.wifi_client->println(event.date.day);
+                channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("DayOfWeek="));channel.wifi_client->println(event.date.dayOfWeek);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Hour="));channel.wifi_client->println(event.date.hour);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Minute="));channel.wifi_client->println(event.date.minute);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Second="));channel.wifi_client->println(event.date.second);
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Millisecond="));channel.wifi_client->println(event.date.millisecond);
+            }
+            if ( event.type == SENSOR_TYPE_SPEED_KNOT ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("SpeedKnot="));channel.wifi_client->print(event.speed);channel.wifi_client->println(F("knot"));
+            }
+            if ( event.type == SENSOR_TYPE_ORIENTATION ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Orientation="));channel.wifi_client->print(event.orientation.heading);channel.wifi_client->println(F("deg"));
+            }
+            if ( event.type == SENSOR_TYPE_SIMPLE_ANALOG ) {
+	            channel.wifi_client->print  (currentTime+" " + hostName + " " + appName +" : ");channel.wifi_client->print(F("Value="));channel.wifi_client->println(event.value);
+            }
+            return true;
+#endif /* __USE_WIFI_CLIENT__ */
 #ifdef __USE_HTTP_CLIENT__
         case AUSEX_OUTPUT_CHANNEL_HTTP_CLIENT :
             String workString = currentTime+" " + hostName + " " + appName +" : " + "Sensor_ID=" + String(event.sensor_id) + "\n"
@@ -6788,9 +7851,10 @@ bool AuxExSensorIO::EventOutputSyslog(sensors_event_t event) {
             channel.mqttClient->endMessage();
             return true;
 #endif /* __USE_MQTT_CLIENT__ */
-        default:
-            return false;
+        //default:
+        //    return false;
     }
+    return false;
 }
 
 bool AuxExSensorIO::EventOutput(sensors_event_t event){
