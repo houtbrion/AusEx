@@ -37,7 +37,12 @@
 #endif /* __USE_ETHERNET_CLIENT__ */
 
 #ifdef __USE_WIFI_CLIENT__
+/* refer - https://www.arduino.cc/en/Reference/WiFiNINA */
+#if defined(ARDUINO_AVR_UNO_WIFI_DEV_ED) || defined(ARDUINO_SAMD_NANO_33_IOT) || defined(ARDUINO_SAMD_MKRWIFI1010) || defined(ARDUINO_SAMD_MKRVIDOR4000) || defined(__WIFI_NINA__)
+#include <WiFiNINA.h>
+#else
 #include <WiFi.h>
+#endif
 #endif /* __USE_WIFI_CLIENT__ */
 
 #ifdef __USE_HTTP_CLIENT__
@@ -72,7 +77,11 @@ typedef union OutputChannel {
 	File * file;
 #endif /* __USE_SD__ */
 #ifdef __USE_SERIAL__
-	HardwareSerial * serial;
+#if defined(ARDUINO_SAMD_MKR1000) || defined(ARDUINO_SAMD_MKRZERO) || defined(ARDUINO_SAMD_MKRWIFI1010) || defined(ARDUINO_SAMD_NANO_33_IOT) || defined(ARDUINO_SAMD_MKRFOX1200) || defined(ARDUINO_SAMD_MKRWAN1300) || defined(ARDUINO_SAMD_MKRWAN1310) || defined(ARDUINO_SAMD_MKRGSM1400) || defined(ARDUINO_SAMD_MKRNB1500) || defined(ARDUINO_SAMD_MKRVIDOR4000) || defined(ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS)
+	Serial_ * serial;
+#else /* for hard serial */
+    HardwareSerial * serial;
+#endif /* for hard serial */
 #endif /* __USE_SERIAL__ */
 #ifdef __USE_SOFT_SERIAL__
     SoftwareSerial * sserial;
