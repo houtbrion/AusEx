@@ -78,7 +78,7 @@ typedef enum
 /** unit type **/
 typedef enum
 {
-    UNIT_TYPE_UNDEF           = (1),  /* C */
+    UNIT_TYPE_UNDEF           = (1),  /* undef */
     UNIT_TYPE_CELCIUS         = (2),  /* C */
     UNIT_TYPE_PERCENTAGE      = (3),  /* % */
     UNIT_TYPE_METER_PER_SEC_2 = (4),  /* m/s^2 */

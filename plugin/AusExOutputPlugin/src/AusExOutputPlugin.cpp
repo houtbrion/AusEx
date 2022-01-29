@@ -2206,7 +2206,7 @@ bool AuxExSensorIO::InfoOutputPlain(sensor_t sensor) {
 
 bool AuxExSensorIO::InfoOutputSyslog(sensor_t sensor) {
 #ifdef __USE_RTC__
-    rtc_date_t nowTime;
+    date_t nowTime;
     rtc->getTime(&nowTime);
     String currentTime=String(nowTime.year)+"/"+String(nowTime.month)+"/"+String(nowTime.mday)+" "+rtc->getWday(nowTime.wday)+" "
         + String(nowTime.hour)+":"+String(nowTime.minute)+":"+String(nowTime.second);
@@ -7123,7 +7123,7 @@ bool AuxExSensorIO::EventOutputPlain(sensors_event_t event) {
 
 bool AuxExSensorIO::EventOutputSyslog(sensors_event_t event) {
 #ifdef __USE_RTC__
-    rtc_date_t nowTime;
+    date_t nowTime;
     rtc->getTime(&nowTime);
     String currentTime=String(nowTime.year)+"/"+String(nowTime.month)+"/"+String(nowTime.mday)+" "+rtc->getWday(nowTime.wday)+" "
         + String(nowTime.hour)+":"+String(nowTime.minute)+":"+String(nowTime.second);
