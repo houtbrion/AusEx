@@ -1,13 +1,12 @@
 #include "AusExOutputPlugin.h"
-#include "AusExGroveWaterSensor.h"
+#include "AusExLSP22HB.h"
 
-#define SENSOR_PIN 13
 
-AusExGroveWaterSensor groveWaterSensor = AusExGroveWaterSensor(SENSOR_PIN);
+AusExLPS22HB ausExLPS22HB=AusExLPS22HB(&Wire);
 OutputChannel channel;
 AuxExSensorIO outputDevice =  AuxExSensorIO();
 
-void setup()
+void setup()  
 {
   Serial.begin(9600);
   while (!Serial) {
@@ -15,21 +14,25 @@ void setup()
   }
   channel.serial= &Serial;
   outputDevice.SetIO(AUSEX_OUTPUT_CHANNEL_SERIAL, channel, FORMAT_TYPE_PLAIN_TEXT);
-  //
-  groveWaterSensor.begin();
+
+  ausExLPS22HB.begin();
+
   sensor_t sensor;
-  groveWaterSensor.getSensor(&sensor);
+  ausExLPS22HB.getSensor(&sensor);
   outputDevice.InfoOutput(sensor);
+
+  Serial.print("set sensor mode to hpa....");
+  if (0!=ausExLPS22HB.setMode(AUSEX_LPS22HB_MODE_HPA)) {
+    Serial.println("Fail.");
+  } else {
+    Serial.println("Success.");
+  }
 }
 void loop()  
 {
   sensors_event_t event;
-  if (groveWaterSensor.getEvent(&event)) {
-    if (isnan(event.value)) {
-      Serial.println("read sensor error.");
-    } else {
-      outputDevice.EventOutput(event);
-    }
+  if (ausExLPS22HB.getEvent(&event)) {
+    outputDevice.EventOutput(event);
   } else {
     Serial.println("read sensor error.");
   }

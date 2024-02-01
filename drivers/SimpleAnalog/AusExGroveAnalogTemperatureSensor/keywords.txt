@@ -2,7 +2,7 @@
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
-AusExGroveAnalog1Temperature	KEYWORD1
+AusExGroveAnalogTemperature	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)

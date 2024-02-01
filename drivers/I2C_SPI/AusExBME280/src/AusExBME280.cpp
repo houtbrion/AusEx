@@ -134,7 +134,7 @@ bool AusExBME280::getHumidity(sensors_event_t* event){
 bool AusExBME280::getPressure(sensors_event_t* event){
   if (_bme280Sleep) _bme280.takeForcedMeasurement();
   event->timestamp = millis();
-  event->pressure = _bme280.readPressure();
+  event->pressure = _bme280.readPressure()/100;
   if (event->pressure == NO_MEASURE) return false;
   return true;
 }

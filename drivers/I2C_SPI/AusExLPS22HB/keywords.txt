@@ -1,0 +1,38 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+AusExLPS22HB	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin		    KEYWORD2
+getEvent	    KEYWORD2
+getSensor	    KEYWORD2
+enableAutoRange KEYWORD2
+setMode		    KEYWORD2
+getMode		    KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+
+AUSEX_LPS22HB_CLASS                     LITERAL1
+AUSEX_LPS22HB_SENSOR_NAME               LITERAL1
+AUSEX_LPS22HB_SENSOR_TYPE               LITERAL1
+AUSEX_LPS22HB_SENSOR_LIBRARY_VERSION    LITERAL1
+AUSEX_LPS22HB_SENSOR_RETURN_VALUE       LITERAL1
+AUSEX_LPS22HB_SENSOR_VALUE_TYPE         LITERAL1
+AUSEX_LPS22HB_SENSOR_MIN_VALUE          LITERAL1
+AUSEX_LPS22HB_SENSOR_MAX_VALUE          LITERAL1
+AUSEX_LPS22HB_SENSOR_RESOLUTION         LITERAL1
+AUSEX_LPS22HB_SENSOR_MIN_DELAY          LITERAL1
+AUSEX_LPS22HB_SENSOR_INIT_DELAY         LITERAL1
+
+AUSEX_LPS22HB_SENSOR_DEFAULT_I2C_ADDR   LITERAL1
+AUSEX_LPS22HB_SENSOR_SECOND_I2C_ADDR    LITERAL1
+
+__AUSEX_LPS22HB_H__			                    PREPROCESSOR

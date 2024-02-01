@@ -72,7 +72,8 @@ typedef enum {
 
 
 
-typedef union OutputChannel {
+//typedef union OutputChannel {
+typedef union {
 #ifdef __USE_SD__
 	File * file;
 #endif /* __USE_SD__ */
@@ -80,7 +81,11 @@ typedef union OutputChannel {
 #if defined(ARDUINO_SAMD_MKR1000) || defined(ARDUINO_SAMD_MKRZERO) || defined(ARDUINO_SAMD_MKRWIFI1010) || defined(ARDUINO_SAMD_NANO_33_IOT) || defined(ARDUINO_SAMD_MKRFOX1200) || defined(ARDUINO_SAMD_MKRWAN1300) || defined(ARDUINO_SAMD_MKRWAN1310) || defined(ARDUINO_SAMD_MKRGSM1400) || defined(ARDUINO_SAMD_MKRNB1500) || defined(ARDUINO_SAMD_MKRVIDOR4000) || defined(ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS)
 	Serial_ * serial;
 #else /* for hard serial */
+#if defined(ARDUINO_NANO_ESP32)
+    USBCDC * serial;
+#else /* ARDUINO_NANO_ESP32 */
     HardwareSerial * serial;
+#endif /* ARDUINO_NANO_ESP32 */
 #endif /* for hard serial */
 #endif /* __USE_SERIAL__ */
 #ifdef __USE_SOFT_SERIAL__
@@ -98,7 +103,8 @@ typedef union OutputChannel {
 #ifdef __USE_MQTT_CLIENT__
     MqttClient * mqttClient;
 #endif /* __USE_MQTT_CLIENT__ */
-};
+} OutputChannel;
+//};
 
 class AuxExSensorIO  {
     public:
