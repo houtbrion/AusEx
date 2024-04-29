@@ -7,6 +7,9 @@ AusExTEMT6000 temt6000 = AusExTEMT6000(SENSOR_PIN);
 void setup()  
 {
   Serial.begin(9600);
+  while (!Serial) {
+    ; // シリアルポートの準備ができるのを待つ(Leonardoのみ必要)
+  }
   temt6000.begin();
   sensor_t sensor;
   temt6000.getSensor(&sensor);
