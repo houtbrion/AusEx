@@ -1,7 +1,7 @@
 #ifndef __AUSEX_OUTPUT_PLUGIN_H__
 #define __AUSEX_OUTPUT_PLUGIN_H__
 
-#include "config.h"
+#include "AusEx_p_config.h"
 
 #define AUSEX_OUTPUT_CHANNEL_SERIAL             1
 #define AUSEX_OUTPUT_CHANNEL_SOFT_SERIAL        2

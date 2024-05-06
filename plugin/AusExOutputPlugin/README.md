@@ -149,13 +149,13 @@ typedef union OutputChannel {
 };
 ```
 
-### ライブラリの``config.h``
+### ライブラリの``AusEx_p_config.h``
 すべてのチャンネルを有効にすると，オブジェクトサイズが非常に大きくなり，Arduino Megaのフラッシュサイズより大きくなってしまいます．
-不要な機能をオブジェクトに入れないため，本ライブラリの``src``ディレクトリ内の``config.h``(下はその内容)を編集し，利用しないチャネルに
+不要な機能をオブジェクトに入れないため，本ライブラリの``src``ディレクトリ内の``AusEx_p_config.h``(下はその内容)を編集し，利用しないチャネルに
 対応する定義をコメントアウトしてください．
 
 また，最後の``__USE_RTC__``はsyslog形式で時刻情報を出力したい場合以外はかならずコメントアウトしてください．
-ArduinoのEthernetシールドを利用しており，プログラム中でRTCを使わないにも関わらず，``config.h``で``__USE_RTC__``を生かしていると，
+ArduinoのEthernetシールドを利用しており，プログラム中でRTCを使わないにも関わらず，``AusEx_p_config.h``で``__USE_RTC__``を生かしていると，
 イーサネットが正しく動作しなくなります．
 ```
 #define __USE_SD__              /* ログ出力先にSD/microSDカードを使う */
@@ -281,7 +281,7 @@ outputDevice.SetLogParam("localhost", "TestApp");   // フォーマットがsysl
 2021/10/18 Mon 18:49:26 localhost TestApp : Temperature Sensor
 ```
 
-この場合，``config.h``で``__USE_RTC__``を有効にする他，RTC用ライブラリとして[RTC_U][RTC_U]を使う必要があるため，
+この場合，``AusEx_p_config.h``で``__USE_RTC__``を有効にする他，RTC用ライブラリとして[RTC_U][RTC_U]を使う必要があるため，
 libraryをインストールしてください．現在，[RTC_U][RTC_U]で利用可能なRTCとしては，EPSON 8564NB, DS1307, DS3234があります．
 
 また，Arduinoのプログラムで以下のAPIを使って，RTCを登録する必要があります．
